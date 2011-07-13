@@ -1,0 +1,37 @@
+.widget .helion_okladka {
+	padding: 10px;
+	margin: 0px auto;
+}
+
+.widget .helion_meta {
+	padding: 10px;
+	margin: 0px auto;
+}
+
+.widget .helion_cena {
+	color: #CC0000;
+    font-family: Georgia,Times New Roman,serif;
+    font-size: 1.4em;
+    font-weight: bold;
+	line-height: 1.5em;
+}
+
+.widget .helion-box {
+	background-color: #f0f0f0;
+	border: 1px solid #e1e1e1;
+	display: block;
+	height: 21px;
+	margin: 12px 0px;
+	overflow: hidden;
+	padding: 6px;
+	position: relative;
+}
+
+.widget .helion-box a {
+	display: block;
+	width: 74px;
+	text-transform: uppercase;
+	padding: 2px 0px 0px 44px;
+	background: url("../images/koszyk.png") no-repeat;
+	margin: 0px auto;
+}
