@@ -1,5 +1,5 @@
 === Helion Widgets Pro ===
-Contributors: paulpela, grupa-wydawnicza-helion
+Contributors: paulpela, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
 Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
 Requires at least: 3.1
