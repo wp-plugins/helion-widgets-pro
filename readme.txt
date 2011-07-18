@@ -3,8 +3,8 @@ Contributors: paulpela, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
 Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
 Requires at least: 3.1
-Tested up to: 3.2
-Stable tag: 0.90
+Tested up to: 3.2.1
+Stable tag: 0.91
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -57,6 +57,10 @@ Wtyczka tworzy aktualną kopię bazy danych o książkach każdej księgarni, kt
 
 Wszystko jest opisane w menu Helion->Pomoc, w panelu administracyjnym twojego bloga.
 
+= Czy mogę używać wtyczkę na WordPress MultiSite? =
+
+W tej chwili wtyczka nie obsługuje jeszcze WordPress MultiSite (sieci blogów), ale planujemy dodać taką możliwość w przyszłości.
+
 = Znalazłem błąd. Gdzie mogę go zgłosić? =
 
 Napisz do autora wtyczki na pawel@paulpela.com
@@ -73,7 +77,14 @@ Napisz do autora wtyczki na pawel@paulpela.com
 * Pierwsza publiczna wersja wtyczki
 * Podziękowania dla Jakuba Milczarka za testy wersji beta
 
+= 0.91 =
+* Poprawiony błąd w wyszukiwarce - podpowiedzi gdy nie wpisano żadnego zapytania
+* Poprawione domyślne style CSS elementów księgarni
+
 == Upgrade Notice ==
 
 = 0.90 =
 Pierwsza publiczna wersja wtyczki
+
+= 0.91 =
+Poprawione błędy w wyszukiwarce i domyślne style.

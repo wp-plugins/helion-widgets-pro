@@ -3,7 +3,7 @@
 	Plugin Name: Helion Widgets Pro
 	Plugin URI: http://wordpress.org/extend/plugins/helion-widgets-pro/
 	Description: Widgety i Księgarnia dla uczestników Programu Partnerskiego GW Helion.
-	Version: 0.90
+	Version: 0.91
 	Author: Paweł Pela
 	Author URI: http://paulpela.com/
 	License: GPL2
@@ -120,7 +120,7 @@ function helion_activation() {
 	
 	if(!get_option("helion_wyszukiwarka_template")) {
 	
-		$template = '<div class="helion_ksiazka">\n\n<div style="float: left; width: 181px; margin-right: 20px;"><a href="%dokoszyka%">%okladka181x236%</a></div>\n\n<div style="float: left; width: 350px;">\n\n<h2><a href="%dokoszyka%">%tytul%</a></h2>\n\n<p>autor: %autor%</p>\n<p>format: %format%</p>\n<p>data wydania: %datawydania%</p>\n<div class="helion-box">\n<div class="helion-cena">%cena% zł</div>\n<a href="%dokoszyka%">kup teraz</a>\n</div>\n</div>\n\n<div style="clear: both;"></div>\n\n<hr/>\n\n<div>%opis%</div>\n\n<div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%">kup teraz</a></div>\n</div>';
+		$template = '<div class="helion_ksiazka"><div style="float: left; width: 181px; margin-right: 20px;"><a href="%dokoszyka%">%okladka181x236%</a></div><div style="float: left; width: 350px;"><h2><a href="%dokoszyka%">%tytul%</a></h2><p>autor: %autor%</p><p>format: %format%</p><p>data wydania: %datawydania%</p><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%">kup teraz</a></div></div><div style="clear: both;"></div><hr/><div>%opis%</div><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%">kup teraz</a></div></div>';
 		
 		update_option("helion_wyszukiwarka_template", $template);
 	}
@@ -141,7 +141,7 @@ function helion_activation() {
 	
 	if(!get_option("helion_bookstore_template_book")) {
 	
-		$template = '<div class="helion_ksiazka">\n\n<div style="float: left; width: 181px; margin-right: 20px;"><a href="%dokoszyka%">%okladka181x236%</a></div>\n\n<div style="float: left; width: 350px;">\n\n<h2><a href="%dokoszyka%">%tytul%</a></h2>\n\n<p>autor: %autor%</p>\n<p>format: %format%</p>\n<p>data wydania: %datawydania%</p>\n<div class="helion-box">\n<div class="helion-cena">%cena% zł</div>\n<a href="%dokoszyka%">kup teraz</a>\n</div>\n</div>\n\n<div style="clear: both;"></div>\n\n<hr/>\n\n<div>%opis%</div>\n\n<div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%">kup teraz</a></div>\n</div>';
+		$template = '<div class="helion_ksiazka"><div style="float: left; width: 181px; margin-right: 20px;"><a href="%dokoszyka%">%okladka181x236%</a></div><div style="float: left; width: 350px;"><h2><a href="%dokoszyka%">%tytul%</a></h2><p>autor: %autor%</p><p>format: %format%</p><p>data wydania: %datawydania%</p><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%">kup teraz</a></div></div><div style="clear: both;"></div><hr/><div>%opis%</div><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%">kup teraz</a></div></div>';
 		
 		update_option("helion_bookstore_template_book", $template);
 	}

@@ -1,16 +1,19 @@
 .helion_ksiegarnia .helion-nowosc {
-	width: 45%;
+	width: 44%;
 	float: left;
 	height: 150px;
 	padding: 10px;
 	margin: 0px 10px 10px 0px;
 	border: 1px solid #d7d7d7;
+	font-size: 12px;
 }
 
 .helion_ksiegarnia .helion-bestseller, .helion_ksiegarnia .helion-kategoria {
 	padding: 10px;
 	margin-bottom: 10px;
-	height: 230px;
+	height: 250px;
+	border-bottom: 1px solid #ddd;
+	font-size: 12px;
 }
 
 .helion_ksiegarnia .helion-nowosc > a, .helion_ksiegarnia .helion-bestseller > a {
