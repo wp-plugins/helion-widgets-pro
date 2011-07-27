@@ -36,61 +36,71 @@ class Helion_Widget_Random_Book extends WP_Widget {
 			echo $after_widget;
 		} else {
 			$book = helion_get_book_info($random_book['bookstore'], $random_book['ident']);
-			$dokoszyka = helion_get_link($random_book['bookstore'], $random_book['ident'], $instance['cyfra'], true);
-				
-			if($instance['koszyk']) {
-				$link = $dokoszyka;
-			} else {
-				$link = helion_get_link($random_book['bookstore'], $random_book['ident'], $instance['cyfra']);
-			}
 			
-			$okladka = helion_get_cover($random_book['bookstore'], $random_book['ident'], $instance['cover']);
-			$tytul = $okladka['alt'];
-			$autor = $book['autor'];
-		
-			echo $before_widget;
-			echo $before_title . $instance['title'] . $after_title;
-			?>
-			<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
-				<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>">
-					<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
-				</a>
-			</div>
-			<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
-				<?php if($instance['tytul']) { ?>
-				<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank"><?php echo $tytul; ?></a></p>
-				<?php } ?>
-				<?php if($instance['autor']) { ?>
-					<p class="helion_autor">autor: <?php echo $autor; ?></p>
-				<?php } ?>
-				<?php if($instance['cena']) { ?>
-				<p class="helion_cena">Cena: <?php echo $book['cenadetaliczna']; ?> zł</p>
-				<?php } ?>
-				<?php if($instance['dodatkowe']) { ?>
-					<?php 
-						if($book['nowosc']) {
-							$dod[] = '<img src="http://helion.pl/img/nowosc.gif" alt="nowość" />';
-						}
-						if($book['bestseller']) {
-							$dod[] = '<img src="http://helion.pl/img/bestseller.gif" alt="bestseller" />';
-						}
-						
-						if(!empty($dod)) { ?>
-							<p class="helion_dodatkowe">
-						<?php
-							echo join(" ", $dod);
+			if(!$book) {
+				echo $before_widget;
+				echo $before_title . $instance['title'] . $after_title;
+				?>
+				<p>Nie było możliwe pobranie danych na temat książki.</p>
+				<?php
+				echo $after_widget;
+			} else {
+				$dokoszyka = helion_get_link($random_book['bookstore'], $random_book['ident'], $instance['cyfra'], true);
+					
+				if($instance['koszyk']) {
+					$link = $dokoszyka;
+				} else {
+					$link = helion_get_link($random_book['bookstore'], $random_book['ident'], $instance['cyfra']);
+				}
+				
+				$okladka = helion_get_cover($random_book['bookstore'], $random_book['ident'], $instance['cover']);
+				$tytul = $okladka['alt'];
+				$autor = $book['autor'];
+			
+				echo $before_widget;
+				echo $before_title . $instance['title'] . $after_title;
+				?>
+				<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
+					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>">
+						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
+					</a>
+				</div>
+				<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
+					<?php if($instance['tytul']) { ?>
+					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank"><?php echo $tytul; ?></a></p>
+					<?php } ?>
+					<?php if($instance['autor']) { ?>
+						<p class="helion_autor">autor: <?php echo $autor; ?></p>
+					<?php } ?>
+					<?php if($instance['cena']) { ?>
+					<p class="helion_cena">Cena: <?php echo $book['cenadetaliczna']; ?> zł</p>
+					<?php } ?>
+					<?php if($instance['dodatkowe']) { ?>
+						<?php 
+							if($book['nowosc']) {
+								$dod[] = '<img src="http://helion.pl/img/nowosc.gif" alt="nowość" />';
+							}
+							if($book['bestseller']) {
+								$dod[] = '<img src="http://helion.pl/img/bestseller.gif" alt="bestseller" />';
+							}
+							
+							if(!empty($dod)) { ?>
+								<p class="helion_dodatkowe">
+							<?php
+								echo join(" ", $dod);
+							?>
+								</p>
+							<?php
+							}
 						?>
-							</p>
-						<?php
-						}
-					?>
-				<?php } ?>
-				<?php if($instance['przycisk']) { ?>
-					<div class="helion-box"><a href="<?php echo $dokoszyka; ?>">kup teraz</a></div>
-				<?php } ?>
-			</div>
-			<?php
-			echo $after_widget;
+					<?php } ?>
+					<?php if($instance['przycisk']) { ?>
+						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>">kup teraz</a></div>
+					<?php } ?>
+				</div>
+				<?php
+				echo $after_widget;
+			}
 		}
 	}
 	

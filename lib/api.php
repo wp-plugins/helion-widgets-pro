@@ -63,14 +63,17 @@ function helion_get_book_info($bookstore, $ident) {
 				curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
 				curl_setopt($cu, CURLOPT_GET, 1); 
 				curl_setopt($cu, CURLOPT_GETFIELDS, $curl_get); 
-				$description = simplexml_load_string(curl_exec($cu));
+				$description = @simplexml_load_string(curl_exec($cu));
 				curl_close($cu);
 				break;
 			default: 
-				$description = simplexml_load_file("http://" . $bookstore . 
+				$description = @simplexml_load_file("http://" . $bookstore . 
 								".pl/plugins/new/xml/ksiazka.cgi?ident=" . $ident);
 				break;
 		}
+		
+		if(!$description)
+			return false;
 		
 		$book['ident'] = $ident;
 		$book['isbn'] = $description->isbn;

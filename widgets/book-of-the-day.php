@@ -88,7 +88,11 @@ class Helion_Widget_BOTD extends WP_Widget {
 				<?php
 				echo $after_widget;
 			} else {
-				//nie udało się pobrać książki
+				echo $before_widget;
+				echo $before_title . $instance['title'] . $after_title;
+				?>
+				<p>Nie było możliwe pobranie danych na temat książki.</p>
+				<?php
 			}
 		}
 	}
