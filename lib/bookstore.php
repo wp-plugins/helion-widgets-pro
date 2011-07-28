@@ -22,6 +22,7 @@ function helion_bookstore($atts) {
 				$template .= stripslashes(get_option("helion_bookstore_template_category"));
 				$template .= '</div>';
 				$template = helion_parse_category_template($template, $_REQUEST['id'], $_REQUEST['helion_page']);
+				print_r($template);
 				break;
 			case 'book':
 				$dane = helion_get_book_info(h_validate_bookstore($_REQUEST['ksiegarnia']), h_validate_ident($_REQUEST['ident']));
