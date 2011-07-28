@@ -86,20 +86,40 @@ function helion_is_cover_cached($bookstore, $ident, $size) {
  */
 function helion_get_current_cache_size() {
 
-	switch(strtolower(php_uname("s"))) {
-		case 'linux':
-		case 'freebsd':
-			$command = "du -sk " . ABSPATH . "wp-content/helion-cache";
-            $c = explode("\t", `$command`);
-            $current = $c[0];
-			break;
-		default:
-			$total = helion_dirsize(ABSPATH . "wp-content/helion-cache");
-			$current = $total['size'] / 1024;
-			break;
+	if(!h_disabled_shell_exec()) {
+		switch(strtolower(php_uname("s"))) {
+			case 'linux':
+			case 'freebsd':
+				$command = "du -sk " . ABSPATH . "wp-content/helion-cache";
+				$c = explode("\t", `$command`);
+				$current = $c[0];
+				break;
+			default:
+				$total = helion_dirsize(ABSPATH . "wp-content/helion-cache");
+				$current = $total['size'] / 1024;
+				break;
+		}
+	} else {
+		$total = helion_dirsize(ABSPATH . "wp-content/helion-cache");
+		$current = $total['size'] / 1024;
 	}
 	
 	return $current;
+}
+
+function h_disabled_shell_exec() {
+	$disabled_functions = @ini_get('disable_functions');
+	
+	if(!empty($disabled_functions)) {
+		$arr = explode(',', $disabled_functions);
+		if(in_array("shell_exec", $arr)) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
 }
 
 function helion_dirsize($path) {

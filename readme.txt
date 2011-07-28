@@ -61,6 +61,14 @@ Wszystko jest opisane w menu Helion->Pomoc, w panelu administracyjnym twojego bl
 
 W tej chwili wtyczka nie obsługuje jeszcze WordPress MultiSite (sieci blogów), ale planujemy dodać taką możliwość w przyszłości.
 
+= Czy wtyczka może działać na hostingu z ograniczeniami nałożonymi na PHP? =
+
+Wtyczka wykorzystuje funckje, które nie są dostępne na hostingach z włączonym safe mode, a także na hostingach z wyłączonymi niektórymi funkcjami, w tym shell_exec(). Może wtedy pojawić się informacja o błędzie:
+
+`shell_exec() has been disabled for security reasons`
+
+W takiej sytuacji należy poprosić administratora hostingu o włączenie shell_exec() lub zmienić hosting.
+
 = Znalazłem błąd. Gdzie mogę go zgłosić? =
 
 Napisz do autora wtyczki na pawel@paulpela.com
@@ -84,6 +92,9 @@ Napisz do autora wtyczki na pawel@paulpela.com
 = 0.92 =
 * Zabezpieczenie w przypadku, gdy próbujemy pobrać dane dla książki w przygotowaniu.
 
+= 0.93 =
+* Informacja o błędach jeśli wtyczka działa na hostingu z ograniczeniami nałożonymi na PHP (shell_exec()).
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -94,3 +105,6 @@ Poprawione błędy w wyszukiwarce i domyślne style.
 
 = 0.92 =
 Zabezpieczenie w przypadku, gdy próbujemy pobrać dane dla książki w przygotowaniu.
+
+= 0.93 =
+Wtyczka próbuje zadziałać poprawnie na hostingach z ograniczonym PHP lub podaje komunikat o błędzie.
