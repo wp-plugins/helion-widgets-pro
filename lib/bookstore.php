@@ -22,7 +22,6 @@ function helion_bookstore($atts) {
 				$template .= stripslashes(get_option("helion_bookstore_template_category"));
 				$template .= '</div>';
 				$template = helion_parse_category_template($template, $_REQUEST['id'], $_REQUEST['helion_page']);
-				print_r($template);
 				break;
 			case 'book':
 				$dane = helion_get_book_info(h_validate_bookstore($_REQUEST['ksiegarnia']), h_validate_ident($_REQUEST['ident']));
@@ -37,8 +36,8 @@ function helion_bookstore($atts) {
 				break;
 		}
 		
-		
 		return $template;
+		
 	} else {
 		return "<p>Wystąpił błąd. Moduł księgarni nie może odnaleźć danych o książkach z tej księgarni. Sprawdź, czy wybrana przez ciebie księgarnia nie została całkowicie wyłączona w menu Helion->Helion.</p>";
 	}
