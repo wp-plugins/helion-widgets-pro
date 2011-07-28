@@ -69,7 +69,7 @@ informacji znajdziesz na stronie <a href="http://program-partnerski.helion.pl" t
 		<?php if(h_disabled_shell_exec()) { ?>
 		<tr valign="top">
 			<th scope="row"><label for="helion_shell_exec" title="Twój hosting wprowadził ograniczenia, przez co wtyczka może nie działać poprawnie">Ograniczenie PHP:</label></th>
-			<td><span style="font-weight: bold; color: red;">funkcja shell_exec() jest niedostępna</span> (<em>Twój hosting wprowadził ograniczenia, przez co wtyczka może nie działać poprawnie. Poproś administratora o włączenie funckji shell_exec() lub zmień hosting.</em>)</td>
+			<td><span style="font-weight: bold; color: red;">funkcja shell_exec() jest niedostępna</span> (<em>Twój hosting wprowadził ograniczenia, przez co wtyczka może nie działać poprawnie. Poproś administratora o włączenie funkcji shell_exec() lub zmień hosting.</em>)</td>
 		</tr>
 		<?php } ?>
 		<tr valign="top">
