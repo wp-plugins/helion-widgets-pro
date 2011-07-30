@@ -579,7 +579,11 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 				$b[] = $pozycja;
 			}
 			
-			$template = preg_replace("/%kategoria%/", implode("\n", $b), $template);
+			if(is_array($b)) {
+				$template = preg_replace("/%kategoria%/", implode("\n", $b), $template);
+			} else {
+				$template = preg_replace("/%kategoria%/", $b, $template);
+			}
 			
 			$paginacja = '<div class="paginacja">';
 			
