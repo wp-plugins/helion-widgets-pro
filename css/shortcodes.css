@@ -1,0 +1,47 @@
+.helion-ksiazka {
+	background: #d7d7d7;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	padding: 10px;
+	margin: 6px;
+}
+
+.helion-ksiazka .helion_chart a {
+	width: 80%;
+	margin: 6px auto;
+	border: 1px solid #aaa;
+	display: block;
+}
+
+.helion-ksiazka .helion_okladka {
+	margin: 0px auto;
+}
+
+.helion-ksiazka .helion_cena {
+	color: #CC0000;
+	font-family: Georgia,Times New Roman,serif;
+	font-size: 1.7em;
+	font-weight: bold;
+}
+
+.helion-ksiazka .helion-box {
+	background-color: #f0f0f0;
+	border: 1px solid #e1e1e1;
+	display: block;
+	height: 21px;
+	margin: 12px auto;
+	overflow: hidden;
+	padding: 6px;
+	position: relative;
+	width: 185px;
+}
+
+.helion-ksiazka .helion-box a {
+	display: block;
+	width: 74px;
+	text-transform: uppercase;
+	padding: 2px 0px 0px 44px;
+	background: url("../images/koszyk.png") no-repeat;
+	margin: 0px auto;
+}
