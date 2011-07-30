@@ -215,15 +215,15 @@ function helion_setup_cache() {
 	$bookstores = array("helion", "sensus", "onepress", "septem");
 	$covers = array("326x466", "181x236", "125x163", "120x156", "90x119", "88x115", "72x95", "65x85");
 	
-	mkdir(ABSPATH . "wp-content/helion-cache", 0775);
+	@mkdir(ABSPATH . "wp-content/helion-cache", 0775);
 	foreach($bookstores as $bookstore) {
-		mkdir(ABSPATH . "wp-content/helion-cache/" . $bookstore, 0775);
+		@mkdir(ABSPATH . "wp-content/helion-cache/" . $bookstore, 0775);
 		foreach($covers as $cover) {
-			mkdir(ABSPATH . "wp-content/helion-cache/" . $bookstore . "/" . $cover, 0775);
+			@mkdir(ABSPATH . "wp-content/helion-cache/" . $bookstore . "/" . $cover, 0775);
 		}
 	}
 	
-	mkdir(ABSPATH . "wp-content/helion-cache/xml");
+	@mkdir(ABSPATH . "wp-content/helion-cache/xml");
 }
 
 /**
