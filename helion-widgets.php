@@ -132,7 +132,7 @@ function helion_activation() {
 		update_option("helion_bookstore_template_main", $template);
 	}
 		
-	update_option("helion_bookstore_template_category", '%kategoria%');
+	update_option("helion_bookstore_template_category", '%kategoria% %paginacja%');
 	
 	if(!get_option("helion_bookstore_template_book")) {
 	
