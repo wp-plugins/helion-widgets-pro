@@ -110,7 +110,7 @@ function helion_activation() {
 	
 	wp_schedule_single_event(time() + 30 * 24 * 60 * 60, 'helion_reset_cache');
 	
-	helion_clear_bestsellers();
+	@helion_clear_bestsellers();
 	
 	$bs = array("helion","onepress", "sensus", "septem");
 	foreach($bs as $b) {
