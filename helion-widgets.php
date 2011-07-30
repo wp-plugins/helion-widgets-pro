@@ -95,7 +95,7 @@ function helion_install() {
 		dbDelta($sql);
 	}
 	
-	helion_setup_cache();
+	@helion_setup_cache();
 
 }
 
