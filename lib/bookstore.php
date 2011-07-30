@@ -25,7 +25,11 @@ function helion_bookstore($atts) {
 				break;
 			case 'book':
 				$dane = helion_get_book_info(h_validate_bookstore($_REQUEST['ksiegarnia']), h_validate_ident($_REQUEST['ident']));
-				$template .= stripslashes(get_option("helion_bookstore_template_book"));
+				if(empty($dane)) {
+					$template .= "<p>Ta książka nie jest w tej chwili w sprzedaży.</p>";
+				} else {
+					$template .= stripslashes(get_option("helion_bookstore_template_book"));
+				}
 				$template .= '</div>';
 				$template = helion_parse_template($template, $dane);
 				break;
