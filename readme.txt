@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 0.95
+Stable tag: 0.96
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -63,7 +63,7 @@ W tej chwili wtyczka nie obsługuje jeszcze WordPress MultiSite (sieci blogów),
 
 = Czy wtyczka może działać na hostingu z ograniczeniami nałożonymi na PHP? =
 
-Wtyczka wykorzystuje funckje, które nie są dostępne na hostingach z włączonym safe mode, a także na hostingach z wyłączonymi niektórymi funkcjami, w tym shell_exec(). Może wtedy pojawić się informacja o błędzie:
+Wtyczka wykorzystuje funckje, które nie są dostępne na hostingach z włączonym safe mode, a także na hostingach z wyłączonymi niektórymi funkcjami (zwłaszcza darmowych), w tym shell_exec(). Może wtedy pojawić się informacja o błędzie:
 
 `shell_exec() has been disabled for security reasons`
 
@@ -102,6 +102,9 @@ Napisz do autora wtyczki na pawel@paulpela.com
 * Dodałem poprawnie działającą paginację w kategoriach.
 * Poprawiłem kilka drobnych błędów zauważonych przez użytkowników.
 
+= 0.96 =
+* Poprawiłem działanie wtyczki na hostingach z wyłączonym shell_exec().
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -121,3 +124,6 @@ Poprawiony błąd w widgecie Kategorie. Wyłącz i włącz wtyczkę po aktualiza
 
 = 0.95 =
 Dodana paginacja w kategoriach, poprawione błędy. Wyłącz i włącz wtyczkę po aktualizacji!
+
+= 0.96 =
+Poprawione działanie wtyczki na hostingach z wyłączonym shell_exec().
