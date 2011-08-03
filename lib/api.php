@@ -650,7 +650,7 @@ function h_validate_bookstore($bookstore) {
 }
 
 function h_validate_ident($ident) {
-	if(preg_match("/^[A-Za-z0-9]+$/", $ident)) {
+	if(preg_match("/^[A-Za-z0-9_]+$/", $ident)) {
 		return $ident;
 	} else {
 		return false;
