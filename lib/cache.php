@@ -208,12 +208,16 @@ function rrmdir($dir) {
 }
 
 function helion_clear_cache() {
-	$bookstores = array("helion", "sensus", "onepress", "septem");
+	$folders = array("helion", "sensus", "onepress", "septem", "xml");
 	$covers = array("326x466", "181x236", "125x163", "120x156", "90x119", "88x115", "72x95", "65x85");
 	
-	foreach($bookstores as $bookstore) {
-		foreach($covers as $cover) {
-			rrmdir(ABSPATH . "wp-content/helion-cache" . $bookstore . "/" . $cover);
+	foreach($folders as $folder) {
+		if($folder == "xml") {
+			rrmdir(ABSPATH . "wp-content/helion-cache/" . $folder);
+		} else {
+			foreach($covers as $cover) {
+				rrmdir(ABSPATH . "wp-content/helion-cache/" . $folder . "/" . $cover);
+			}
 		}
 	}
 	
