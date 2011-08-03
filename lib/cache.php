@@ -285,8 +285,9 @@ function helion_cron_cache_size() {
 }
 
 function helion_reset_cache() {
-
-	if(helion_get_current_cache_size() >= (int) get_option("helion_cache_user")) {
+	$current = helion_get_current_cache_size();
+	$user = get_option("helion_cache_user");
+	if($current > $user) {
 		helion_clear_cache();
 		helion_setup_cache();
 	}
