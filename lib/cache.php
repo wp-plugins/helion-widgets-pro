@@ -199,7 +199,11 @@ function rrmdir($dir) {
 		$objects = scandir($dir);
 		foreach ($objects as $object) {
 			if($object != "." && $object != "..") {
-				if(filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+				if(filetype($dir . "/" . $object) == "dir") {
+					rmdir($dir . "/" . $object); 
+				} else {
+					unlink($dir . "/" . $object);
+				}
 			}
 		}
 		reset($objects);
@@ -208,20 +212,7 @@ function rrmdir($dir) {
 }
 
 function helion_clear_cache() {
-	$folders = array("helion", "sensus", "onepress", "septem", "xml");
-	$covers = array("326x466", "181x236", "125x163", "120x156", "90x119", "88x115", "72x95", "65x85");
-	
-	foreach($folders as $folder) {
-		if($folder == "xml") {
-			rrmdir(ABSPATH . "wp-content/helion-cache/" . $folder);
-		} else {
-			foreach($covers as $cover) {
-				rrmdir(ABSPATH . "wp-content/helion-cache/" . $folder . "/" . $cover);
-			}
-		}
-	}
-	
-	rrmdir(ABSPATH . "wp-content/helion-cache");
+	rrmdir(ABSPATH . "/wp-content/helion-cache");
 }
 
 function helion_setup_cache() {
@@ -295,7 +286,7 @@ function helion_cron_cache_size() {
 
 function helion_reset_cache() {
 
-	if(helion_get_current_cache_size() > get_option("helion_cache_user")) {
+	if(helion_get_current_cache_size() >= get_option("helion_cache_user")) {
 		helion_clear_cache();
 		helion_setup_cache();
 	}
