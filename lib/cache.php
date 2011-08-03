@@ -200,8 +200,10 @@ function rrmdir($dir) {
 		foreach ($objects as $object) {
 			if($object != "." && $object != "..") {
 				if(filetype($dir . "/" . $object) == "dir") {
-					rmdir($dir . "/" . $object); 
+					chmod($dir . "/" . $object, 0775);
+					rrmdir($dir . "/" . $object); 
 				} else {
+					chmod($dir . "/" . $object, 0664);
 					unlink($dir . "/" . $object);
 				}
 			}
