@@ -280,20 +280,8 @@ function helion_cron_remove_covers() {
 
 }
 
-function helion_cron_cache_size() {
-	update_option("helion_current_cache_size", helion_get_current_cache_size());
-}
 
-function helion_reset_cache() {
-	$current = helion_get_current_cache_size();
-	$user = get_option("helion_cache_user");
-	if($current > $user) {
-		helion_clear_cache();
-		helion_setup_cache();
-	}
-	
-	// sprawdź ponownie za miesiąc
-	wp_schedule_single_event(time() + 30 * 24 * 60 * 60, 'helion_reset_cache');
-}
+
+
 
 ?>
