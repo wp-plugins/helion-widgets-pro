@@ -14,10 +14,10 @@ function helion_get_book_title($bookstore, $ident) {
 }
 
 function helion_detect_connection_method() {
-	if(is_allow_url_fopen_enabled()) {
-		return "fopen";
-	} else if(is_curl_enabled()) {
+	if(is_curl_enabled()) {
 		return "curl";
+	} else if(is_allow_url_fopen_enabled()) {
+		return "fopen";
 	} else {
 		return "none";
 	}
@@ -146,7 +146,7 @@ function is_curl_enabled() {
 function helion_download_file($src, $dest) {
 	switch(helion_detect_connection_method()) {
 		case 'fopen':
-			copy($src, $dest);
+			@copy($src, $dest);
 			return true;
 			break;
 		case 'curl':
