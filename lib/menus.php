@@ -106,6 +106,12 @@ function helion_submenu_cache() {
 	
 	if($_REQUEST['action'] == 'save') {
 		update_option("helion_cache_user", $_REQUEST['helion_cache_user'] * 1024);
+		
+		if($_REQUEST['helion_cache_user'] == 0) {
+			helion_clear_cache();
+			helion_setup_cache();
+		}
+		
 		?>
 		<div id="message" class="updated">
 			<p><strong>Zmiany zostały zapisane.</strong></p>
