@@ -212,7 +212,7 @@ function rrmdir($dir) {
 }
 
 function helion_clear_cache() {
-	rrmdir(ABSPATH . "/wp-content/helion-cache");
+	rrmdir(ABSPATH . "wp-content/helion-cache");
 }
 
 function helion_setup_cache() {
@@ -286,7 +286,7 @@ function helion_cron_cache_size() {
 
 function helion_reset_cache() {
 
-	if(helion_get_current_cache_size() >= get_option("helion_cache_user")) {
+	if(helion_get_current_cache_size() >= (int) get_option("helion_cache_user")) {
 		helion_clear_cache();
 		helion_setup_cache();
 	}
