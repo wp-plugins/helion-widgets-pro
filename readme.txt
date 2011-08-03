@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 0.96
+Stable tag: 0.97
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -105,6 +105,9 @@ Napisz do autora wtyczki na pawel@paulpela.com
 = 0.96 =
 * Poprawiłem działanie wtyczki na hostingach z wyłączonym shell_exec().
 
+= 0.97 =
+* cURL jako domyślna metoda pobierania danych (powinno pewniej działać na niektórych hostingach).
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -127,3 +130,6 @@ Dodana paginacja w kategoriach, poprawione błędy. Wyłącz i włącz wtyczkę 
 
 = 0.96 =
 Poprawione działanie wtyczki na hostingach z wyłączonym shell_exec().
+
+= 0.97 =
+cURL jako domyślna metoda pobierania danych (powinno pewniej działać).
