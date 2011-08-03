@@ -374,7 +374,11 @@ function helion_parse_bookstore_template($template) {
 				$n[] = $pozycja;
 			}
 
-			$template = preg_replace("/%nowosci%/", implode("\n", $n) . '<div class="clear"></div>', $template);
+			if(is_array($n)) {
+				$template = preg_replace("/%nowosci%/", implode("\n", $n), $template);
+			} else {
+				$template = preg_replace("/%nowosci%/", $n, $template);
+			}
 		}
 		
 		if(preg_match("/%bestsellery%/", $template)) {
