@@ -132,7 +132,7 @@ function helion_dirsize($path) {
 		  if ($file != '.' && $file != '..' && !is_link ($nextpath)) {
 			if (is_dir ($nextpath)) {
 				  $dircount++;
-				  $result = getDirectorySize($nextpath);
+				  $result = helion_dirsize($nextpath);
 				  $totalsize += $result['size'];
 				  $totalcount += $result['count'];
 				  $dircount += $result['dircount'];
