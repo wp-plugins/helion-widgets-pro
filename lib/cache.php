@@ -86,7 +86,7 @@ function helion_is_cover_cached($bookstore, $ident, $size) {
  */
 function helion_get_current_cache_size() {
 
-	if(!h_disabled_shell_exec()) {
+	/* if(!h_disabled_shell_exec()) {
 		switch(strtolower(php_uname("s"))) {
 			case 'linux':
 			case 'freebsd':
@@ -99,10 +99,10 @@ function helion_get_current_cache_size() {
 				$current = $total['size'] / 1024;
 				break;
 		}
-	} else {
+	} else { */
 		$total = helion_dirsize(ABSPATH . "wp-content/helion-cache");
 		$current = $total['size'] / 1024;
-	}
+	/* } */
 	
 	return $current;
 }
