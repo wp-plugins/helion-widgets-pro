@@ -66,12 +66,6 @@ z największych i najlepiej ocenianych programów partnerskich w Polsce. Więcej
 informacji znajdziesz na stronie <a href="http://program-partnerski.helion.pl" target="_blank">http://program-partnerski.helion.pl</a></strong>.</p>
 	
 	<table class="form-table">
-		<?php if(h_disabled_shell_exec()) { ?>
-		<tr valign="top">
-			<th scope="row"><label for="helion_shell_exec" title="Twój hosting wprowadził ograniczenia, przez co wtyczka może nie działać poprawnie">Ograniczenie PHP:</label></th>
-			<td><span style="font-weight: bold; color: red;">funkcja shell_exec() jest niedostępna</span> (<em>Twój hosting wprowadził ograniczenia, przez co wtyczka może nie działać poprawnie. Poproś administratora o włączenie funkcji shell_exec() lub zmień hosting.</em>)</td>
-		</tr>
-		<?php } ?>
 		<tr valign="top">
 			<th scope="row"><label for="helion_partner_id" title="Identyfikator partnera zdobędziesz po podpisaniu z księgarnią umowy partnerskiej.">Twój identyfikator partnera:</label></th>
 			<td><input type="text" name="helion_partner_id" value="<?php echo get_option("helion_partner_id"); ?>" /></td>
