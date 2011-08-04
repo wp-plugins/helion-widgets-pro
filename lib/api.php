@@ -237,10 +237,10 @@ function helion_random_bookstore() {
 
 function helion_parse_search($fraza) {
 	global $wpdb;
-	// dopuszczalny tylko jeden typ zapytania
-	// ident, tytul, autor
 	
 	$zapytanie = explode(":", $fraza);
+	
+	$zapytanie[1] = $wpdb->escape($wpdb->like_escape($zapytanie[1]));
 	
 	switch($zapytanie[0]) {
 		case 'ident':
