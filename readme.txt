@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 0.98
+Stable tag: 0.99
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -112,6 +112,9 @@ Napisz do autora wtyczki na pawel@paulpela.com
 * Drobne modyfikacje w mechanizmie cache.
 * Poprawione wyświetlanie ceny w widgecie Książka Dnia
 
+= 0.99 =
+* Poprawione błędy związane z marką Bezdroża.
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -140,3 +143,6 @@ cURL jako domyślna metoda pobierania danych (powinno pewniej działać).
 
 = 0.98 =
 Poprawione wyświetlanie ceny w widgecie Książka Dnia. Drobne poprawki błędów.
+
+= 0.99 =
+Poprawione błędy związane z marką Bezdroża.
