@@ -59,7 +59,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>
 					<?php } ?>
 					<?php if($instance['cena']) { ?>
-					<p class="helion_cena">Cena: <?php echo $book['cenadetaliczna']; ?> zł <del><?php echo $book['cena']; ?> zł</del></p>
+					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł <del><?php echo $book['cenadetaliczna']; ?> zł</del></p>
 					<?php } ?>
 					<p class="helion_znizka"><?php echo $book['znizka']; ?>% taniej!</p>
 					<?php if($instance['dodatkowe']) { ?>

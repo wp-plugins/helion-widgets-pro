@@ -61,7 +61,7 @@ class Helion_Widget_Bestsellers extends WP_Widget {
 						<p class="helion_autor">autor: <?php echo $book['autor']; ?></p>
 					<?php } ?>
 					<?php if($instance['cena']) { ?>
-					<p class="helion_cena">Cena: <?php echo $book['cenadetaliczna']; ?> zł</p>
+					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł</p>
 					<?php } ?>
 					<?php if($instance['dodatkowe']) { ?>
 						<?php 

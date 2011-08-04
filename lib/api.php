@@ -108,7 +108,7 @@ function helion_get_botd($bookstore) {
 			break;
 	}
 	
-	if($description) {
+	if(is_object($description)) {
 	
 		$book['ident'] = strtolower($description->item->attributes()->ident);
 		$book['isbn'] = $description->item->attributes()->isbn;
