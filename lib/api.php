@@ -240,7 +240,7 @@ function helion_parse_search($fraza) {
 	
 	$zapytanie = explode(":", $fraza);
 	
-	$zapytanie[1] = $wpdb->escape($zapytanie[1]);
+	$zapytanie[1] = $wpdb->escape(like_escape($zapytanie[1]));
 	
 	switch($zapytanie[0]) {
 		case 'ident':
