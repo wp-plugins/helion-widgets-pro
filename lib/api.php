@@ -257,6 +257,8 @@ function helion_parse_search($fraza) {
 function helion_wyszukiwarka($fraza) {
 	global $wpdb;
 	
+	$fraza = $wpdb->escape(like_escape($fraza));
+	
 	return $wpdb->get_results("(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%')", ARRAY_A);
 }
 
