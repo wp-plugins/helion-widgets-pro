@@ -1,0 +1,80 @@
+.helion_ksiegarnia .helion-nowosc {
+	width: 44%;
+	float: left;
+	height: 150px;
+	padding: 10px;
+	margin: 0px 10px 10px 0px;
+	border: 1px solid #d7d7d7;
+	font-size: 12px;
+}
+
+.helion_ksiegarnia .helion-bestseller, .helion_ksiegarnia .helion-kategoria {
+	padding: 10px;
+	margin-bottom: 10px;
+	height: 250px;
+	border-bottom: 1px solid #ddd;
+	font-size: 12px;
+}
+
+.helion_ksiegarnia .helion-nowosc > a, .helion_ksiegarnia .helion-bestseller > a {
+	float: left;
+}
+
+.helion_ksiegarnia .info {
+	float: right;
+	width: 68%;
+}
+
+.helion_ksiegarnia .info a {
+	font-weight: bold;
+}
+
+.helion_ksiegarnia .helion-box {
+	background-color: #f0f0f0;
+	border: 1px solid #e1e1e1;
+	display: block;
+	height: 21px;
+	margin: 12px 0px;
+	overflow: hidden;
+	padding: 6px;
+	position: relative;
+	width: 274px;
+	float: right;
+}
+
+.helion-box .helion-cena {
+	float: left;
+	width: 50%;
+	font-weight: bold;
+}
+
+.helion_ksiegarnia .helion-box a {
+	float: right;
+	display: block;
+	width: 33%;
+	text-transform: uppercase;
+	padding: 2px 0px 0px 44px;
+	background: url("../images/koszyk.png") no-repeat;
+}
+
+
+
+
+
+
+.helion_ksiazka .helion-box {
+	background-color: #f0f0f0;
+	border: 1px solid #e1e1e1;
+	display: block;
+	height: 21px;
+	margin: 12px auto;
+	overflow: hidden;
+	padding: 6px;
+	position: relative;
+	width: 274px;
+	float: none;
+}
+
+.helion_widget_kategorie li.n:hover {
+	cursor: pointer;
+}
