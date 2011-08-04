@@ -186,6 +186,12 @@ function helion_marka($cyfra) {
 		case '5':
 			return 'septem';
 			break;
+		case '6':
+			return 'septem';
+			break;
+		case '9':
+			return 'septem';
+			break;
 		case 'helion':
 			return '1';
 			break;
