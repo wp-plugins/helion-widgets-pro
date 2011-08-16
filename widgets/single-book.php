@@ -145,7 +145,7 @@ class Helion_Widget_Single_Book extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'cyfra' ); ?>">Cyfra:</label>
 			<input id="<?php echo $this->get_field_id( 'cyfra' ); ?>" name="<?php echo $this->get_field_name( 'cyfra' ); ?>" value="<?php echo $instance['cyfra']; ?>" class="widefat" />
 		</p>
-		<p><small><strong>Cyfra:</strong> Jest to dodatkowy parametr, dzięki któremu możesz zbadać skuteczność kampanii. Jeśli prowadzisz dwie strony, na jednej możesz ustawić cyfrę 1 a na drugiej cyfrę 2 - gdy ktoś dokona zakupu, wówczas otrzymasz maila w którym oprócz informacji o zakupach zostanie przekazana ta cyfra i będziesz wiedział, z jakiej strony został dokonany zakup. </small></p>
+		<p><small><strong>Cyfra:</strong> Jest to dodatkowy (nieobowiązkowy) parametr, dzięki któremu możesz zbadać skuteczność kampanii. Jeśli prowadzisz dwie strony, na jednej możesz ustawić cyfrę 1 a na drugiej cyfrę 2 - gdy ktoś dokona zakupu, wówczas otrzymasz maila w którym oprócz informacji o zakupach zostanie przekazana ta cyfra i będziesz wiedział, z jakiej strony został dokonany zakup. </small></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'cover' ); ?>">Rozmiar okładki:</label>
 			<select id="<?php echo $this->get_field_id( 'cover' ); ?>" name="<?php echo $this->get_field_name( 'cover' ); ?>" class="widefat" style="width:100%;">

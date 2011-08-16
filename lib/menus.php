@@ -529,6 +529,8 @@ drukowanych oraz 15% w przypadku publikacji elektronicznych.</p>
 		<li><a href="#link">Jak wstawić Link do książki do wpisu?</a></li>
 		<li><a href="#cache">Co to jest cache i jak go używać?</a></li>
 		<li><a href="#wyglad">Chcę zmienić sposób wyświetlania elementów - jak to zrobić?</a></li>
+		<li><a href="#bug">Znalazłem błąd - gdzie mogę go zgłosić?</a></li>
+		<li><a href="#forum">Gdzie znajdę pomoc dotyczącą Programu Partnerskiego i tej wtyczki?</a></li>
 	</ol>
 	
 	<h3 id="wymagania">Jakie są wymagania wtyczki?</h3>
@@ -714,6 +716,16 @@ ich interesują.</p>
 	
 	<h3 id="wyglad">Chcę zmienić sposób wyświetlania elementów - jak to zrobić?</h3>
 	<p>Wtyczka jest wyposażona w domyślny zestaw stylów CSS, dzięki czemu od samego początku wygląd elementów jest już w jakimś stopniu zdefinowany. Jeśli jednak chcesz wprowadzić zmiany, możesz dodać własne style w plikach twojego szablonu, np. za pomocą edytora w menu Wygląd->Edycja. Prawie każdy widget i element posiada własne klasy CSS, dzięki czemu możesz łatwo zapanować nad jego wyglądem. Przydatnym narzędziem w tym przypadku będzie wtyczka Firebug dla przeglądarki Firefox.</p>
+	
+	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	
+	<h3 id="bug">Znalazłem błąd. Gdzie mogę go zgłosić?</h3>
+	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:pawel@paulpela.com?subject=Helion+Widgets+Pro">pawel@paulpela.com</a></p>
+	
+	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	
+	<h3 id="forum">Gdzie znajdę pomoc dotyczącą Programu Partnerskiego i tej wtyczki?</h3>
+	<p>Wszelką pomoc dotyczącą PP Helion znajdziesz na specjalnie do tego celu stworzonym forum pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a></p>
 	
 	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
 </div>

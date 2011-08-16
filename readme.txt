@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 0.99.1
+Stable tag: 1.0.0
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -69,9 +69,13 @@ Wtyczka wykorzystuje funckje, które nie są dostępne na hostingach z włączon
 
 W takiej sytuacji należy poprosić administratora hostingu o włączenie shell_exec() lub zmienić hosting.
 
+= Mam problemy z obsługą wtyczki. Gdzie znajdę pomoc? =
+
+Pomoc znajdziesz, rejestrując się na forum Programu Partnerskiego Helion pod adresem http://program-partnerski.helion.pl/forum/
+
 = Znalazłem błąd. Gdzie mogę go zgłosić? =
 
-Napisz do autora wtyczki na pawel@paulpela.com
+Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Helion pod adresem http://program-partnerski.helion.pl/forum/index.php
 
 == Screenshots ==
 
@@ -120,6 +124,10 @@ Napisz do autora wtyczki na pawel@paulpela.com
 * Podziękowania dla Wiktora za intensywne testy i wyszukiwanie błędów.
 * Dodatkowe zabezpieczenia.
 
+= 1.0.0 =
+* Dodana informacja o znaczeniu nieobowiązkowego parametru cyfra.
+* Dodany link do forum, na którym można otrzymać pomoc w sprawie programu i działania wtyczki
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -154,3 +162,6 @@ Poprawione błędy związane z marką Bezdroża.
 
 = 0.99.1 =
 Usunięto błędy i problemy z zabezpieczeniami.
+
+= 1.0.0 =
+Dodana informacja o znaczeniu parametru cyfra.
