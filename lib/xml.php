@@ -1,4 +1,4 @@
-<?
+<?php
 
 function helion_xml_download($bookstore, $bestseller = false) {
 

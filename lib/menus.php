@@ -16,7 +16,7 @@ function helion_main_options() {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
 	
-	$bookstores = array("helion", "onepress", "sensus", "septem");
+	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint");
 	$old_bookstores = get_option("helion_bookstores");
 	
 	if($_REQUEST['action'] == 'save') {
@@ -55,7 +55,7 @@ function helion_main_options() {
 <div class="wrap">
 	<form method="post">
 	<div id="icon-options-general" class="icon32"></div>
-	<h2>Konfiguracja wtyczki Helion</h3>
+	<h2>Konfiguracja wtyczki Helion</h2>
 	
 	<p>Wzbogać swój serwis o ciekawe treści, które przyciągną do Ciebie klientów! Rozwiń
 skrzydła w e-biznesie i zacznij dobrze zarabiać. Poszerz swoją ofertę o nowości
@@ -91,6 +91,8 @@ informacji znajdziesz na stronie <a href="http://program-partnerski.helion.pl" t
 	<p>Ze względu na to, że dane na temat książek w każdej z księgarń są pobierane do
 lokalnej bazy danych, warto ograniczyć wybór tylko do tych księgarń, z których
 naprawdę zamierzasz korzystać.</p>
+
+<p>W razie problemów np. z brakiem danych na temat książek, możesz zresetować bazy odznaczając wybrane księgarnie, zapisując i ponownie je zaznaczając. Spowoduje to pobranie na nowo danych na temat książek.</p>
 	
 	<input type="hidden" name="action" value="save"/>
 	<p><input type="submit" class="button-primary" value="<?php _e("Save"); ?>"/></p>
@@ -162,7 +164,7 @@ function helion_submenu_losowa_ksiazka() {
 		$wpdb->query("TRUNCATE TABLE " . $wpdb->prefix . "helion_widget_random");
 		if(!empty($_REQUEST['books'])) {
 			foreach($_REQUEST['books'] as $book) {
-				$b = explode("_", $book);
+				$b = explode("-", $book);
 				$wpdb->insert($wpdb->prefix . "helion_widget_random", array("typ" => $b[0], "obiekt" => $b[1]));
 			}
 		}
@@ -271,7 +273,7 @@ function helion_submenu_losowa_ksiazka() {
 						foreach(get_option("helion_bookstores") as $ksiegarnia => $selected) {
 							if($selected) {
 						?>
-							<input type="button" class="cala_ksiegarnia" name="caly_<?php echo $ksiegarnia; ?>" value="+ <?php echo ucfirst($ksiegarnia); ?>" /><br/>
+							<input type="button" class="cala_ksiegarnia" name="caly-<?php echo $ksiegarnia; ?>" value="+ <?php echo ucfirst($ksiegarnia); ?>" /><br/>
 						<?
 							}
 						}
@@ -298,9 +300,9 @@ function helion_submenu_losowa_ksiazka() {
 					$i++;
 				}
 				
-				if($r['typ'] == "helion" || $r['typ'] == "sensus" || $r['typ'] == "onepress" || $r['typ'] == "septem") {
+				if($r['typ'] == "helion" || $r['typ'] == "sensus" || $r['typ'] == "onepress" || $r['typ'] == "septem" || $r['typ'] == "ebookpoint") {
 				?>
-					<span><a class="bookdelete" id="book-check-num-<?php echo $i; ?>">X</a>&nbsp;<code title="<?php echo helion_get_book_title($r['typ'], $r['obiekt']); ?>"><?php echo $r['obiekt']; ?></code><input type="hidden" name="books[]" value="<?php echo $r['typ'] . "_" . $r['obiekt']; ?>"/> </span> 
+					<span><a class="bookdelete" id="book-check-num-<?php echo $i; ?>">X</a>&nbsp;<code title="<?php echo helion_get_book_title($r['typ'], $r['obiekt']); ?>"><?php echo $r['obiekt']; ?></code><input type="hidden" name="books[]" value="<?php echo $r['typ'] . "-" . $r['obiekt']; ?>"/> </span> 
 				<?php
 					$i++;
 				}
@@ -685,7 +687,7 @@ ich interesują.</p>
 	<h3 id="box">Jak wstawić Boks z opisem książki do wpisu?</h3>
 	<p>W każdym wpisie możesz łatwo wstawić Boks z okładką i danymi na temat dowolnej książki. Wystarczy w wybranym przez ciebie miejscu wstawić następujący kod: <code>[helion_ksiazka ksiegarnia="helion" ident="markwy" okladka="120x156" width="250" float="right"]</code>, gdzie dostępne są następujące parametry:</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
-		<li>ksiegarnia: (helion|onepress|sensus|septem) nazwa księgarni, do której należy książka (obowiązkowy)</li>
+		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint) nazwa księgarni, do której należy książka (obowiązkowy)</li>
 		<li>ident: identyfikator książki (obowiązkowy)</li>
 		<li>okladka: rozmiar wyświetlonej w boxie okładki. Możesz wybierać spośród następujących rozmiarów: 326x466, 181x236, 125x163, 120x156, 90x119, 88x115, 72x95 i 65x85. Inne rozmiary nie są dostępne. (opcjonalny, domyślnie 120x156)</li>
 		<li>width: szerokość boxu w pikselach (opcjonalny, domyślnie taki sam jak szerokość okładki, minimum 200px)</li>
@@ -697,7 +699,7 @@ ich interesują.</p>
 	<h3 id="link">Jak wstawić link do książki do wpisu?</h3>
 	<p>Jeżeli znasz parametr ident książki i wiesz, z jakiej księgarni ona pochodzi, możesz z łatwością wstawić do niej link za pomocą następującego kodu: <code>[helion_link ksiegarnia="helion" ident="markwy" cyfra="123"]</code>, gdzie parametry są następujące:</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
-		<li>ksiegarnia: (helion|onepress|sensus|septem) nazwa księgarni (obowiązkowa)</li>
+		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint) nazwa księgarni (obowiązkowa)</li>
 		<li>ident: identyfikator książki (obowiązkowy)</li>
 		<li>cyfra: jest to dodatkowy parametr, dzięki którego możesz zbadać skuteczność kampanii. Jeśli prowadzisz dwie strony, na jednej możesz ustawić cyfrę 1 a na drugiej cyfrę 2 - gdy ktoś dokona zakupu, wówczas otrzymasz maila w którym oprócz informacji o zakupach zostanie przekazana ta cyfra i będziesz wiedział, z jakiej strony został dokonany zakup. (opcjonalna)</li>
 	</ul>

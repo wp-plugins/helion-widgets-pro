@@ -8,15 +8,15 @@ jQuery(document).ready(function() {
 	var i = 0;
 	jQuery(".helion_page_helion_losowa_ksiazka table tbody input[type=button]").live('click', function() {
 		if(jQuery(this).hasClass("cala_ksiegarnia")) {
-			var ks = this.name.split("_");
+			var ks = this.name.split("-");
 			if(jQuery('input[value=' + ks[1] + ']').length == 0) {
 				jQuery("#selected_books .items").append('<span><a class="bookdelete" id="book-check-num-' + i + '">X</a>&nbsp; Cała księgarnia ' + cap(ks[1]) + '<input type="hidden" name="ksiegarnie[]" value="' + ks[1] + '"/> </span> ');
 				i++;
 			}
 		} else {
-			var ks = this.name.split("_");
+			var ks = this.name.split("-");
 			if(jQuery('input[value=' + ks[0] + '_' + ks[1] + ']').length == 0) {
-				jQuery("#selected_books .items").append('<span><a class="bookdelete" id="book-check-num-' + i + '">X</a>&nbsp;<code title="' + ks[2] + '">' + ks[1] + '</code><input type="hidden" name="books[]" value="' + ks[0] + '_' + ks[1] + '"/> </span> ');
+				jQuery("#selected_books .items").append('<span><a class="bookdelete" id="book-check-num-' + i + '">X</a>&nbsp;<code title="' + ks[2] + '">' + ks[1] + '</code><input type="hidden" name="books[]" value="' + ks[0] + '-' + ks[1] + '"/> </span> ');
 				i++;
 			}
 		}

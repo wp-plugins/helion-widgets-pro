@@ -84,7 +84,11 @@ function helion_book_picker() {
 	foreach($rows_ksiazki as $row) { ?>
 	<tr>
 		<td>
-			<input type="button" name="<?php echo helion_marka($row['marka']) . "_" . $row['ident'] . "_" . $row['tytul']; ?>" value="+"/>
+			<?php if(stristr($row['ident'], "_") && $row['marka'] == "1") { ?>
+			<input type="button" name="<?php echo "ebookpoint-" . $row['ident'] . "-" . $row['tytul']; ?>" value="+"/>
+			<?php } else { ?>
+			<input type="button" name="<?php echo helion_marka($row['marka']) . "-" . $row['ident'] . "-" . $row['tytul']; ?>" value="+"/>
+			<?php } ?>
 		</td>
 		<td>
 			<em><?php echo $row['tytul']; ?></em>

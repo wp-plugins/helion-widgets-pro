@@ -244,13 +244,13 @@ function helion_parse_search($fraza) {
 	
 	switch($zapytanie[0]) {
 		case 'ident':
-			return "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena)";
+			return "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint WHERE ident LIKE '%" . $zapytanie[1] . "%' AND cena)";
 			break;
 		case 'autor':
-			return "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena)";
+			return "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint WHERE autor LIKE '%" . $zapytanie[1] . "%' AND cena)";
 			break;
 		case 'tytul':
-			return "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena)";
+			return "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena) UNION (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint WHERE tytul LIKE '%" . $zapytanie[1] . "%' AND cena)";
 	}
 }
 
@@ -259,7 +259,7 @@ function helion_wyszukiwarka($fraza) {
 	
 	$fraza = $wpdb->escape(like_escape($fraza));
 	
-	return $wpdb->get_results("(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%')", ARRAY_A);
+	return $wpdb->get_results("(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%')", ARRAY_A);
 }
 
 function helion_losowe_ksiazki($bookstore = '', $ilosc = 5) {
@@ -650,7 +650,7 @@ function get_slug_by_ID($page_id) {
 }
 
 function h_validate_bookstore($bookstore) {
-	if($bookstore == 'helion' || $bookstore == 'onepress' || $bookstore == 'sensus' || $bookstore == 'septem') {
+	if($bookstore == 'helion' || $bookstore == 'onepress' || $bookstore == 'sensus' || $bookstore == 'septem' || $bookstore == 'ebookpoint') {
 		return $bookstore;
 	} else {
 		return false;

@@ -12,7 +12,7 @@ Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książ
 
 Wzbogać swój serwis o ciekawe treści, które przyciągną do Ciebie klientów! Rozwiń skrzydła w e-biznesie i zacznij dobrze zarabiać. Poszerz swoją ofertę o nowości oraz bestsellery literatury informatycznej, biznesowej, przewodniki turystyczne, beletrystykę oraz poradniki psychologiczne. Pamiętaj książki informatyczne to najlepiej sprzedające się pozycje w sieci!
 
-Program partnerski działa praktycznie bezobsługowo a jego zasady są proste i przejrzyste. Partner może publikować wszystkie informacje o książkach dostępnych w księgarniach Grupy Wydawniczej Helion, a mianowicie: onepress.pl, helion.pl, sensus.pl i septem.pl, w tym fragmentów książek, okładek, filmów video, szczegółowych opisów oraz spisów treści wraz z mechanizmem dodawania książek
+Program partnerski działa praktycznie bezobsługowo a jego zasady są proste i przejrzyste. Partner może publikować wszystkie informacje o książkach dostępnych w księgarniach Grupy Wydawniczej Helion, a mianowicie: onepress.pl, helion.pl, sensus.pl, septem.pl i ebookpoint.pl, w tym fragmentów książek, okładek, filmów video, szczegółowych opisów oraz spisów treści wraz z mechanizmem dodawania książek
 do koszyka.
 
 W zamian za prezentację naszych produktów otrzymasz wynagrodzenie w postaci prowizji od każdego zrealizowanego zakupu w księgarniach za pośrednictwem swojej strony. Prowizja od każdego zrealizowanego zamówienia wynosi 5% dla książek drukowanych oraz 15% w przypadku publikacji elektronicznych.
@@ -128,6 +128,9 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 * Dodana informacja o znaczeniu nieobowiązkowego parametru cyfra.
 * Dodany link do forum, na którym można otrzymać pomoc w sprawie programu i działania wtyczki
 
+= 1.0.1 =
+* Dodana obsługa nowej księgarni ebookpoint.pl
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -165,3 +168,6 @@ Usunięto błędy i problemy z zabezpieczeniami.
 
 = 1.0.0 =
 Dodana informacja o znaczeniu parametru cyfra.
+
+= 1.0.1 =
+Dodana obsługa nowej księgarni ebookpoint.pl
