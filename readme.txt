@@ -1,10 +1,10 @@
 === Helion Widgets Pro ===
 Contributors: paulpela, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
-Tags: helion, sensus, onepress, septem, program partnerski, księgarnia
+Tags: helion, sensus, onepress, septem, ebookpoint, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 1.0.1
+Stable tag: 1.1.1
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -131,6 +131,9 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 = 1.0.1 =
 * Dodana obsługa nowej księgarni ebookpoint.pl
 
+= 1.1.1 =
+* Poprawiona wysokość zniżki dla książki dnia w ebookpoint.pl na 30%
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -171,3 +174,6 @@ Dodana informacja o znaczeniu parametru cyfra.
 
 = 1.0.1 =
 Dodana obsługa nowej księgarni ebookpoint.pl
+
+= 1.1.1 =
+Poprawiona wysokość zniżki dla książki dnia w ebookpoint.pl na 30%
