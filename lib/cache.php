@@ -2,6 +2,11 @@
 
 function helion_get_cover($bookstore, $ident, $size) {
 	
+	if(preg_match("/_ebook$/", $ident)) {
+		$temp_ident = explode("_ebook", $ident);
+		$ident = $temp_ident[0];
+	}
+	
 	$bookstore = h_validate_bookstore($bookstore);
 	$ident = h_validate_ident($ident);
 	$size = h_validate_size($size);
@@ -31,9 +36,9 @@ function helion_get_cover($bookstore, $ident, $size) {
 
 					if($out) {
 						$ch = curl_init();
-						curl_setopt($ch, CURLOPT_FILE, $out);
-						curl_setopt($ch, CURLOPT_HEADER, 0);
-						curl_setopt($ch, CURLOPT_URL, $src);
+						@curl_setopt($ch, CURLOPT_FILE, $out);
+						@curl_setopt($ch, CURLOPT_HEADER, 0);
+						@curl_setopt($ch, CURLOPT_URL, $src);
 						curl_exec($ch);
 						curl_close($ch); 
 						fclose($out);

@@ -59,11 +59,11 @@ function helion_get_book_info($bookstore, $ident) {
 				$cu = curl_init();
 				$curl_get = array("ident" => $ident);
 				$curl_url = "http://" . $bookstore . ".pl/plugins/new/xml/ksiazka.cgi";
-				curl_setopt($cu, CURLOPT_URL, $curl_url); 
-				curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
-				curl_setopt($cu, CURLOPT_GET, 1); 
-				curl_setopt($cu, CURLOPT_GETFIELDS, $curl_get); 
-				$description = @simplexml_load_string(curl_exec($cu));
+				@curl_setopt($cu, CURLOPT_URL, $curl_url); 
+				@curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
+				@curl_setopt($cu, CURLOPT_GET, 1); 
+				@curl_setopt($cu, CURLOPT_GETFIELDS, $curl_get); 
+				$description = @simplexml_load_string(@curl_exec($cu));
 				curl_close($cu);
 				break;
 			default: 
@@ -73,6 +73,9 @@ function helion_get_book_info($bookstore, $ident) {
 		}
 		
 		if(!$description)
+			return false;
+			
+		if(!is_object($description))
 			return false;
 		
 		$book['ident'] = $ident;

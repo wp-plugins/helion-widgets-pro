@@ -6,7 +6,8 @@ function helion_xml_download($bookstore, $bestseller = false) {
 		$source = "http://" . $bookstore . ".pl/plugins/new/xml/top.cgi";
 		$destination = ABSPATH . "/wp-content/helion-cache/xml/bestsellers_" . $bookstore . ".xml";
 	} else {
-		$source = "http://" . $bookstore . ".pl/plugins/xml/lista2.xml";
+		//$source = "http://" . $bookstore . ".pl/plugins/xml/lista2.xml";
+		$source = "http://" . $bookstore . ".pl/xml/produkty-" . $bookstore . ".xml";
 		$destination = ABSPATH . "/wp-content/helion-cache/xml/" . $bookstore . ".xml";
 	}
 	
