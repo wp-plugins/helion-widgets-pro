@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, ebookpoint, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -139,6 +139,9 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 * Poprawiony błąd z wyświetlaniem niektórych okładek
 * Poprawione błędy związane z wyświetlaniem komunikatów przez cURL
 
+= 1.1.3 =
+* Poprawiony błąd wywołujący komunikat w sprawie wpdb::prepare
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -185,3 +188,6 @@ Poprawiona wysokość zniżki dla książki dnia w ebookpoint.pl na 30%
 
 = 1.1.2 =
 Ważne zmiany w umiejscowieniu plików XML na serwerach Helion.
+
+= 1.1.3 =
+Poprawiony błąd dotyczący wpdb::prepare.
