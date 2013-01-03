@@ -3,7 +3,7 @@ Contributors: paulpela, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
 Tags: helion, sensus, onepress, septem, ebookpoint, program partnerski, księgarnia
 Requires at least: 3.1
-Tested up to: 3.2.1
+Tested up to: 3.5
 Stable tag: 1.1.3
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
