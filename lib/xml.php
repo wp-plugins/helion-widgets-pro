@@ -133,13 +133,13 @@ function helion_import_xmls($bestsellers = false) {
 function helion_clear_books_database($bookstore) {
 	global $wpdb;
 	
-	$wpdb->query($wpdb->prepare("TRUNCATE TABLE " . $wpdb->prefix . "helion_books_" . $bookstore));
+	$wpdb->query($wpdb->prepare("TRUNCATE TABLE " . $wpdb->prefix . "helion_books_%s", $bookstore));
 }
 
 function helion_clear_bestsellers() {
 	global $wpdb;
 	
-	$wpdb->query($wpdb->prepare("TRUNCATE TABLE " . $wpdb->prefix . "helion_bestsellers"));
+	$wpdb->query("TRUNCATE TABLE " . $wpdb->prefix . "helion_bestsellers");
 }
 
 function helion_download_bestsellers() {
