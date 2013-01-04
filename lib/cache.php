@@ -240,8 +240,8 @@ function helion_cache_cover_info($bookstore, $ident, $size) {
 	global $wpdb;
 	
 	$result = $wpdb->get_row($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . 
-		"helion_cover_cache WHERE bookstore = $bookstore AND ident = $ident " . 
-		"AND size = $size"), ARRAY_A);
+		"helion_cover_cache WHERE bookstore = %s AND ident = %s " . 
+		"AND size = %s", $bookstore, $ident, $size), ARRAY_A);
 
 	if($result) {
 		return array(

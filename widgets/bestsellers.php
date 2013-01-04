@@ -180,7 +180,7 @@ class Helion_Widget_Bestsellers extends WP_Widget {
 	function random_book($bookstore) {
 		global $wpdb;
 		
-		$book = $wpdb->get_row($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "helion_bestsellers WHERE bookstore = '" . $bookstore . "' ORDER BY RAND() LIMIT 1"), ARRAY_A);
+		$book = $wpdb->get_row($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "helion_bestsellers WHERE bookstore = %s ORDER BY RAND() LIMIT 1", $bookstore), ARRAY_A);
 		
 		return $book;
 	}
