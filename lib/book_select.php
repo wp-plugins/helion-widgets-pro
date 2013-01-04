@@ -28,7 +28,7 @@ function helion_book_picker() {
 		$fraza = helion_parse_search($_REQUEST['fraza']);
 		$rows_ksiazki = $wpdb->get_results($fraza, ARRAY_A);
 	} else {
-		$rows_ksiazki = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE cena AND marka = '1' " . $nazadanie . " LIMIT " . $limit_bottom . "," . $per_page), ARRAY_A);
+		$rows_ksiazki = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE cena AND marka = '1' %s LIMIT %s, %s", $nazadanie, $limit_bottom, $per_page), ARRAY_A);
 	}
 	
 	$wynikow = $wpdb->num_rows;
