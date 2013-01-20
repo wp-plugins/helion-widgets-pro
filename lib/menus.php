@@ -662,7 +662,7 @@ ich interesują.</p>
 		<li><code>%isbn%</code> - numer ISBN, </li>
 		<li><code>%cena%</code> - aktualna cena książki, w tym cena po uwzględnieniu zniżki jeśli taka jest, </li>
 		<li><code>%cenadetaliczna%</code> - normalna cena, przed uwzględnieniem zniżki, </li>
-		<li><code>%znizka%</code> - informacja o wielkości zniżki, </li>
+		<li><code>%znizka%</code> - informacja o wielkości zniżki (w zł), </li>
 		<li><code>%marka%</code> - nazwa księgarni, z której pochodzi książka, </li>
 		<li><code>%format%</code> - format książki,</li> 
 		<li><code>%liczbastron%</code> - liczba stron, </li>
