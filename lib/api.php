@@ -373,7 +373,7 @@ function helion_parse_bookstore_template($template) {
 				$pozycja .= '<div class="helion-box">';
 				
 				if($nowosc['znizka']) {
-					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł (-' . $nowosc['znizka'] . ')</div>';
+					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł (-' . $nowosc['znizka'] . 'zł)</div>';
 				} else {
 					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł</div>';
 				}
@@ -429,7 +429,7 @@ function helion_parse_bookstore_template($template) {
 				$pozycja .= '<div class="helion-box">';
 				
 				if($bestseller['znizka']) {
-					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł (-' . $bestseller['znizka'] . ')</div>';
+					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł (-' . $bestseller['znizka'] . 'zł)</div>';
 				} else {
 					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł</div>';
 				}
@@ -582,7 +582,7 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 				$pozycja .= '<div class="helion-box">';
 				
 				if($ksiazka['znizka']) {
-					$pozycja .= '<div class="helion-cena">' . $ksiazka['cena'] . ' zł (-' . $ksiazka['znizka'] . ')</div>';
+					$pozycja .= '<div class="helion-cena">' . $ksiazka['cena'] . ' zł (-' . $ksiazka['znizka'] . 'zł)</div>';
 				} else {
 					$pozycja .= '<div class="helion-cena">' . $ksiazka['cena'] . ' zł</div>';
 				}
