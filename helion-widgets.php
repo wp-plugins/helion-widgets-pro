@@ -3,7 +3,7 @@
 	Plugin Name: Helion Widgets Pro
 	Plugin URI: http://wordpress.org/extend/plugins/helion-widgets-pro/
 	Description: Widgety i Księgarnia dla uczestników Programu Partnerskiego GW Helion.
-	Version: 1.1.6
+	Version: 1.1.7
 	Author: Paweł Pela
 	Author URI: http://paulpela.com/
 	License: GPL2
@@ -115,6 +115,7 @@ function helion_activation() {
 	
 	$bs = array("helion","onepress", "sensus", "septem", "ebookpoint");
 	foreach($bs as $b) {
+		@helion_clear_books_database($b);
 		@helion_xml_download($b, true);
 		@helion_xml_import($b, true);
 	}
@@ -159,7 +160,6 @@ function helion_deactivation() {
 	
 	$timestamp = wp_next_scheduled('helion_reset_cache');
     wp_unschedule_event($timestamp, 'helion_reset_cache');
-	
 }
 
 register_activation_hook(__FILE__, 'helion_activation');
