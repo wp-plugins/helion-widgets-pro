@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, ebookpoint, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.5
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -154,6 +154,10 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 = 1.1.7 =
 * Poprawiono problem z czyszczeniem bazy
 
+
+= 1.1.8 =
+* Zmieniona funkcja odpowiedzialna za czyszczenie bazy
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -215,3 +219,6 @@ Zmiana sposobu wyświetlania zniżki
 
 = 1.1.7 =
 Poprawiono problem z czyszczeniem bazy
+
+= 1.1.8 =
+Zmieniona funkcja odpowiedzialna za czyszczenie bazy
