@@ -28,6 +28,29 @@ function helion_xml_remove($bookstore, $bestseller = false) {
 	}
 }
 
+function helion_clear_books_database($bookstore) {
+	global $wpdb;
+	
+//	$wpdb->query($wpdb->prepare("TRUNCATE TABLE " . $wpdb->prefix . "helion_books_%s", $bookstore));
+	$wpdb->query($wpdb->prepare("DELETE FROM %s", $wpdb->prefix . "helion_books_" . $bookstore . " WHERE 1"));
+}
+
+function helion_clear_bestsellers() {
+	global $wpdb;
+	
+	//$wpdb->query("TRUNCATE TABLE " . $wpdb->prefix . "helion_bestsellers");
+	$wpdb->query("DELETE FROM " . $wpdb->prefix . "helion_bestsellers WHERE 1");
+}
+
+function helion_download_bestsellers() {
+	return helion_download_xmls(true);
+}
+
+function helion_import_bestsellers() {
+	return helion_import_xmls(true);
+}
+
+
 /**
  * Funkcja dla cronjob
  *
@@ -59,6 +82,7 @@ function helion_xml_import($bookstore, $bestseller = false) {
 		}
 	} else {
 		if(is_readable(ABSPATH . "/wp-content/helion-cache/xml/" . $bookstore . ".xml")) {
+			helion_clear_books_database($bookstore);
 			$xml = simplexml_load_file(ABSPATH . "/wp-content/helion-cache/xml/" . $bookstore . ".xml");
 			foreach($xml->lista->ksiazka as $ksiazka) {
 				$k['ident'] = strtolower($ksiazka->ident);
@@ -128,26 +152,6 @@ function helion_import_xmls($bestsellers = false) {
 			}
 		}
 	}
-}
-
-function helion_clear_books_database($bookstore) {
-	global $wpdb;
-	
-	$wpdb->query($wpdb->prepare("TRUNCATE TABLE " . $wpdb->prefix . "helion_books_%s", $bookstore));
-}
-
-function helion_clear_bestsellers() {
-	global $wpdb;
-	
-	$wpdb->query("TRUNCATE TABLE " . $wpdb->prefix . "helion_bestsellers");
-}
-
-function helion_download_bestsellers() {
-	return helion_download_xmls(true);
-}
-
-function helion_import_bestsellers() {
-	return helion_import_xmls(true);
 }
 
 ?>
