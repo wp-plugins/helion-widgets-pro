@@ -32,13 +32,14 @@ function helion_clear_books_database($bookstore) {
 	global $wpdb;
 	
 //	$wpdb->query($wpdb->prepare("TRUNCATE TABLE " . $wpdb->prefix . "helion_books_%s", $bookstore));
-	$wpdb->query($wpdb->prepare("DELETE FROM %s", $wpdb->prefix . "helion_books_" . $bookstore));
+	$wpdb->query($wpdb->prepare("DELETE FROM %s", $wpdb->prefix . "helion_books_" . $bookstore . " WHERE 1"));
 }
 
 function helion_clear_bestsellers() {
 	global $wpdb;
 	
-	$wpdb->query("TRUNCATE TABLE " . $wpdb->prefix . "helion_bestsellers");
+	//$wpdb->query("TRUNCATE TABLE " . $wpdb->prefix . "helion_bestsellers");
+	$wpdb->query("DELETE FROM " . $wpdb->prefix . "helion_bestsellers WHERE 1");
 }
 
 function helion_download_bestsellers() {
