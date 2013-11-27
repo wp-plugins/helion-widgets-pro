@@ -3,9 +3,10 @@
 	Plugin Name: Helion Widgets Pro
 	Plugin URI: http://wordpress.org/extend/plugins/helion-widgets-pro/
 	Description: Widgety i Księgarnia dla uczestników Programu Partnerskiego GW Helion.
-	Version: 1.1.9
+	Version: 1.2.0
 	Author: Paweł Pela
 	Author URI: http://paulpela.com/
+        Author: Marek Dzimiera
 	License: GPL2
 */
 
@@ -20,7 +21,7 @@ add_action("update_plugin_complete_actions", "helion_install");
 function helion_install() {
 	global $wpdb;
 	
-	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint");
+	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint", "bezdroza");
 	
 	foreach($bookstores as $bookstore) {
 		$table_name = $wpdb->prefix . "helion_books_" . $bookstore;
@@ -113,7 +114,7 @@ function helion_activation() {
 	
 	@helion_clear_bestsellers();
 	
-	$bs = array("helion","onepress", "sensus", "septem", "ebookpoint");
+	$bs = array("helion","onepress", "sensus", "septem", "ebookpoint", "bezdroza");
 	foreach($bs as $b) {
 		@helion_clear_books_database($b);
 		@helion_xml_download($b, true);
@@ -176,7 +177,7 @@ register_uninstall_hook(__FILE__, "helion_uninstall");
 function helion_uninstall() {
 	global $wpdb;
 	
-	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint");
+	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint", "bezdroza");
 	
 	foreach($bookstores as $bookstore) {
 		$xml_table = $wpdb->prefix . "helion_books_" . $bookstore;
