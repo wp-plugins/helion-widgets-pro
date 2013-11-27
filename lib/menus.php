@@ -16,7 +16,7 @@ function helion_main_options() {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
 	
-	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint");
+	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza");
 	$old_bookstores = get_option("helion_bookstores");
 	
 	if($_REQUEST['action'] == 'save') {
@@ -33,7 +33,7 @@ function helion_main_options() {
 				$new_bookstores[$bookstore] = 1;
 			} else {
 				if($old_bookstores[$bookstore] == 1) {
-					helion_clear_books_database($bookstore);
+                                    helion_clear_books_database($bookstore);
 				}
 				helion_clear_random_on_disable($bookstore);
 				
