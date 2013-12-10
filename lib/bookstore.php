@@ -9,7 +9,6 @@ function helion_ksiegarnia_styl() {
 
 add_shortcode('helion_ksiegarnia', 'helion_bookstore');
 
-// TODO: jeśli np helion_bookstore_template_category == null, użyj domyślnego
 function helion_bookstore($atts) {
 
 	global $wpdb;
@@ -19,7 +18,11 @@ function helion_bookstore($atts) {
 
 		switch($_REQUEST['helion_bookstore']) {
 			case 'category':
-				$template .= stripslashes(get_option("helion_bookstore_template_category"));
+                                if(get_option("helion_bookstore_template_category") == NULL)
+                                    $template .= "%kategoria% %paginacja%"; // jesli opcja null ustaw domyslnie
+                                else
+                                    $template .= stripslashes(get_option("helion_bookstore_template_category"));
+                                
 				$template .= '</div>';
 				$template = helion_parse_category_template($template, $_REQUEST['id'], $_REQUEST['helion_page']);
 				break;
