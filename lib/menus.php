@@ -16,7 +16,7 @@ function helion_main_options() {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
 	
-	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint");
+	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza");
 	$old_bookstores = get_option("helion_bookstores");
 	
 	if($_REQUEST['action'] == 'save') {
@@ -33,7 +33,7 @@ function helion_main_options() {
 				$new_bookstores[$bookstore] = 1;
 			} else {
 				if($old_bookstores[$bookstore] == 1) {
-					helion_clear_books_database($bookstore);
+                                    helion_clear_books_database($bookstore);
 				}
 				helion_clear_random_on_disable($bookstore);
 				
@@ -504,7 +504,7 @@ najlepiej sprzedające się pozycje w sieci!</p>
 	
 	<p>Program partnerski działa praktycznie bezobsługowo, a jego zasady są proste i
 przejrzyste. Partner może publikować wszystkie informacje o książkach dostępnych
-w księgarniach Grupy Wydawniczej Helion, a mianowicie: <a href="http://www.onepress.pl" target="_blank">onepress.pl</a>, <a href="http://www.helion.pl" target="_blank">helion.pl</a>, <a href="http://www.sensus.pl" target="_blank">sensus.pl</a> i <a href="http://www.septem.pl" target="_blank">septem.pl</a>, w tym fragmenty książek, okładki, filmy wideo, szczegółowe
+w księgarniach Grupy Wydawniczej Helion, a mianowicie: <a href="http://www.onepress.pl" target="_blank">onepress.pl</a>, <a href="http://www.helion.pl" target="_blank">helion.pl</a>, <a href="http://www.sensus.pl" target="_blank">sensus.pl</a>, <a href="http://www.septem.pl" target="_blank">septem.pl</a>, <a href="http://www.bezdroza.pl" target="_blank">bezdroza.pl</a> i <a href="http://www.ebookpoint.pl" target="_blank">ebookpoint.pl</a>, w tym fragmenty książek, okładki, filmy wideo, szczegółowe
 opisy oraz spisy treści wraz z mechanizmem dodawania książek do koszyka.</p>
 	
 	<p>W zamian za prezentację naszych produktów otrzymasz wynagrodzenie w postaci

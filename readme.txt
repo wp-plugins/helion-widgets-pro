@@ -1,10 +1,10 @@
 === Helion Widgets Pro ===
-Contributors: paulpela, Grupa Wydawnicza Helion
+Contributors: paulpela, Grupa Wydawnicza Helion, mdzimiera
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
-Tags: helion, sensus, onepress, septem, ebookpoint, program partnerski, księgarnia
+Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.5
-Stable tag: 1.1.9
+Stable tag: 1.2.1
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -162,6 +162,16 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 = 1.1.9 =
 * Dodatkowe zmiany w funkcji odpowiedzialnej za czyszczenie bazy
 
+
+= 1.2.0 =
+* Dodano markę Bezdroża
+* Nie wyświetlaj rabatu, gdy zniżka == 0
+* Poprawa przy usuwaniu wszystkich wierszy danej tabeli (marki)
+
+= 1.2.1 =
+* Gdy brak ustawienia dot. kategorii, użyj domyślnego
+* Dodano brakujący parametr przy czyszczeniu bazy
+ 
 == Upgrade Notice ==
 
 = 0.90 =
@@ -229,3 +239,9 @@ Zmieniona funkcja odpowiedzialna za czyszczenie bazy
 
 = 1.1.9 =
 Poprawione czyszczenie bazy
+
+= 1.2.0 =
+Dodano markę Bezdroża
+
+= 1.2.1 =
+Gdy brak ustawienia dot. kategorii, użyj domyślnego

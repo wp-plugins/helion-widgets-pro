@@ -190,8 +190,11 @@ function helion_marka($cyfra) {
 			return 'septem';
 			break;
 		case '6':
-			return 'septem';
+			return 'bezdroza';
 			break;
+                case '7':
+                        return 'bezdroza';
+                        break;
 		case '9':
 			return 'septem';
 			break;
@@ -210,6 +213,9 @@ function helion_marka($cyfra) {
 		case 'septem':
 			return '5';
 			break;
+                case 'bezdroza':
+                        return '6';
+                        break;
 		default:
 			return $cyfra;
 			break;
@@ -346,7 +352,7 @@ function helion_parse_bookstore_template($template) {
 	if($ksiegarnia = h_validate_bookstore(get_option("helion_bookstore_ksiegarnia"))) {
 	
 		if(preg_match("/%nowosci%/", $template)) {
-			$nowosci = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc AND marka = " . helion_marka($ksiegarnia) . " ORDER BY RAND() LIMIT 4", ARRAY_A);
+			$nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc AND marka = " . helion_marka($ksiegarnia) . " ORDER BY RAND() LIMIT 4", ARRAY_A);
 			
 			foreach($nowosci as $nowosc) {
 				$okladka = helion_get_cover($ksiegarnia, $nowosc['ident'], "72x95");
@@ -372,7 +378,7 @@ function helion_parse_bookstore_template($template) {
 				$pozycja .= '<div class="clear"></div>';
 				$pozycja .= '<div class="helion-box">';
 				
-				if($nowosc['znizka']) {
+				if($nowosc['znizka'] > 0) {
 					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł (-' . $nowosc['znizka'] . 'zł)</div>';
 				} else {
 					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł</div>';
@@ -428,7 +434,7 @@ function helion_parse_bookstore_template($template) {
 				$pozycja .= '<div class="clear"></div>';
 				$pozycja .= '<div class="helion-box">';
 				
-				if($bestseller['znizka']) {
+				if($bestseller['znizka'] > 0) {
 					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł (-' . $bestseller['znizka'] . 'zł)</div>';
 				} else {
 					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł</div>';
@@ -653,7 +659,7 @@ function get_slug_by_ID($page_id) {
 }
 
 function h_validate_bookstore($bookstore) {
-	if($bookstore == 'helion' || $bookstore == 'onepress' || $bookstore == 'sensus' || $bookstore == 'septem' || $bookstore == 'ebookpoint') {
+	if($bookstore == 'helion' || $bookstore == 'onepress' || $bookstore == 'sensus' || $bookstore == 'septem' || $bookstore == 'ebookpoint' || $bookstore == 'bezdroza') {
 		return $bookstore;
 	} else {
 		return false;
