@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.5
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -174,6 +174,12 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 
 = 1.2.2 =
 * Poprawiono problem z kategoriami w bezdrożach
+
+= 1.2.3 =
+* Zmiana pobierania nowości - według daty wydania
+* Zmiana pobierania bestsellerów
+* Rozwiazanie problemu związanego z wyświetlaniem nowości w ebookpoint
+* Rozwiązanie problemu z wyświetlaniem pozycji kategorii eBooki
  
 == Upgrade Notice ==
 
@@ -251,3 +257,9 @@ Gdy brak ustawienia dot. kategorii, użyj domyślnego
 
 = 1.2.2 =
 Poprawiono problem z kategoriami w bezdrożach
+
+= 1.2.3 =
+Zmiana pobierania nowości - według daty wydania
+Zmiana pobierania bestsellerów
+Rozwiazanie problemu związanego z wyświetlaniem nowości w ebookpoint
+Rozwiązanie problemu z wyświetlaniem pozycji kategorii eBooki
