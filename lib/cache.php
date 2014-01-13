@@ -21,6 +21,12 @@ function helion_get_cover($bookstore, $ident, $size) {
 	} else {
 		$src = "http://$bookstore.pl/okladki/$size/$ident.jpg";
 		if(get_option("helion_current_cache_size") <= get_option("helion_cache_user")) {
+                    
+                    // w przypadku braku katalogu stworz go
+                    if(!is_dir(ABSPATH . "wp-content/helion-cache/$bookstore/$size")){
+                        mkdir(ABSPATH . "wp-content/helion-cache/$bookstore/$size", 0775, true);
+                    }
+                    
 			switch(helion_detect_connection_method()) {
 				case 'fopen':
 					if(copy($src, 

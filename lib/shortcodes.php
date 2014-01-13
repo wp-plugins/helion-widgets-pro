@@ -129,7 +129,7 @@ function helion_wyniki_wyszukiwania() {
 	$slug = get_option("helion_wyszukiwarka_slug");
 	
 	if($_REQUEST['helion_wyszukiwarka']) {
-	
+            
 		$template = '<div class="helion_wyszukiwarka_wyniki">';
 		
 		$template .= stripslashes(get_option("helion_wyszukiwarka_template"));

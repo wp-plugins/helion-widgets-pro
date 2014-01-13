@@ -53,11 +53,13 @@ class Helion_Widget_Kategorie extends WP_Widget {
                                        
                                         # sprawdzamy czy istnieje chociaz jeden podelement
                                         $pod_exist = false;
-                                        foreach($lista['pod'] as $id => $pod) {
-                                                    if(key($pod) == $id_nad) {
-                                                        $pod_exist = true;
-                                                        break;
-                                                    }
+                                        if($nad != 'eBooki'){
+                                            foreach($lista['pod'] as $id => $pod) {
+                                                        if(key($pod) == $id_nad) {
+                                                            $pod_exist = true;
+                                                            break;
+                                                        }
+                                            }
                                         }
 
                                         if($pod_exist){

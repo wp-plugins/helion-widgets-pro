@@ -198,6 +198,12 @@ function helion_marka($cyfra) {
 		case '9':
 			return 'septem';
 			break;
+                case '11':
+                        return 'bezdroza';
+                        break;
+                case '13':
+                        return 'ebookpoint';
+                        break;
 		case 'helion':
 			return '1';
 			break;
@@ -352,6 +358,9 @@ function helion_parse_bookstore_template($template) {
 
 	global $wpdb;
 	
+        $nowosci = array();
+        $bestsellery = array();
+        
 	if($ksiegarnia = h_validate_bookstore(get_option("helion_bookstore_ksiegarnia"))) {
 
 		if(preg_match("/%nowosci%/", $template)) {
