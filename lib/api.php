@@ -181,7 +181,7 @@ function helion_marka($cyfra) {
 			return 'onepress';
 			break;
 		case '3':
-			return 'editio';
+			return 'onepress';
 			break;
 		case '4':
 			return 'sensus';
@@ -210,7 +210,7 @@ function helion_marka($cyfra) {
 		case 'onepress':
 			return '2';
 			break;
-		case 'editio':
+		case 'onepress':
 			return '3';
 			break;
 		case 'sensus':

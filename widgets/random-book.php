@@ -196,6 +196,7 @@ class Helion_Widget_Random_Book extends WP_Widget {
 			case 'onepress':
 			case 'sensus':
 			case 'septem':
+                        case 'bezdroza':    
 			case 'ebookpoint':
 				return array("bookstore" => $random['typ'], "ident" => $random['obiekt']);
 				break;
