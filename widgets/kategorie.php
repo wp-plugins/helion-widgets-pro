@@ -23,7 +23,7 @@ class Helion_Widget_Kategorie extends WP_Widget {
 		extract( $args );
 		
 		$bookstore = h_validate_bookstore(get_option("helion_bookstore_ksiegarnia"));
-		
+
 		if(!$bookstore) {
 			echo $before_widget;
 			echo $before_title . $instance['title'] . $after_title;
@@ -35,9 +35,9 @@ class Helion_Widget_Kategorie extends WP_Widget {
 		
 			echo $before_widget;
 			echo $before_title . $instance['title'] . $after_title;
-			
+
 			$lista = helion_get_kategorie($bookstore);
-			
+
 			$slug = get_option("helion_bookstore_slug");
 			
 			if($slug) {
@@ -50,17 +50,37 @@ class Helion_Widget_Kategorie extends WP_Widget {
 			
 			if(count($lista['pod']) > 0) {
 				foreach($lista['nad'] as $id_nad => $nad) {
-					echo '<li class="n">' . $nad;
-					echo '<ul class="pod">';
+                                       
+                                        # sprawdzamy czy istnieje chociaz jeden podelement
+                                        $pod_exist = false;
+                                        if($nad != 'eBooki'){
+                                            foreach($lista['pod'] as $id => $pod) {
+                                                        if(key($pod) == $id_nad) {
+                                                            $pod_exist = true;
+                                                            break;
+                                                        }
+                                            }
+                                        }
+
+                                        if($pod_exist){
+                                            echo '<li class="n">' . $nad;
+                                            echo '<ul class="pod">';
+
+                                            foreach($lista['pod'] as $id => $pod) {
+                                                    if(key($pod) == $id_nad) {
+                                                            echo '<li><a href="' . $home . "&id=" . $id . '">' . $pod[key($pod)] .'</a></li>';
+                                                    }
+                                            }
+
+                                            echo '</ul>';
+                                            echo '</li>';
+                                            
+                                        }else{
+                                            
+                                            echo '<li class="n"><a href="' . $home . "&id=" . $id_nad . '">' . $nad . '</a></li>';
+                                            
+                                        }
 					
-					foreach($lista['pod'] as $id => $pod) {
-						if(key($pod) == $id_nad) {
-							echo '<li><a href="' . $home . "&id=" . $id . '">' . $pod[key($pod)] .'</a></li>';
-						}
-					}
-					
-					echo '</ul>';
-					echo '</li>';
 				}
 			} else {
 				foreach($lista['nad'] as $id_nad => $nad) {
