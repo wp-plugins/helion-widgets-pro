@@ -181,7 +181,7 @@ function helion_marka($cyfra) {
 			return 'onepress';
 			break;
 		case '3':
-			return 'editio';
+			return 'onepress';
 			break;
 		case '4':
 			return 'sensus';
@@ -198,13 +198,19 @@ function helion_marka($cyfra) {
 		case '9':
 			return 'septem';
 			break;
+                case '11':
+                        return 'bezdroza';
+                        break;
+                case '13':
+                        return 'ebookpoint';
+                        break;
 		case 'helion':
 			return '1';
 			break;
 		case 'onepress':
 			return '2';
 			break;
-		case 'editio':
+		case 'onepress':
 			return '3';
 			break;
 		case 'sensus':
@@ -215,6 +221,9 @@ function helion_marka($cyfra) {
 			break;
                 case 'bezdroza':
                         return '6';
+                        break;
+                case 'ebookpoint':
+                        return '0';
                         break;
 		default:
 			return $cyfra;
@@ -268,7 +277,7 @@ function helion_wyszukiwarka($fraza) {
 	
 	$fraza = $wpdb->escape(like_escape($fraza));
 	
-	return $wpdb->get_results("(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%')", ARRAY_A);
+	return $wpdb->get_results("(SELECT * FROM " . $wpdb->prefix . "helion_books_helion WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%') UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_bezdroza WHERE ident LIKE '%" . $fraza . "%' OR isbn LIKE '%" . $fraza . "%' OR tytul LIKE '%" . $fraza . "%' OR tytul_orig LIKE '%" . $fraza . "%' OR autor LIKE '%" . $fraza . "%')", ARRAY_A);
 }
 
 function helion_losowe_ksiazki($bookstore = '', $ilosc = 5) {
@@ -349,11 +358,20 @@ function helion_parse_bookstore_template($template) {
 
 	global $wpdb;
 	
+        $nowosci = array();
+        $bestsellery = array();
+        
 	if($ksiegarnia = h_validate_bookstore(get_option("helion_bookstore_ksiegarnia"))) {
-	
+
 		if(preg_match("/%nowosci%/", $template)) {
-			$nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc AND marka = " . helion_marka($ksiegarnia) . " ORDER BY RAND() LIMIT 4", ARRAY_A);
-			
+                        $marka = helion_marka($ksiegarnia);
+                        
+                        // w przypadku ebookpoint nie bierzemy po uwage marki
+                        if($marka == '0')
+                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia ." WHERE nowosc = true ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
+                        else
+                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc = true AND marka = " . helion_marka($ksiegarnia) . " ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
+
 			foreach($nowosci as $nowosc) {
 				$okladka = helion_get_cover($ksiegarnia, $nowosc['ident'], "72x95");
 				$dokoszyka = helion_get_link($ksiegarnia, $nowosc['ident'], null, true);
@@ -402,7 +420,7 @@ function helion_parse_bookstore_template($template) {
 			$bs_table = $wpdb->prefix . "helion_bestsellers";
 			$ks_table = $wpdb->prefix . "helion_books_" . $ksiegarnia;
 			
-			$sql = "SELECT * FROM $bs_table, $ks_table WHERE ($bs_table.ident = $ks_table.ident) AND $bs_table.bookstore = '" . $ksiegarnia . "' ORDER BY RAND() LIMIT 10";
+			$sql = "SELECT * FROM $bs_table, $ks_table WHERE ($bs_table.ident = $ks_table.ident) AND $bs_table.bookstore = '" . $ksiegarnia . "' ORDER BY $bs_table.id ASC LIMIT 10";
 			
 			$bestsellery = $wpdb->get_results($sql, ARRAY_A);
 			
@@ -530,7 +548,7 @@ function helion_get_kategorie($bookstore) {
 function helion_parse_category_template($template, $kategoria, $page = 0) {
 
 	$kategoria = h_validate_catid($kategoria);
-	
+
 	if($page) {
 		$page = h_validate_page($page);
 		if($page == false) return "<p>Nieprawidłowy numer strony.</p>";
@@ -555,9 +573,16 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 	}
 	
 	if($ksiegarnia = h_validate_bookstore(get_option("helion_bookstore_ksiegarnia"))) {
-		
+	
+            $lista = helion_get_kategorie($ksiegarnia); // kategorie danej marki
+            
 		if(preg_match("/%kategoria%/", $template)) {
 	
+                    // jesli kategoria ebooki, pobierz ident like '%_ebook'
+                    // TODO trzeba rozwiazac to inaczej
+                    if($lista['nad'][$kategoria] == 'eBooki')
+                        $sql = "SELECT * FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND ident LIKE '%_ebook' LIMIT " . $p . ", 10";
+                    else
 			$sql = "SELECT * FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND serietematyczne LIKE '%id=\"" . $kategoria . "\"%' LIMIT " . $p . ", 10";
 			
 			$dane = $wpdb->get_results($sql, ARRAY_A);
@@ -612,7 +637,10 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 				$paginacja .= '<div class="poprzednia"><a href="' . $home_url . '?helion_bookstore=category&id=' . $kategoria . '&helion_page=' . ($page - 1) . '">&laquo; Poprzednia strona</a></div>';
 			}
 			
-			$sql2 = "SELECT COUNT(*) FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND serietematyczne LIKE '%id=\"" . $kategoria . "\"%'";
+                        if($lista['nad'][$kategoria] == 'eBooki')
+                            $sql2 = "SELECT COUNT(*) FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND ident LIKE '%_ebook'";
+                        else
+                            $sql2 = "SELECT COUNT(*) FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND serietematyczne LIKE '%id=\"" . $kategoria . "\"%'";
 			
 			$ilosc_wynikow = $wpdb->get_var($sql2);
 
@@ -714,6 +742,34 @@ function helion_clear_random_on_disable($bookstore) {
 	global $wpdb;
 	
 	$wpdb->query("DELETE FROM " . $wpdb->prefix . "helion_widget_random WHERE typ = '" . $bookstore . "' OR (typ = 'ksiegarnia' AND obiekt = '" . $bookstore . "')");
+}
+
+/**
+ * 
+ * 
+ * 
+ * @global type $wpdb
+ * @param type $ident
+ * @return type
+ */
+function helion_get_book_by_ident($ident) {
+	
+        global $wpdb;
+        
+        $sql = "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_bezdroza "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1)";
+        
+	return $wpdb->get_results($sql, ARRAY_A);
 }
 
 ?>

@@ -129,12 +129,26 @@ function helion_wyniki_wyszukiwania() {
 	$slug = get_option("helion_wyszukiwarka_slug");
 	
 	if($_REQUEST['helion_wyszukiwarka']) {
-	
+            
 		$template = '<div class="helion_wyszukiwarka_wyniki">';
 		
 		$template .= stripslashes(get_option("helion_wyszukiwarka_template"));
 		
-		$wynik = helion_wyszukiwarka($_REQUEST['helion_wyszukiwarka']);
+                # jesli sa wylistowane wyniki, to przy 'helion_wyszukiwarka' podany jest ident
+                if(!$_REQUEST['helion_serp']){
+                    
+                    # walidacja id pozycji
+                    if(h_validate_ident($_REQUEST['helion_wyszukiwarka'])){
+
+                        $wynik = helion_get_book_by_ident($_REQUEST['helion_wyszukiwarka']);
+                        
+                    }
+                    
+                }else{
+		
+                    $wynik = helion_wyszukiwarka($_REQUEST['helion_wyszukiwarka']);
+                    
+                }
 		
 		if(!$_REQUEST['helion_serp'] && $wynik) {
 
