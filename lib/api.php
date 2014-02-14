@@ -744,4 +744,32 @@ function helion_clear_random_on_disable($bookstore) {
 	$wpdb->query("DELETE FROM " . $wpdb->prefix . "helion_widget_random WHERE typ = '" . $bookstore . "' OR (typ = 'ksiegarnia' AND obiekt = '" . $bookstore . "')");
 }
 
+/**
+ * 
+ * 
+ * 
+ * @global type $wpdb
+ * @param type $ident
+ * @return type
+ */
+function helion_get_book_by_ident($ident) {
+	
+        global $wpdb;
+        
+        $sql = "(SELECT * FROM " . $wpdb->prefix . "helion_books_helion "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_onepress "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_sensus "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_septem "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_ebookpoint "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1) "
+                . "UNION DISTINCT (SELECT * FROM " . $wpdb->prefix . "helion_books_bezdroza "
+                . "WHERE ident LIKE '%" . $ident . "%' LIMIT 1)";
+        
+	return $wpdb->get_results($sql, ARRAY_A);
+}
+
 ?>
