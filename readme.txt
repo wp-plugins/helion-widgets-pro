@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 3.5
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -75,7 +75,7 @@ Pomoc znajdziesz, rejestrując się na forum Programu Partnerskiego Helion pod a
 
 = Znalazłem błąd. Gdzie mogę go zgłosić? =
 
-Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Helion pod adresem http://program-partnerski.helion.pl/forum/index.php
+Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP Helion pod adresem http://program-partnerski.helion.pl/forum/index.php
 
 == Screenshots ==
 
@@ -193,6 +193,9 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 = 1.2.6 =
 * Poprawiono problem z wyszukiwarką (linki w wynikach prowadziły do złej pozycji)
 
+= 1.2.7 =
+* Aktualizacja FAQ
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -287,3 +290,6 @@ Losowa książka - dodanie marki bezdroża
 
 = 1.2.6 =
 Poprawiono problem z wyszukiwarką (linki w wynikach prowadziły do złej książki)
+
+= 1.2.7 =
+Aktualizacja FAQ
