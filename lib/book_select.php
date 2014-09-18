@@ -130,7 +130,7 @@ function helion_book_picker() {
 <?php } ?>
 </div>
 
-<?
+<?php
 	if($_REQUEST['ajax']) {
 		die();
 	}
