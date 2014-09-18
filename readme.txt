@@ -1,10 +1,10 @@
 === Helion Widgets Pro ===
-Contributors: paulpela, Grupa Wydawnicza Helion, mdzimiera
+Contributors: mdzimiera, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
-Tested up to: 3.5
-Stable tag: 1.2.7
+Tested up to: 4.0
+Stable tag: 1.2.8
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -21,9 +21,9 @@ Już teraz zapoznaj się z Programem Partnerskim na stronie http://program-partn
 
 Wtyczka pozwala na:
 
-*  	umieszczanie na blogu widgetów z książkami (wybrane książki, książka dnia, bestsellery, wyszukiwarka)
-*   łatwe umieszczanie informacji o książkach i linków we wpisach
-*   stworzenie na blogu własnej księgarni zawierającej wszystkie pozycje z dowolnej księgarni GW Helion
+*  umieszczanie na blogu widgetów z książkami (wybrane książki, książka dnia, bestsellery, wyszukiwarka)
+*  łatwe umieszczanie informacji o książkach i linków we wpisach
+*  stworzenie na blogu własnej księgarni zawierającej wszystkie pozycje z dowolnej księgarni GW Helion
 
 == Installation ==
 
@@ -196,6 +196,11 @@ Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP He
 = 1.2.7 =
 * Aktualizacja FAQ
 
+= 1.2.8 =
+* Zmiany odnośnie curl
+* zmiany odnośnie nie zamkniętych tagów
+* Zmiany odnośnie widoku nowości
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -293,3 +298,8 @@ Poprawiono problem z wyszukiwarką (linki w wynikach prowadziły do złej ksią�
 
 = 1.2.7 =
 Aktualizacja FAQ
+
+= 1.2.8 = 
+Pobieranie pozycji przy wyborze marki
+Poprawa działania curl
+Poprawa widoku nowości, dodanie brakujących atrybutów

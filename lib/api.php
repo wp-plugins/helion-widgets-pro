@@ -154,13 +154,21 @@ function helion_download_file($src, $dest) {
 			break;
 		case 'curl':
 			$out = fopen($dest, 'wb');
-
+                    
 			if($out) {
 				$ch = curl_init();
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+                                curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+                                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   
+                                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 				curl_setopt($ch, CURLOPT_FILE, $out);
 				curl_setopt($ch, CURLOPT_HEADER, 0);
 				curl_setopt($ch, CURLOPT_URL, $src);
-				curl_exec($ch);
+                                if(curl_exec($ch) === false){
+                                    
+                                }else{
+                                    
+                                }
 				curl_close($ch); 
 				fclose($out);
 			}
@@ -368,12 +376,12 @@ function helion_parse_bookstore_template($template) {
                         
                         // w przypadku ebookpoint nie bierzemy po uwage marki
                         if($marka == '0')
-                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia ." WHERE nowosc = true ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
+                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka, opis FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia ." WHERE nowosc = true ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
                         else
-                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc = true AND marka = " . helion_marka($ksiegarnia) . " ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
+                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka, opis FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc = true AND marka = " . helion_marka($ksiegarnia) . " ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
 
 			foreach($nowosci as $nowosc) {
-				$okladka = helion_get_cover($ksiegarnia, $nowosc['ident'], "72x95");
+				$okladka = helion_get_cover($ksiegarnia, $nowosc['ident'], "125x163");
 				$dokoszyka = helion_get_link($ksiegarnia, $nowosc['ident'], null, true);
 				$ksiazka = get_bloginfo("home") . '/' . get_option("helion_bookstore_slug") . '/?helion_bookstore=book&ksiegarnia=' . $ksiegarnia . '&ident=' . $nowosc['ident'];
 				
@@ -391,7 +399,7 @@ function helion_parse_bookstore_template($template) {
 				} else {
 					$pozycja .= '<span>Autor: ' . substr($nowosc['autor'], 0, 46) . '...</span>';
 				}
-				
+				$pozycja .= '<p>' . helion_snippet(strip_tags($nowosc['opis']), 324, "...") . '</p>';
 				$pozycja .= '</div>';
 				$pozycja .= '<div class="clear"></div>';
 				$pozycja .= '<div class="helion-box">';
@@ -402,7 +410,7 @@ function helion_parse_bookstore_template($template) {
 					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł</div>';
 				}
 				
-				$pozycja .= '<a href="' . $dokoszyka . '">kup teraz</a>';
+				$pozycja .= '<a href="' . $dokoszyka . '" title="Kup teraz">kup teraz</a>';
 				$pozycja .= '</div>';
 				$pozycja .= '</div>';
 				
@@ -458,7 +466,7 @@ function helion_parse_bookstore_template($template) {
 					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł</div>';
 				}
 				
-				$pozycja .= '<a href="' . $dokoszyka . '">kup teraz</a>';
+				$pozycja .= '<a href="' . $dokoszyka . '" title="Kup teraz">kup teraz</a>';
 				$pozycja .= '</div>';
 				$pozycja .= '</div>';
 				
