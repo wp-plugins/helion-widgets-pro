@@ -61,7 +61,9 @@ class Helion_Widget_BOTD extends WP_Widget {
 					<?php if($instance['cena']) { ?>
 					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł <del><?php echo $book['cenadetaliczna']; ?> zł</del></p>
 					<?php } ?>
+                                        <?php if($instance['roznica']){?>
 					<p class="helion_znizka">O <?php echo $book['cenadetaliczna'] - $book['cena']; ?>zł taniej!</p>
+                                        <?php }?>
 					<?php if($instance['dodatkowe']) { ?>
 						<?php 
 							if($book['nowosc']) {
@@ -110,6 +112,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 		$instance['bookstore'] = strip_tags( $new_instance['bookstore'] );
 		$instance['koszyk'] = strip_tags( $new_instance['koszyk'] );
 		$instance['przycisk'] = strip_tags( $new_instance['przycisk'] );
+                $instance['roznica'] = strip_tags( $new_instance['roznica'] );
 
 		return $instance;
 	}
@@ -165,6 +168,9 @@ class Helion_Widget_BOTD extends WP_Widget {
 			<br/>
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'cena' ); ?>" name="<?php echo $this->get_field_name( 'cena' ); ?>" <?php if($instance['cena']) echo $checked; ?> />
 			<label for="<?php echo $this->get_field_id( 'cena' ); ?>">Wyświetlać cenę książki?</label>
+			<br/>
+                        <input type="checkbox" id="<?php echo $this->get_field_id( 'roznica' ); ?>" name="<?php echo $this->get_field_name( 'roznica' ); ?>" <?php if($instance['roznica']) echo $checked; ?> />
+			<label for="<?php echo $this->get_field_id( 'roznica' ); ?>">Wyświetlać różnicę cenową?</label>
 			<br/>
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'dodatkowe' ); ?>" name="<?php echo $this->get_field_name( 'dodatkowe' ); ?>" <?php if($instance['dodatkowe']) echo $checked; ?> />
 			<label for="<?php echo $this->get_field_id( 'dodatkowe' ); ?>">Wyświetlać dodatkowe informacje o książce (nowość, bestseller itp.)?</label>
