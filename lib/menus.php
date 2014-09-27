@@ -725,7 +725,7 @@ ich interesują.</p>
 	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="bug">Znalazłem błąd. Gdzie mogę go zgłosić?</h3>
-	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:pawel@paulpela.com?subject=Helion+Widgets+Pro">pawel@paulpela.com</a></p>
+	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:mdzimiera@helion.pl?subject=Helion+Widgets+Pro">mdzimiera@helion.pl</a></p>
 	
 	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
 	
