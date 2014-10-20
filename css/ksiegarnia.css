@@ -1,4 +1,4 @@
-.helion_ksiegarnia .helion-nowosc {
+/*.helion_ksiegarnia .helion-nowosc {
 	width: 44%;
 	float: left;
 	height: 150px;
@@ -6,9 +6,11 @@
 	margin: 0px 10px 10px 0px;
 	border: 1px solid #d7d7d7;
 	font-size: 12px;
-}
+}*/
 
-.helion_ksiegarnia .helion-bestseller, .helion_ksiegarnia .helion-kategoria {
+.helion_ksiegarnia .helion-bestseller, 
+.helion_ksiegarnia .helion-kategoria, 
+.helion_ksiegarnia .helion-nowosc {
 	padding: 10px;
 	margin-bottom: 10px;
 	height: 250px;

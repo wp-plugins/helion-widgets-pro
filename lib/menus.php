@@ -15,6 +15,8 @@ function helion_main_options() {
 	if (!current_user_can('manage_options'))  {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
+        
+        global $wpdb;
 	
 	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza");
 	$old_bookstores = get_option("helion_bookstores");
@@ -24,11 +26,12 @@ function helion_main_options() {
 		
 		foreach($bookstores as $bookstore) {
 			if($_REQUEST['ksiegarnia_' . $bookstore] == "on") {
-				// Pobierz bazę na nowo tylko jeśli księgarnia nie była wcześniej wybrana
-				if($old_bookstores[$bookstore] == 0) {
-					helion_xml_download($bookstore);
-					helion_xml_import($bookstore);
-				}
+                            // Pobierz bazę na nowo tylko jeśli księgarnia nie była wcześniej wybrana
+                            $result = $wpdb->get_row("SELECT COUNT(id) as count FROM " . $wpdb->prefix . "helion_books_" . $bookstore);
+                            if($old_bookstores[$bookstore] == 0 || $result->count == 0) {
+                                helion_xml_download($bookstore);
+                                helion_xml_import($bookstore);
+                            }
 				
 				$new_bookstores[$bookstore] = 1;
 			} else {
@@ -44,7 +47,7 @@ function helion_main_options() {
 		
 		helion_download_bestsellers();
 		helion_import_bestsellers();
-					
+	
 		?>
 		<div id="message" class="updated">
 			<p><strong>Zmiany zostały zapisane.</strong></p>
@@ -274,7 +277,7 @@ function helion_submenu_losowa_ksiazka() {
 							if($selected) {
 						?>
 							<input type="button" class="cala_ksiegarnia" name="caly-<?php echo $ksiegarnia; ?>" value="+ <?php echo ucfirst($ksiegarnia); ?>" /><br/>
-						<?
+						<?php
 							}
 						}
 					?>
@@ -722,7 +725,7 @@ ich interesują.</p>
 	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="bug">Znalazłem błąd. Gdzie mogę go zgłosić?</h3>
-	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:pawel@paulpela.com?subject=Helion+Widgets+Pro">pawel@paulpela.com</a></p>
+	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:mdzimiera@helion.pl?subject=Helion+Widgets+Pro">mdzimiera@helion.pl</a></p>
 	
 	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
 	

@@ -22,9 +22,17 @@ function helion_xml_download($bookstore, $bestseller = false) {
 
 function helion_xml_remove($bookstore, $bestseller = false) {
 	if($bestseller) {
+            if(file_exists(ABSPATH . "/wp-content/helion-cache/xml/bestsellers_" . $bookstore . ".xml")){
 		return unlink(ABSPATH . "/wp-content/helion-cache/xml/bestsellers_" . $bookstore . ".xml");
+            }else{
+                return false;
+            }
 	} else {
+            if(file_exists(ABSPATH . "/wp-content/helion-cache/xml/" . $bookstore . ".xml")){
 		return unlink(ABSPATH . "/wp-content/helion-cache/xml/" . $bookstore . ".xml");
+            }else{
+                return false;
+            }
 	}
 }
 
