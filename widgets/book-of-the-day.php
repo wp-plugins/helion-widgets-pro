@@ -47,13 +47,13 @@ class Helion_Widget_BOTD extends WP_Widget {
 				echo $before_title . $instance['title'] . $after_title;
 				?>
 				<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
-					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>">
+					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>" rel="nofollow">
 						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
 					</a>
 				</div>
 				<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
 					<?php if($instance['tytul']) { ?>
-					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank"><?php echo $tytul; ?></a></p>
+					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank" rel="nofollow"><?php echo $tytul; ?></a></p>
 					<?php } ?>
 					<?php if($instance['autor']) { ?>
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>
@@ -84,7 +84,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 						?>
 					<?php } ?>
 					<?php if($instance['przycisk']) { ?>
-						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>">kup teraz</a></div>
+						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>" rel="nofollow">kup teraz</a></div>
 					<?php } ?>
 				</div>
 				<?php
