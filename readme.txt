@@ -1,10 +1,10 @@
 === Helion Widgets Pro ===
-Contributors: paulpela, Grupa Wydawnicza Helion, mdzimiera
+Contributors: paulpela, mdzimiera, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
-Tested up to: 3.5
-Stable tag: 1.2.6
+Tested up to: 4.0
+Stable tag: 1.3.3
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -21,9 +21,9 @@ Już teraz zapoznaj się z Programem Partnerskim na stronie http://program-partn
 
 Wtyczka pozwala na:
 
-*  	umieszczanie na blogu widgetów z książkami (wybrane książki, książka dnia, bestsellery, wyszukiwarka)
-*   łatwe umieszczanie informacji o książkach i linków we wpisach
-*   stworzenie na blogu własnej księgarni zawierającej wszystkie pozycje z dowolnej księgarni GW Helion
+*  umieszczanie na blogu widgetów z książkami (wybrane książki, książka dnia, bestsellery, wyszukiwarka)
+*  łatwe umieszczanie informacji o książkach i linków we wpisach
+*  stworzenie na blogu własnej księgarni zawierającej wszystkie pozycje z dowolnej księgarni GW Helion
 
 == Installation ==
 
@@ -75,7 +75,7 @@ Pomoc znajdziesz, rejestrując się na forum Programu Partnerskiego Helion pod a
 
 = Znalazłem błąd. Gdzie mogę go zgłosić? =
 
-Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Helion pod adresem http://program-partnerski.helion.pl/forum/index.php
+Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP Helion pod adresem http://program-partnerski.helion.pl/forum/index.php
 
 == Screenshots ==
 
@@ -193,6 +193,32 @@ Napisz do autora wtyczki na pawel@paulpela.com lub zaloguj się na forum  PP Hel
 = 1.2.6 =
 * Poprawiono problem z wyszukiwarką (linki w wynikach prowadziły do złej pozycji)
 
+= 1.2.7 =
+* Aktualizacja FAQ
+
+= 1.2.8 =
+* Zmiany odnośnie curl
+* zmiany odnośnie nie zamkniętych tagów
+* Zmiany odnośnie widoku nowości
+
+= 1.2.9 =
+* Poprawiono wyświetlanie opcji "Kup teraz"
+* Dodano opcję w widgecie "Książka dnia"
+
+= 1.3.0 =
+* Zmiana adresu email
+
+= 1.3.1 =
+* Sprawdzaj czy plik istnieje przed usunięciem
+
+= 1.3.2 =
+* Dodanie atrybutu rel="nofollow" do linków
+
+= 1.3.3 =
+* Widget Helion Serie
+* Poprawki przy wyświetlaniu stronicowania
+* Poprawki przy kategoriach
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -287,3 +313,29 @@ Losowa książka - dodanie marki bezdroża
 
 = 1.2.6 =
 Poprawiono problem z wyszukiwarką (linki w wynikach prowadziły do złej książki)
+
+= 1.2.7 =
+Aktualizacja FAQ
+
+= 1.2.8 = 
+Pobieranie pozycji przy wyborze marki
+Poprawa działania curl
+Poprawa widoku nowości, dodanie brakujących atrybutów
+
+= 1.2.9 =
+Poprawiono wyświetlanie opcji "Kup teraz"
+Dodano opcję w widgecie "Książka dnia"
+
+= 1.3.0 =
+Zmiana adresu email
+
+= 1.3.1 =
+Sprawdzaj czy plik istnieje przed usunięciem (warning)
+
+= 1.3.2 =
+Dodanie atrybutu rel="nofollow" do linków
+
+= 1.3.3 =
+Widget Helion Serie
+Poprawki przy wyświetlaniu stronicowania
+Poprawki przy kategoriach
