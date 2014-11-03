@@ -73,19 +73,19 @@ function helion_ksiazka($atts) {
 
 		$cont = '<div class="helion-ksiazka ' . "helion-ksiazka-" . $ksiegarnia . "-" . $ident . ' ' . $float . '" style="width: ' . $width . 'px">';
 		$cont .= '<div class="helion_okladka" style="width: ' . $wymiary[0] . 'px;">';
-		$cont .= '<p><a href="' . $link . '" target="_blank" title="' . $tytul . '">';
+		$cont .= '<p><a href="' . $link . '" target="_blank" title="' . $tytul . '" rel="nofollow">';
 		$cont .= '<img src="' . $okladka['src'] . '" alt="' . $okladka['alt'] . '" />';
 		$cont .= '</a></p>';
 		$cont .= '</div>';
 		$cont .= '<div class="helion_meta">';
-		$cont .= '<p class="helion_tytul"><a href="' . $link . '" target="_blank">' . $tytul . '</a></p>';
+		$cont .= '<p class="helion_tytul"><a href="' . $link . '" target="_blank" rel="nofollow">' . $tytul . '</a></p>';
 		$cont .= '<p class="helion_autor">autor: ' . $autor . '</p>';
 		$cont .= '<p class="helion_isbn">ISBN: ' . $book['isbn'] . '</p>';
 		$cont .= '<p class="helion_format">Format: ' . $book['format'] . ', stron: ' . $book['liczbastron'] . '</p>';
 		$cont .= '<p class="helion_data">Data wydania: ' . $book['datawydania'] . '</p>';
 		$cont .= '<p class="helion_cena">Cena: ' . $book['cenadetaliczna'] . 'zł</p>';
 		$cont .= '<div class="helion-box">';
-		$cont .= '<a href="' . $link . '">kup teraz</a>';
+		$cont .= '<a href="' . $link . '" rel="nofollow">kup teraz</a>';
 		$cont .= '</div>';
 		$cont .= '</div>';
 		$cont .= '</div>';
@@ -113,9 +113,9 @@ function helion_link($atts, $content = null) {
 		$link = helion_get_link($ksiegarnia, $ident, $cyfra);
 		
 		if($content) {
-			$cont = '<a href="' . $link . '" target="_blank" title="' . $book['tytul'] . '">' . $content . '</a>';
+			$cont = '<a href="' . $link . '" target="_blank" title="' . $book['tytul'] . '" rel="nofollow">' . $content . '</a>';
 		} else {
-			$cont = '<a href="' . $link . '" target="_blank" title="' . $book['tytul'] . '">' . $book['tytul'] . '</a>';
+			$cont = '<a href="' . $link . '" target="_blank" title="' . $book['tytul'] . '" rel="nofollow">' . $book['tytul'] . '</a>';
 		}
 		
 		return $cont;
@@ -168,7 +168,7 @@ function helion_wyniki_wyszukiwania() {
 			
 			foreach($wynik as $w) {
 				if(!in_array($w['ident'], $dup_idents)) {
-					$lista_wynikow .= '<li><a href="' . $slug . '/?helion_wyszukiwarka=' . $w['ident'] . '">' . $w['autor'] . " - " . $w['tytul'] . '</a></li>';
+					$lista_wynikow .= '<li><a href="' . $slug . '/?helion_wyszukiwarka=' . $w['ident'] . '" rel="nofollow">' . $w['autor'] . " - " . $w['tytul'] . '</a></li>';
 					$dup_idents[] = $w['ident'];
 				}
 			}
@@ -190,7 +190,7 @@ function helion_wyniki_wyszukiwania() {
 			
 			foreach($losowe as $l) {
 				if(!in_array($l['ident'], $dup_idents)) {
-					$output .= '<li><a href="' . $slug . '/?helion_wyszukiwarka=' . $l['ident'] . '">' . $l['autor'] . " - " . $l['tytul'] . '</a></li>';
+					$output .= '<li><a href="' . $slug . '/?helion_wyszukiwarka=' . $l['ident'] . '" rel="nofollow">' . $l['autor'] . " - " . $l['tytul'] . '</a></li>';
 					$dup_idents[] = $l['ident'];
 				}
 			}
@@ -213,7 +213,7 @@ function helion_wyniki_wyszukiwania() {
 		
 		foreach($losowe as $l) {
 			if(!in_array($l['ident'], $dup_idents)) {
-				$output .= '<li><a href="' . $slug . '/?helion_wyszukiwarka=' . $l['ident'] . '">' . $l['autor'] . " - " . $l['tytul'] . '</a></li>';
+				$output .= '<li><a href="' . $slug . '/?helion_wyszukiwarka=' . $l['ident'] . '" rel="nofollow">' . $l['autor'] . " - " . $l['tytul'] . '</a></li>';
 				$dup_idents[] = $l['ident'];
 			}
 		}

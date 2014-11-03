@@ -36,7 +36,7 @@ function helion_book_picker() {
 ?>
 <div class="helion-select-navi">
 <?php if($paged > 0 && !$_REQUEST['fraza']) { ?>
-	<a class="prev">&laquo;</a>
+	<a class="prev" rel="nofollow">&laquo;</a>
 <?php } else if(!$_REQUEST['fraza']) { ?>
 	<span class="empty">&laquo;</span>
 <?php } ?>
@@ -54,7 +54,7 @@ function helion_book_picker() {
 <?php */ ?>	
 
 <?php if(!$_REQUEST['fraza']) { ?>
-	<a class="next">&raquo;</a>
+	<a class="next" rel="nofollow">&raquo;</a>
 <?php } ?>
 </div>
 <table class="widefat" id="tabela_wyboru">
@@ -120,17 +120,17 @@ function helion_book_picker() {
 <?php if(!$_REQUEST['fraza']) { ?>
 <div class="helion-select-navi">
 <?php if($paged > 0) { ?>
-	<a class="prev">&laquo;</a>
+	<a class="prev" rel="nofollow">&laquo;</a>
 <?php } else { ?>
 	<span class="empty">&laquo;</span>
 <?php }} ?>
 
 <?php if(!$_REQUEST['fraza']) { ?>
-	<a class="next">&raquo;</a>
+	<a class="next" rel="nofollow">&raquo;</a>
 <?php } ?>
 </div>
 
-<?
+<?php
 	if($_REQUEST['ajax']) {
 		die();
 	}
