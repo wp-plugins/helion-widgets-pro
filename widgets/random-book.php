@@ -61,13 +61,13 @@ class Helion_Widget_Random_Book extends WP_Widget {
 				echo $before_title . $instance['title'] . $after_title;
 				?>
 				<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
-					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>">
+					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>" rel="nofollow">
 						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
 					</a>
 				</div>
 				<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
 					<?php if($instance['tytul']) { ?>
-					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank"><?php echo $tytul; ?></a></p>
+					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank" rel="nofollow"><?php echo $tytul; ?></a></p>
 					<?php } ?>
 					<?php if($instance['autor']) { ?>
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>
@@ -95,7 +95,7 @@ class Helion_Widget_Random_Book extends WP_Widget {
 						?>
 					<?php } ?>
 					<?php if($instance['przycisk']) { ?>
-						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>">kup teraz</a></div>
+						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>" rel="nofollow">kup teraz</a></div>
 					<?php } ?>
 				</div>
 				<?php
@@ -126,7 +126,7 @@ class Helion_Widget_Random_Book extends WP_Widget {
 		$selected = ' selected="selected" ';
 		$checked = ' checked="checked" ';
 		?>
-		<p><small>Książki, które mają być wyświetlane w tym widgecie wybiera się w menu <a href="<?php bloginfo("home"); ?>/wp-admin/admin.php?page=helion_losowa_ksiazka">Helion - Losowa książka</a>.</small></p>
+		<p><small>Książki, które mają być wyświetlane w tym widgecie wybiera się w menu <a href="<?php bloginfo("home"); ?>/wp-admin/admin.php?page=helion_losowa_ksiazka" rel="nofollow">Helion - Losowa książka</a>.</small></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Tytuł:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" class="widefat" />
