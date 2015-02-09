@@ -80,13 +80,19 @@ function helion_xml_import($bookstore, $bestseller = false) {
             if(file_exists($filename)){
 		if(is_readable($filename)) {
                     if(filesize($filename) > 0){
-                        if(($xml = simplexml_load_file($filename) !== false)){
+                        if(($xml = simplexml_load_file($filename)) !== false){    
                             foreach($xml as $ksiazka) {
-                                    $k['ident'] = strtolower($ksiazka->attributes()->ID);
-                                    $k['bookstore'] = $bookstore;
-                                    $wpdb->insert($wpdb->prefix . "helion_bestsellers", $k);
+                                $k['ident'] = strtolower($ksiazka->attributes()->ID);
+                                $k['bookstore'] = $bookstore;
+                                $wpdb->insert($wpdb->prefix . "helion_bestsellers", $k);
                             }
+                        }else{
+                            // wrong xml structure
+                            return false;
                         }
+                    }else{
+                        // empty file
+                        return false;
                     }
                     helion_xml_remove($bookstore, true);
 		} else {
@@ -138,7 +144,11 @@ function helion_xml_import($bookstore, $bestseller = false) {
 
                                     $wpdb->insert($wpdb->prefix . "helion_books_" . $bookstore, $k);
                             }
+                        }else{
+                            return false;
                         }
+                    }else{
+                        return false;
                     }
                     helion_xml_remove($bookstore);
 		} else {

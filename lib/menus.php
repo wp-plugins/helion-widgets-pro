@@ -96,7 +96,14 @@ lokalnej bazy danych, warto ograniczyć wybór tylko do tych księgarń, z któr
 naprawdę zamierzasz korzystać.</p>
 
 <p>W razie problemów np. z brakiem danych na temat książek, możesz zresetować bazy odznaczając wybrane księgarnie, zapisując i ponownie je zaznaczając. Spowoduje to pobranie na nowo danych na temat książek.</p>
-	
+<?php 
+    if(!is_writable(ABSPATH . "/wp-content/helion-cache")) {
+        echo '<p class="error">Brak wystarczających uprawnień do utworzenia katalogu <b>"helion-cache"</b>. Nadaj odpowiednie uprawnienia dla katalogu <b>"wp-content"</b></p>';
+    }
+    if(!extension_loaded("simplexml")){
+        echo '<p class="error">Brak zainstalowanego rozszerzenia <b>"simplexml"</b>. Zgłoś prośbę do administratora o dodanie rozszerzenia.</p>';
+    }
+?>
 	<input type="hidden" name="action" value="save"/>
 	<p><input type="submit" class="button-primary" value="<?php _e("Save"); ?>"/></p>
 	</form>
@@ -385,7 +392,7 @@ function helion_submenu_ksiegarnia() {
 			<th scope="row"><label for="helion_bookstore_template_main">Wygląd strony głównej: </label></th>
 			<td><textarea name="helion_bookstore_template_main" cols="68" rows="12"><?php echo stripslashes(get_option("helion_bookstore_template_main")); ?></textarea>
 			<br/>
-			<p>Dostępne znaczniki: <code>%nowosci%</code>, <code>%bestsellery%</code>. Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>" rel="nofollow">dziale pomocy</a>.</p>
+                        <p>Dostępne znaczniki: <code>%nowosci%</code>, <code>%bestsellery%</code>, <code>%polecane%</code>. Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>" rel="nofollow">dziale pomocy</a>.</p>
 			</td>
 		</tr>
 		<tr valign="top">
@@ -682,6 +689,7 @@ ich interesują.</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
 		<li><code>%nowosci%</code> - wyświetla 4 boxy z losowo wybranymi nowymi książkami w ofercie, </li>
 		<li><code>%bestsellery%</code> - wyświetla listę 10 losowo wybranych bestsellerów</li>
+                <li><code>%polecane%</code> - wyświetla listę 10 wybranych pozycji ustalonych w widgecie "Losowa książka"</li>
 	</ul>
 	
 	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>

@@ -366,6 +366,7 @@ function helion_parse_bookstore_template($template) {
 
 	global $wpdb;
 	
+        $polecane = array();
         $nowosci = array();
         $bestsellery = array();
         
@@ -395,9 +396,9 @@ function helion_parse_bookstore_template($template) {
 				}
 				
 				if(strlen($nowosc['autor']) <= 46) {
-					$pozycja .= '<span>Autor: ' . $nowosc['autor'] . '</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . $nowosc['autor'] . '</p>';
 				} else {
-					$pozycja .= '<span>Autor: ' . substr($nowosc['autor'], 0, 46) . '...</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . substr($nowosc['autor'], 0, 46) . '...</p>';
 				}
 				$pozycja .= '<p>' . helion_snippet(strip_tags($nowosc['opis']), 324, "...") . '</p>';
 				$pozycja .= '</div>';
@@ -450,9 +451,9 @@ function helion_parse_bookstore_template($template) {
 				}
 				
 				if(strlen($bestseller['autor']) <= 46) {
-					$pozycja .= '<span>Autor: ' . $bestseller['autor'] . '</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . $bestseller['autor'] . '</p>';
 				} else {
-					$pozycja .= '<span>Autor: ' . substr($bestseller['autor'], 0, 46) . '...</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . substr($bestseller['autor'], 0, 46) . '...</p>';
 				}
 				
 				$pozycja .= '<p>' . helion_snippet(strip_tags($bestseller['opis']), 324, "...") . '</p>';				
@@ -477,6 +478,57 @@ function helion_parse_bookstore_template($template) {
 				$template = preg_replace("/%bestsellery%/", implode("\n", $b), $template);
 			} else {
 				$template = preg_replace("/%bestsellery%/", $b, $template);
+			}
+		}
+                
+                if(preg_match("/%polecane%/", $template)) {
+                    $polecane = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix . "helion_widget_random limit 10", ARRAY_A);
+                        
+                    foreach($polecane as $key => $value) {
+                            
+                        $book = $wpdb->get_row("SELECT id, ident, tytul, autor, cena, znizka, opis FROM " . $wpdb->prefix . "helion_books_" . $value['typ'] ." WHERE ident = '" . $value['obiekt'] . "'");
+                        if($book){
+                            $okladka = helion_get_cover($value['typ'], $book->ident, "125x163");
+                            $dokoszyka = helion_get_link($value['typ'], $book->ident, null, true);
+                            $ksiazka = get_bloginfo("home") . '/' . get_option("helion_bookstore_slug") . '/?helion_bookstore=book&ksiegarnia=' . $value['typ'] . '&ident=' . $book->ident;
+				
+                            $pozycja = '<div class="helion-polecane">';
+                            $pozycja .= '<a href="' . $ksiazka . '" rel="nofollow"><img src="' . $okladka['src'] . '" /></a>';
+                            $pozycja .= '<div class="info">';
+                            if(strlen($book->tytul) <= 46) {
+                                $pozycja .= '<p><a href="' . $ksiazka . '" title="' . $book->tytul . '" rel="nofollow">' . $book->tytul . '</a></p>';
+                            } else {
+				$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $book->tytul . '" rel="nofollow">' . helion_snippet(strip_tags($book->tytul), 46, "...") . '</a></p>';
+                            }
+				
+                            if(strlen($book->autor) <= 46) {
+                                $pozycja .= '<p><b>Autor:</b> ' . $book->autor . '</p>';
+                            } else {
+                            	$pozycja .= '<p><b>Autor:</b> ' . substr($book->autor, 0, 46) . '...</p>';
+                            }
+                            $pozycja .= '<p class="opis">' . helion_snippet(strip_tags($book->opis), 324, "...") . '</p>';
+                            $pozycja .= '</div>';
+                            $pozycja .= '<div class="clear"></div>';
+                            $pozycja .= '<div class="helion-box">';
+				
+                            if($book->znizka > 0) {
+                            	$pozycja .= '<div class="helion-cena">' . $book->cena . ' zł (-' . $book->znizka . 'zł)</div>';
+                            } else {
+                            	$pozycja .= '<div class="helion-cena">' . $book->cena . ' zł</div>';
+                            }
+				
+                            $pozycja .= '<a href="' . $dokoszyka . '" title="Kup teraz" rel="nofollow">kup teraz</a>';
+                            $pozycja .= '</div>';
+                            $pozycja .= '</div>';
+				
+                            $p[] = $pozycja;
+                        }
+			}
+
+			if(is_array($p)) {
+                            $template = preg_replace("/%polecane%/", implode("\n", $p), $template);
+			} else {
+                            $template = preg_replace("/%polecane%/", $p, $template);
 			}
 		}
 		

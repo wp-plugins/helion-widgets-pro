@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 4.0
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -63,7 +63,7 @@ W tej chwili wtyczka nie obsługuje jeszcze WordPress MultiSite (sieci blogów),
 
 = Czy wtyczka może działać na hostingu z ograniczeniami nałożonymi na PHP? =
 
-Wtyczka wykorzystuje funckje, które nie są dostępne na hostingach z włączonym safe mode, a także na hostingach z wyłączonymi niektórymi funkcjami (zwłaszcza darmowych), w tym shell_exec(). Może wtedy pojawić się informacja o błędzie:
+Wtyczka wykorzystuje funkcje, które nie są dostępne na hostingach z włączonym safe mode, a także na hostingach z wyłączonymi niektórymi funkcjami (zwłaszcza darmowych), w tym shell_exec(). Może wtedy pojawić się informacja o błędzie:
 
 `shell_exec() has been disabled for security reasons`
 
@@ -222,6 +222,11 @@ Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP He
 = 1.3.4 =
 * Sprawdzanie rozmiaru przed załadowaniem pliku xml
 
+= 1.3.5 =
+* Dodatkowe sprawdzanie konfiguracji
+* Poprawka przy simplexml_load_file
+* Moduł polecane
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -345,3 +350,8 @@ Poprawki przy kategoriach
 
 = 1.3.4 =
 Sprawdzanie rozmiaru przed załadowaniem pliku xml
+
+= 1.3.5 =
+Dodatkowe sprawdzanie konfiguracji
+Poprawka przy simplexml_load_file
+Moduł polecane
