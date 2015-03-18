@@ -35,6 +35,8 @@ function helion_ksiazka($atts) {
 		'okladka' => '181x236',
 		'width' => '',
 		'float' => 'left',
+                'opis' => '0',
+                'substring' => '100',
 	), $atts ) );
 	
 	switch($float) {
@@ -61,9 +63,7 @@ function helion_ksiazka($atts) {
 	if(!$width)
 		 // albo rozmiar okładki, albo 200, które większe
 		$width = max($wymiary[0], 200);
-		
-	
-		
+
 	$book = helion_get_book_info($ksiegarnia, $ident);
 	if($book) {
 		$link = helion_get_link($ksiegarnia, $ident, $cyfra, true);
@@ -78,14 +78,17 @@ function helion_ksiazka($atts) {
 		$cont .= '</a></p>';
 		$cont .= '</div>';
 		$cont .= '<div class="helion_meta">';
-		$cont .= '<p class="helion_tytul"><a href="' . $link . '" target="_blank" rel="nofollow">' . $tytul . '</a></p>';
-		$cont .= '<p class="helion_autor">autor: ' . $autor . '</p>';
-		$cont .= '<p class="helion_isbn">ISBN: ' . $book['isbn'] . '</p>';
-		$cont .= '<p class="helion_format">Format: ' . $book['format'] . ', stron: ' . $book['liczbastron'] . '</p>';
-		$cont .= '<p class="helion_data">Data wydania: ' . $book['datawydania'] . '</p>';
-		$cont .= '<p class="helion_cena">Cena: ' . $book['cenadetaliczna'] . 'zł</p>';
+		$cont .= '<p class="helion_tytul"><a href="' . $link . '" target="_blank" rel="nofollow" title="' . $tytul . '">' . $tytul . '</a></p>';
+		$cont .= '<p class="helion_autor"><span>Autor:</span> ' . $autor . '</p>';
+		$cont .= '<p class="helion_isbn"><span>ISBN:</span> ' . $book['isbn'] . '</p>';
+		$cont .= '<p class="helion_format"><span>Format:</span> ' . $book['format'] . ', stron: ' . $book['liczbastron'] . '</p>';
+		$cont .= '<p class="helion_data"><span>Data wydania:</span> ' . $book['datawydania'] . '</p>';
+                if($opis == '1' && (int)$substring > 0){
+                    $cont .= '<p class="helion_opis"><span>Opis:</span> ' . substr(strip_tags($book['opis']), 0, $substring) . '</p>';
+                }
+		$cont .= '<p class="helion_cena"><span>Cena:</span> ' . $book['cenadetaliczna'] . 'zł</p>';
 		$cont .= '<div class="helion-box">';
-		$cont .= '<a href="' . $link . '" rel="nofollow">kup teraz</a>';
+		$cont .= '<a href="' . $link . '" rel="nofollow" title="Kup teraz">kup teraz</a>';
 		$cont .= '</div>';
 		$cont .= '</div>';
 		$cont .= '</div>';

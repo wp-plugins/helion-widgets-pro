@@ -696,13 +696,15 @@ ich interesują.</p>
 	
 	
 	<h3 id="box">Jak wstawić Boks z opisem książki do wpisu?</h3>
-	<p>W każdym wpisie możesz łatwo wstawić Boks z okładką i danymi na temat dowolnej książki. Wystarczy w wybranym przez ciebie miejscu wstawić następujący kod: <code>[helion_ksiazka ksiegarnia="helion" ident="markwy" okladka="120x156" width="250" float="right"]</code>, gdzie dostępne są następujące parametry:</p>
+	<p>W każdym wpisie możesz łatwo wstawić Boks z okładką i danymi na temat dowolnej książki. Wystarczy w wybranym przez ciebie miejscu wstawić następujący kod: <code>[helion_ksiazka ksiegarnia="helion" ident="markwy" okladka="120x156" width="250" float="right" opis="1" substring="100"]</code>, gdzie dostępne są następujące parametry:</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
-		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint) nazwa księgarni, do której należy książka (obowiązkowy)</li>
+		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint|bezdroza) nazwa księgarni, do której należy książka (obowiązkowy)</li>
 		<li>ident: identyfikator książki (obowiązkowy)</li>
 		<li>okladka: rozmiar wyświetlonej w boxie okładki. Możesz wybierać spośród następujących rozmiarów: 326x466, 181x236, 125x163, 120x156, 90x119, 88x115, 72x95 i 65x85. Inne rozmiary nie są dostępne. (opcjonalny, domyślnie 120x156)</li>
 		<li>width: szerokość boxu w pikselach (opcjonalny, domyślnie taki sam jak szerokość okładki, minimum 200px)</li>
 		<li>float: określa, po której stronie ma się znaleźć box. Dostępne parametry: left, right (opcjonalny, domyślnie left)</li>
+                <li>opis: określa, czy wyświetlać opis (1 - tak, 0 - nie (opcjonalnie))</li>
+                <li>substring: określa, do ilu znaków ma zostać skrócony opis (opcjonalnie 100)</li>
 	</ul>
 	
 	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
@@ -710,7 +712,7 @@ ich interesują.</p>
 	<h3 id="link">Jak wstawić link do książki do wpisu?</h3>
 	<p>Jeżeli znasz parametr ident książki i wiesz, z jakiej księgarni ona pochodzi, możesz z łatwością wstawić do niej link za pomocą następującego kodu: <code>[helion_link ksiegarnia="helion" ident="markwy" cyfra="123"]</code>, gdzie parametry są następujące:</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
-		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint) nazwa księgarni (obowiązkowa)</li>
+		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint|bezdroza) nazwa księgarni (obowiązkowa)</li>
 		<li>ident: identyfikator książki (obowiązkowy)</li>
 		<li>cyfra: jest to dodatkowy parametr, dzięki którego możesz zbadać skuteczność kampanii. Jeśli prowadzisz dwie strony, na jednej możesz ustawić cyfrę 1 a na drugiej cyfrę 2 - gdy ktoś dokona zakupu, wówczas otrzymasz maila w którym oprócz informacji o zakupach zostanie przekazana ta cyfra i będziesz wiedział, z jakiej strony został dokonany zakup. (opcjonalna)</li>
 	</ul>
