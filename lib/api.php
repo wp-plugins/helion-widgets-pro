@@ -53,16 +53,14 @@ function helion_get_book_info($bookstore, $ident) {
 		return $book;
 	} else {
 		$method = helion_detect_connection_method();
-		
+
 		switch($method) {
 			case 'curl':
 				$cu = curl_init();
-				$curl_get = array("ident" => $ident);
-				$curl_url = "http://" . $bookstore . ".pl/plugins/new/xml/ksiazka.cgi";
+				$curl_get = "?ident=" . $ident;
+				$curl_url = "http://" . $bookstore . ".pl/plugins/new/xml/ksiazka.cgi" . $curl_get;
 				@curl_setopt($cu, CURLOPT_URL, $curl_url); 
 				@curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
-				@curl_setopt($cu, CURLOPT_GET, 1); 
-				@curl_setopt($cu, CURLOPT_GETFIELDS, $curl_get); 
 				$description = @simplexml_load_string(@curl_exec($cu));
 				curl_close($cu);
 				break;
