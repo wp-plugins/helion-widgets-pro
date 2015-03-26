@@ -65,7 +65,24 @@ class Helion_Widget_Single_Book extends WP_Widget {
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>
 					<?php } ?>
 					<?php if($instance['cena']) { ?>
-					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł</p>
+					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł
+                                            <?php
+                                            $bookd = $druk = $ebook = false;
+                                            if(preg_match('/\_ebook$/', $book['ident'])){
+                                                $bookd = helion_get_book_info($instance['bookstore'], str_replace('_ebook', '', $book['ident']));
+                                                $druk = true;
+                                            }else{
+                                                $bookd = helion_get_book_info($instance['bookstore'], $book['ident'].'_ebook');
+                                                $ebook = true;
+                                            }
+                                                
+                                            if($bookd){
+                                                ?>
+                                                <br /><sup>(Cena <?php if($ebook):?>e-booka<?php else: ?>druku<?php endif;?>: <?php echo $bookd['cena']?> zł)</sup>
+                                                <?php
+                                            }
+                                            ?>
+                                        </p>
 					<?php } ?>
 					<?php if($instance['dodatkowe']) { ?>
 						<?php 

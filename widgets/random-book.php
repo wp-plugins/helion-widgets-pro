@@ -73,7 +73,24 @@ class Helion_Widget_Random_Book extends WP_Widget {
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>
 					<?php } ?>
 					<?php if($instance['cena']) { ?>
-					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł</p>
+					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł
+                                            <?php
+                                            $bookd = $druk = $ebook = false;
+                                            if(preg_match('/\_ebook$/', $random_book['ident'])){
+                                                $bookd = helion_get_book_info($random_book['bookstore'], str_replace('_ebook', '', $random_book['ident']));
+                                                $druk = true;
+                                            }else{
+                                                $bookd = helion_get_book_info($random_book['bookstore'], $random_book['ident'].'_ebook');
+                                                $ebook = true;
+                                            }
+                                                
+                                            if($bookd){
+                                                ?>
+                                                <br /><sup>(Cena <?php if($ebook):?>e-booka<?php else: ?>druku<?php endif;?>: <?php echo $bookd['cena']?> zł)</sup>
+                                                <?php
+                                            }
+                                            ?>
+                                        </p>
 					<?php } ?>
 					<?php if($instance['dodatkowe']) { ?>
 						<?php 
