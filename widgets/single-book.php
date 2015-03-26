@@ -53,19 +53,36 @@ class Helion_Widget_Single_Book extends WP_Widget {
 				echo $before_title . $instance['title'] . $after_title;
 				?>
 				<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
-					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>">
+					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>" rel="nofollow">
 						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
 					</a>
 				</div>
 				<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
 					<?php if($instance['tytul']) { ?>
-					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank"><?php echo $tytul; ?></a></p>
+					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank" rel="nofollow"><?php echo $tytul; ?></a></p>
 					<?php } ?>
 					<?php if($instance['autor']) { ?>
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>
 					<?php } ?>
 					<?php if($instance['cena']) { ?>
-					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł</p>
+					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł
+                                            <?php
+                                            $bookd = $druk = $ebook = false;
+                                            if(preg_match('/\_ebook$/', $book['ident'])){
+                                                $bookd = helion_get_book_info($instance['bookstore'], str_replace('_ebook', '', $book['ident']));
+                                                $druk = true;
+                                            }else{
+                                                $bookd = helion_get_book_info($instance['bookstore'], $book['ident'].'_ebook');
+                                                $ebook = true;
+                                            }
+                                                
+                                            if($bookd){
+                                                ?>
+                                                <br /><sup>(Cena <?php if($ebook):?>e-booka<?php else: ?>druku<?php endif;?>: <?php echo $bookd['cena']?> zł)</sup>
+                                                <?php
+                                            }
+                                            ?>
+                                        </p>
 					<?php } ?>
 					<?php if($instance['dodatkowe']) { ?>
 						<?php 
@@ -87,7 +104,7 @@ class Helion_Widget_Single_Book extends WP_Widget {
 						?>
 					<?php } ?>
 					<?php if($instance['przycisk']) { ?>
-						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>">kup teraz</a></div>
+						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>" rel="nofollow">kup teraz</a></div>
 					<?php } ?>
 				</div>
 				<?php
