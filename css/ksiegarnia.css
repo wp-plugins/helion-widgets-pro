@@ -32,9 +32,15 @@
     padding: 0;
     margin: 7px 0 7px 0;
 }
-.helion_ksiegarnia .helion-polecane p, span, a,
-.helion_ksiegarnia .helion-nowosc p, span, a,
-.helion_ksiegarnia .helion-bestseller p, span, a {
+.helion_ksiegarnia .helion-polecane p, 
+.helion_ksiegarnia .helion-polecane span, 
+.helion_ksiegarnia .helion-polecane a,
+.helion_ksiegarnia .helion-nowosc p, 
+.helion_ksiegarnia .helion-nowosc span, 
+.helion_ksiegarnia .helion-nowosc a,
+.helion_ksiegarnia .helion-bestseller p, 
+.helion_ksiegarnia .helion-bestseller span, 
+.helion_ksiegarnia .helion-bestseller a {
     font-size: 12px;
 }
 
