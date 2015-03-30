@@ -78,7 +78,7 @@ class Helion_Widget_Wyszukiwarka extends WP_Widget {
 		$selected = ' selected="selected" ';
 		$checked = ' checked="checked" ';
 		?>
-		<p><small>Konfiguracja wyglądu strony z wynikami odbywa się za pomocą menu <a href="<?php echo admin_url("admin.php?page=helion_wyszukiwarka"); ?>">Helion->Wyszukiwarka</a>.</small></p>
+		<p><small>Konfiguracja wyglądu strony z wynikami odbywa się za pomocą menu <a href="<?php echo admin_url("admin.php?page=helion_wyszukiwarka"); ?>" rel="nofollow">Helion->Wyszukiwarka</a>.</small></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Tytuł:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" class="widefat" />
