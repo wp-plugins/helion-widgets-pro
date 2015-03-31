@@ -53,16 +53,14 @@ function helion_get_book_info($bookstore, $ident) {
 		return $book;
 	} else {
 		$method = helion_detect_connection_method();
-		
+
 		switch($method) {
 			case 'curl':
 				$cu = curl_init();
-				$curl_get = array("ident" => $ident);
-				$curl_url = "http://" . $bookstore . ".pl/plugins/new/xml/ksiazka.cgi";
+				$curl_get = "?ident=" . $ident;
+				$curl_url = "http://" . $bookstore . ".pl/plugins/new/xml/ksiazka.cgi" . $curl_get;
 				@curl_setopt($cu, CURLOPT_URL, $curl_url); 
 				@curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
-				@curl_setopt($cu, CURLOPT_GET, 1); 
-				@curl_setopt($cu, CURLOPT_GETFIELDS, $curl_get); 
 				$description = @simplexml_load_string(@curl_exec($cu));
 				curl_close($cu);
 				break;
@@ -154,13 +152,21 @@ function helion_download_file($src, $dest) {
 			break;
 		case 'curl':
 			$out = fopen($dest, 'wb');
-
+                    
 			if($out) {
 				$ch = curl_init();
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+                                curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+                                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   
+                                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 				curl_setopt($ch, CURLOPT_FILE, $out);
 				curl_setopt($ch, CURLOPT_HEADER, 0);
 				curl_setopt($ch, CURLOPT_URL, $src);
-				curl_exec($ch);
+                                if(curl_exec($ch) === false){
+                                    
+                                }else{
+                                    
+                                }
 				curl_close($ch); 
 				fclose($out);
 			}
@@ -358,6 +364,7 @@ function helion_parse_bookstore_template($template) {
 
 	global $wpdb;
 	
+        $polecane = array();
         $nowosci = array();
         $bestsellery = array();
         
@@ -368,30 +375,30 @@ function helion_parse_bookstore_template($template) {
                         
                         // w przypadku ebookpoint nie bierzemy po uwage marki
                         if($marka == '0')
-                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia ." WHERE nowosc = true ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
+                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka, opis FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia ." WHERE nowosc = true ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
                         else
-                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc = true AND marka = " . helion_marka($ksiegarnia) . " ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
+                            $nowosci = $wpdb->get_results("SELECT id, ident, tytul, autor, cena, znizka, opis FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE nowosc = true AND marka = " . helion_marka($ksiegarnia) . " ORDER BY datawydania DESC LIMIT 4", ARRAY_A);
 
 			foreach($nowosci as $nowosc) {
-				$okladka = helion_get_cover($ksiegarnia, $nowosc['ident'], "72x95");
+				$okladka = helion_get_cover($ksiegarnia, $nowosc['ident'], "125x163");
 				$dokoszyka = helion_get_link($ksiegarnia, $nowosc['ident'], null, true);
 				$ksiazka = get_bloginfo("home") . '/' . get_option("helion_bookstore_slug") . '/?helion_bookstore=book&ksiegarnia=' . $ksiegarnia . '&ident=' . $nowosc['ident'];
 				
 				$pozycja = '<div class="helion-nowosc">';
-				$pozycja .= '<a href="' . $ksiazka . '"><img src="' . $okladka['src'] . '" /></a>';
+				$pozycja .= '<a href="' . $ksiazka . '" rel="nofollow"><img src="' . $okladka['src'] . '" /></a>';
 				$pozycja .= '<div class="info">';
 				if(strlen($nowosc['tytul']) <= 46) {
-					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $nowosc['tytul'] . '">' . $nowosc['tytul'] . '</a></p>';
+					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $nowosc['tytul'] . '" rel="nofollow">' . $nowosc['tytul'] . '</a></p>';
 				} else {
-					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $nowosc['tytul'] . '">' . helion_snippet(strip_tags($nowosc['tytul']), 46, "...") . '</a></p>';
+					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $nowosc['tytul'] . '" rel="nofollow">' . helion_snippet(strip_tags($nowosc['tytul']), 46, "...") . '</a></p>';
 				}
 				
 				if(strlen($nowosc['autor']) <= 46) {
-					$pozycja .= '<span>Autor: ' . $nowosc['autor'] . '</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . $nowosc['autor'] . '</p>';
 				} else {
-					$pozycja .= '<span>Autor: ' . substr($nowosc['autor'], 0, 46) . '...</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . substr($nowosc['autor'], 0, 46) . '...</p>';
 				}
-				
+				$pozycja .= '<p>' . helion_snippet(strip_tags($nowosc['opis']), 324, "...") . '</p>';
 				$pozycja .= '</div>';
 				$pozycja .= '<div class="clear"></div>';
 				$pozycja .= '<div class="helion-box">';
@@ -402,7 +409,7 @@ function helion_parse_bookstore_template($template) {
 					$pozycja .= '<div class="helion-cena">' . $nowosc['cena'] . ' zł</div>';
 				}
 				
-				$pozycja .= '<a href="' . $dokoszyka . '">kup teraz</a>';
+				$pozycja .= '<a href="' . $dokoszyka . '" title="Kup teraz" rel="nofollow">kup teraz</a>';
 				$pozycja .= '</div>';
 				$pozycja .= '</div>';
 				
@@ -433,18 +440,18 @@ function helion_parse_bookstore_template($template) {
 				$ksiazka = get_bloginfo("home") . '/' . get_option("helion_bookstore_slug") . '/?helion_bookstore=book&ksiegarnia=' . $ksiegarnia . '&ident=' . $bestseller['ident'];
 				
 				$pozycja = '<div class="helion-bestseller">';
-				$pozycja .= '<a href="' . $ksiazka . '"><img src="' . $okladka['src'] . '" /></a>';
+				$pozycja .= '<a href="' . $ksiazka . '" rel="nofollow"><img src="' . $okladka['src'] . '" /></a>';
 				$pozycja .= '<div class="info">';
 				if(strlen($bestseller['tytul']) <= 46) {
-					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $bestseller['tytul'] . '">' . $bestseller['tytul'] . '</a></p>';
+					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $bestseller['tytul'] . '" rel="nofollow">' . $bestseller['tytul'] . '</a></p>';
 				} else {
-					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $bestseller['tytul'] . '">' . helion_snippet(strip_tags($bestseller['tytul']), 46) . '</a></p>';
+					$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $bestseller['tytul'] . '" rel="nofollow">' . helion_snippet(strip_tags($bestseller['tytul']), 46) . '</a></p>';
 				}
 				
 				if(strlen($bestseller['autor']) <= 46) {
-					$pozycja .= '<span>Autor: ' . $bestseller['autor'] . '</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . $bestseller['autor'] . '</p>';
 				} else {
-					$pozycja .= '<span>Autor: ' . substr($bestseller['autor'], 0, 46) . '...</span>';
+					$pozycja .= '<p><b>Autor:</b> ' . substr($bestseller['autor'], 0, 46) . '...</p>';
 				}
 				
 				$pozycja .= '<p>' . helion_snippet(strip_tags($bestseller['opis']), 324, "...") . '</p>';				
@@ -458,7 +465,7 @@ function helion_parse_bookstore_template($template) {
 					$pozycja .= '<div class="helion-cena">' . $bestseller['cena'] . ' zł</div>';
 				}
 				
-				$pozycja .= '<a href="' . $dokoszyka . '">kup teraz</a>';
+				$pozycja .= '<a href="' . $dokoszyka . '" title="Kup teraz" rel="nofollow">kup teraz</a>';
 				$pozycja .= '</div>';
 				$pozycja .= '</div>';
 				
@@ -469,6 +476,57 @@ function helion_parse_bookstore_template($template) {
 				$template = preg_replace("/%bestsellery%/", implode("\n", $b), $template);
 			} else {
 				$template = preg_replace("/%bestsellery%/", $b, $template);
+			}
+		}
+                
+                if(preg_match("/%polecane%/", $template)) {
+                    $polecane = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix . "helion_widget_random limit 10", ARRAY_A);
+                        
+                    foreach($polecane as $key => $value) {
+                            
+                        $book = $wpdb->get_row("SELECT id, ident, tytul, autor, cena, znizka, opis FROM " . $wpdb->prefix . "helion_books_" . $value['typ'] ." WHERE ident = '" . $value['obiekt'] . "'");
+                        if($book){
+                            $okladka = helion_get_cover($value['typ'], $book->ident, "125x163");
+                            $dokoszyka = helion_get_link($value['typ'], $book->ident, null, true);
+                            $ksiazka = get_bloginfo("home") . '/' . get_option("helion_bookstore_slug") . '/?helion_bookstore=book&ksiegarnia=' . $value['typ'] . '&ident=' . $book->ident;
+				
+                            $pozycja = '<div class="helion-polecane">';
+                            $pozycja .= '<a href="' . $ksiazka . '" rel="nofollow"><img src="' . $okladka['src'] . '" /></a>';
+                            $pozycja .= '<div class="info">';
+                            if(strlen($book->tytul) <= 46) {
+                                $pozycja .= '<p><a href="' . $ksiazka . '" title="' . $book->tytul . '" rel="nofollow">' . $book->tytul . '</a></p>';
+                            } else {
+				$pozycja .= '<p><a href="' . $ksiazka . '" title="' . $book->tytul . '" rel="nofollow">' . helion_snippet(strip_tags($book->tytul), 46, "...") . '</a></p>';
+                            }
+				
+                            if(strlen($book->autor) <= 46) {
+                                $pozycja .= '<p><b>Autor:</b> ' . $book->autor . '</p>';
+                            } else {
+                            	$pozycja .= '<p><b>Autor:</b> ' . substr($book->autor, 0, 46) . '...</p>';
+                            }
+                            $pozycja .= '<p class="opis">' . helion_snippet(strip_tags($book->opis), 324, "...") . '</p>';
+                            $pozycja .= '</div>';
+                            $pozycja .= '<div class="clear"></div>';
+                            $pozycja .= '<div class="helion-box">';
+				
+                            if($book->znizka > 0) {
+                            	$pozycja .= '<div class="helion-cena">' . $book->cena . ' zł (-' . $book->znizka . 'zł)</div>';
+                            } else {
+                            	$pozycja .= '<div class="helion-cena">' . $book->cena . ' zł</div>';
+                            }
+				
+                            $pozycja .= '<a href="' . $dokoszyka . '" title="Kup teraz" rel="nofollow">kup teraz</a>';
+                            $pozycja .= '</div>';
+                            $pozycja .= '</div>';
+				
+                            $p[] = $pozycja;
+                        }
+			}
+
+			if(is_array($p)) {
+                            $template = preg_replace("/%polecane%/", implode("\n", $p), $template);
+			} else {
+                            $template = preg_replace("/%polecane%/", $p, $template);
 			}
 		}
 		
@@ -493,6 +551,163 @@ function helion_snippet($text, $length, $tail = "...") {
 		$text = substr($text,0,$length-$i+1) . $tail;
 	}
 	return $text;
+}
+
+function helion_get_serie($bookstore){
+    
+    $bookstore = h_validate_bookstore($bookstore);
+    
+    if($lista = get_option("helion_serie_" . $bookstore)){
+        
+        return $lista;
+        
+    } else {
+        
+        $method = helion_detect_connection_method();
+        
+        $url = "http://" . $bookstore . ".pl/plugins/new/xml/lista-serie.cgi";
+        
+        switch($method) {
+            case 'curl':
+                $cu = curl_init();
+				
+		curl_setopt($cu, CURLOPT_URL, $url); 
+		curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
+		$xml = curl_exec($cu);
+		curl_close($cu);
+		break;
+				
+            default: 
+                $xml = file_get_contents($url);
+		break;
+            }
+		
+	$xml = simplexml_load_string($xml);
+        
+        $lista = array();
+		
+	foreach($xml as $item) {
+            
+            $lista[] = array('seria' => (string)$item->attributes()->seria,
+                            'id_seria' => (string)$item->attributes()->id_seria);
+            
+	}
+        
+	update_option("helion_serie_" . $bookstore, $lista);
+		
+	return $lista;
+        
+    }
+    
+}
+
+function helion_parse_serie_template($template, $seria, $page = 0) {
+
+	$seria = h_validate_catid($seria);
+
+	if($page) {
+		$page = h_validate_page($page);
+		if($page == false) return "<p>Nieprawidłowy numer strony.</p>";
+	}
+	
+	if(!$seria) return "<p>Nieprawidłowa seria.</p>";
+	
+	global $wpdb;
+	
+	$slug = get_option("helion_bookstore_slug");
+	$home = get_bloginfo('home');
+	if($slug) {
+		$home_url = $home . "/" . $slug . "/";
+	} else {
+		$home_url = $home . "/";
+	}
+	
+	if($page) {
+		$p = $page * 10;
+	} else {
+		$p = 0;
+	}
+	
+	if($ksiegarnia = h_validate_bookstore(get_option("helion_bookstore_ksiegarnia"))) {
+	
+            $lista = helion_get_serie($ksiegarnia); // serie danej marki
+            
+		if(preg_match("/%seria%/", $template)) {
+                    
+                    $sql = "SELECT * FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND seriewydawnicze LIKE '%id=\"" . $seria . "\"%' LIMIT " . $p . ", 10";
+			
+                    $dane = $wpdb->get_results($sql, ARRAY_A);
+			
+			foreach($dane as $ksiazka) {
+				$okladka = helion_get_cover($ksiegarnia, $ksiazka['ident'], "125x163");
+				$dokoszyka = helion_get_link($ksiegarnia, $ksiazka['ident'], null, true);
+				$url = get_bloginfo("home") . '/' . $slug . '/?helion_bookstore=book&ksiegarnia=' . $ksiegarnia . '&ident=' . $ksiazka['ident'];
+				
+				$pozycja = '<div class="helion-kategoria">';
+				$pozycja .= '<a href="' . $url . '" rel="nofollow"><img src="' . $okladka['src'] . '" /></a>';
+				$pozycja .= '<div class="info">';
+				if(strlen($ksiazka['tytul']) <= 46) {
+					$pozycja .= '<p><a href="' . $url . '" title="' . $ksiazka['tytul'] . '" rel="nofollow">' . $ksiazka['tytul'] . '</a></p>';
+				} else {
+					$pozycja .= '<p><a href="' . $url . '" title="' . $ksiazka['tytul'] . '" rel="nofollow">' . helion_snippet(strip_tags($ksiazka['tytul']), 46) . '</a></p>';
+				}
+				
+				if(strlen($ksiazka['autor']) <= 46) {
+					$pozycja .= '<span>Autor: ' . $ksiazka['autor'] . '</span>';
+				} else {
+					$pozycja .= '<span>Autor: ' . substr($ksiazka['autor'], 0, 46) . '...</span>';
+				}
+				
+				$pozycja .= '<p>' . helion_snippet(strip_tags($ksiazka['opis']), 324, "...") . '</p>';				
+				$pozycja .= '</div>';
+				$pozycja .= '<div class="clear"></div>';
+				$pozycja .= '<div class="helion-box">';
+				
+				if($ksiazka['znizka']) {
+					$pozycja .= '<div class="helion-cena">' . $ksiazka['cena'] . ' zł (-' . $ksiazka['znizka'] . 'zł)</div>';
+				} else {
+					$pozycja .= '<div class="helion-cena">' . $ksiazka['cena'] . ' zł</div>';
+				}
+				
+				$pozycja .= '<a href="' . $dokoszyka . '" rel="nofollow">kup teraz</a>';
+				$pozycja .= '</div>';
+				$pozycja .= '</div>';
+				
+				$b[] = $pozycja;
+			}
+			
+			if(is_array($b)) {
+				$template = preg_replace("/%seria%/", implode("\n", $b), $template);
+			} else {
+				$template = preg_replace("/%seria%/", $b, $template);
+			}
+			
+			$paginacja = '<div class="paginacja">';
+                            $paginacja .= '<ul class="paginacja">';
+			
+			if($page > 0) {
+                            $paginacja .= '<li class="poprzednia"><a href="' . $home_url . '?helion_bookstore=serie&id=' . $seria . '&helion_page=' . ($page - 1) . '" rel="nofollow" title="Poprzednia strona">&laquo; Poprzednia strona</a></li>';
+			}
+			
+                        
+                        $sql2 = "SELECT COUNT(*) FROM " . $wpdb->prefix . "helion_books_" . $ksiegarnia . " WHERE cena AND seriewydawnicze LIKE '%id=\"" . $seria . "\"%'";
+			
+			$ilosc_wynikow = $wpdb->get_var($sql2);
+
+			if($ilosc_wynikow > $p + 10) {
+                            $paginacja .= '<li class="nastepna"><a href="' . $home_url . '?helion_bookstore=serie&id=' . $seria . '&helion_page=' . ($page + 1) . '" rel="nofollow" title="Następna strona">Następna strona &raquo;</a></li>';
+			}
+			
+                            $paginacja .= '</ul>';
+			$paginacja .= '</div>';
+			
+			$template = preg_replace("/%paginacja%/", $paginacja, $template);
+			
+			return $template;
+		}
+	} else {
+		return "<p>Nie wybrano księgarni. Przejdź do menu Helion->Księgarnia i skonfiguruj wtyczkę.</p>";
+	}
 }
 
 function helion_get_kategorie($bookstore) {
@@ -593,12 +808,12 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 				$url = get_bloginfo("home") . '/' . $slug . '/?helion_bookstore=book&ksiegarnia=' . $ksiegarnia . '&ident=' . $ksiazka['ident'];
 				
 				$pozycja = '<div class="helion-kategoria">';
-				$pozycja .= '<a href="' . $url . '"><img src="' . $okladka['src'] . '" /></a>';
+				$pozycja .= '<a href="' . $url . '" rel="nofollow"><img src="' . $okladka['src'] . '" /></a>';
 				$pozycja .= '<div class="info">';
 				if(strlen($ksiazka['tytul']) <= 46) {
-					$pozycja .= '<p><a href="' . $url . '" title="' . $ksiazka['tytul'] . '">' . $ksiazka['tytul'] . '</a></p>';
+					$pozycja .= '<p><a href="' . $url . '" title="' . $ksiazka['tytul'] . '" rel="nofollow" title="' . $ksiazka['tytul'] . '">' . $ksiazka['tytul'] . '</a></p>';
 				} else {
-					$pozycja .= '<p><a href="' . $url . '" title="' . $ksiazka['tytul'] . '">' . helion_snippet(strip_tags($ksiazka['tytul']), 46) . '</a></p>';
+					$pozycja .= '<p><a href="' . $url . '" title="' . $ksiazka['tytul'] . '" rel="nofollow" title="' . $ksiazka['tytul'] . '">' . helion_snippet(strip_tags($ksiazka['tytul']), 46) . '</a></p>';
 				}
 				
 				if(strlen($ksiazka['autor']) <= 46) {
@@ -618,7 +833,7 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 					$pozycja .= '<div class="helion-cena">' . $ksiazka['cena'] . ' zł</div>';
 				}
 				
-				$pozycja .= '<a href="' . $dokoszyka . '">kup teraz</a>';
+				$pozycja .= '<a href="' . $dokoszyka . '" rel="nofollow">kup teraz</a>';
 				$pozycja .= '</div>';
 				$pozycja .= '</div>';
 				
@@ -632,9 +847,10 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 			}
 			
 			$paginacja = '<div class="paginacja">';
+                            $paginacja .= '<ul class="paginacja">';
 			
 			if($page > 0) {
-				$paginacja .= '<div class="poprzednia"><a href="' . $home_url . '?helion_bookstore=category&id=' . $kategoria . '&helion_page=' . ($page - 1) . '">&laquo; Poprzednia strona</a></div>';
+                            $paginacja .= '<li class="poprzednia"><a href="' . $home_url . '?helion_bookstore=category&id=' . $kategoria . '&helion_page=' . ($page - 1) . '" rel="nofollow" title="Poprzednia strona">&laquo; Poprzednia strona</a></li>';    
 			}
 			
                         if($lista['nad'][$kategoria] == 'eBooki')
@@ -645,9 +861,10 @@ function helion_parse_category_template($template, $kategoria, $page = 0) {
 			$ilosc_wynikow = $wpdb->get_var($sql2);
 
 			if($ilosc_wynikow > $p + 10) {
-				$paginacja .= '<div class="nastepna"><a href="' . $home_url . '?helion_bookstore=category&id=' . $kategoria . '&helion_page=' . ($page + 1) . '">Następna strona &raquo;</a></div>';
+                            $paginacja .= '<li class="nastepna"><a href="' . $home_url . '?helion_bookstore=category&id=' . $kategoria . '&helion_page=' . ($page + 1) . '" rel="nofollow" title="Nestępna strona">Następna strona &raquo;</a></li>';
 			}
 			
+                            $paginacja .= '</ul>';
 			$paginacja .= '</div>';
 			
 			$template = preg_replace("/%paginacja%/", $paginacja, $template);
