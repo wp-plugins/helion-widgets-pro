@@ -104,6 +104,21 @@ naprawdę zamierzasz korzystać.</p>
         echo '<p class="error">Brak zainstalowanego rozszerzenia <b>"simplexml"</b>. Zgłoś prośbę do administratora o dodanie rozszerzenia.</p>';
     }
 ?>
+<?php 
+    if($conn = helion_detect_connection_method()){
+        if($conn == "none"){
+            echo '<p class="error">Brak zainstalowanej funkcji cURL. Zgłoś prośbę do administratora o włączenie jej.</p>';
+        }
+    }    
+?>
+
+<?php 
+    $xml = simplexml_load_file("http://helion.pl/plugins/xml/lista.cgi?pd=1");
+    if($xml === false){        
+       echo '<p class="error">Brak możliwości pobrania książki dnia dla marki helion (simplexml_load_file)</p>';
+    }
+?>
+
 	<input type="hidden" name="action" value="save"/>
 	<p><input type="submit" class="button-primary" value="<?php _e("Save"); ?>"/></p>
 	</form>

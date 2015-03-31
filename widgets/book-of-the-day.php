@@ -111,7 +111,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 				echo $before_widget;
 				echo $before_title . $instance['title'] . $after_title;
 				?>
-				<p>Nie było możliwe pobranie danych na temat książki.</p>
+				<p>Nie było możliwe pobranie danych na temat książki dla marki <b><?php echo $instance['bookstore']?></b>.</p>
 				<?php
 			}
 		}

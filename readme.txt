@@ -3,8 +3,8 @@ Contributors: paulpela, mdzimiera, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
-Tested up to: 4.0
-Stable tag: 1.3.9
+Tested up to: 4.1.1
+Stable tag: 1.4.0
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -239,6 +239,9 @@ Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP He
 = 1.3.9 =
 * Poprawki css
 
+= 1.4.0 =
+* Komunikaty
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -378,4 +381,7 @@ Poprawka przy curl (rezygnacja z curlopt_get)
 Cena e-booka/druku w losowa książka, książka dnia, wybrana książka
 
 = 1.3.9 =
-* Poprawki css
+Poprawki css
+
+= 1.4.0 =
+Komunikaty
