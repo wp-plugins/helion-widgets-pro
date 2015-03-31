@@ -36,6 +36,15 @@ function helion_bookstore($atts) {
 				$template .= '</div>';
 				$template = helion_parse_template($template, $dane);
 				break;
+                        case 'serie':
+                                if(get_option("helion_bookstore_template_serie") == NULL)
+                                    $template .= "%seria% %paginacja%"; // jesli opcja null ustaw domyslnie
+                                else
+                                    $template .= stripslashes(get_option("helion_bookstore_template_serie"));
+                                
+				$template .= '</div>';
+				$template = helion_parse_serie_template($template, $_REQUEST['id'], $_REQUEST['helion_page']);
+				break;
 			default:
 				$template .= stripslashes(get_option("helion_bookstore_template_main"));
 				$template .= '</div>';
