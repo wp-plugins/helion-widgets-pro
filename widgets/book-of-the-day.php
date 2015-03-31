@@ -25,7 +25,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 			echo $before_widget;
 			echo $before_title . $instance['title'] . $after_title;
 		?>
-			<p><strong>Wystąpił błąd.</strong> Nie wybrano żadnej książki w konfiguracji widgetu.</p>
+			<p><strong>Wystąpił błąd.</strong> Nie wybrano żadnej marki w konfiguracji widgetu.</p>
 		<?php
 			echo $after_widget;
 		} else {

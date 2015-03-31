@@ -108,15 +108,19 @@ naprawdę zamierzasz korzystać.</p>
     if($conn = helion_detect_connection_method()){
         if($conn == "none"){
             echo '<p class="error">Brak zainstalowanej funkcji cURL. Zgłoś prośbę do administratora o włączenie jej.</p>';
-        }
-    }    
-?>
+        }else if($conn == "curl"){
 
-<?php 
-    $xml = simplexml_load_file("http://helion.pl/plugins/xml/lista.cgi?pd=1");
-    if($xml === false){        
-       echo '<p class="error">Brak możliwości pobrania książki dnia dla marki helion (simplexml_load_file)</p>';
-    }
+        }else if($conn == "fopen"){
+            
+        }else{
+            $xml = simplexml_load_file("http://helion.pl/plugins/xml/lista.cgi?pd=1");
+            if($xml === false){        
+               echo '<p class="error">Brak możliwości pobrania książki dnia dla marki helion (simplexml_load_file)</p>';
+            }
+        }
+    }else{
+        echo '<p class="error">Brak możliwości wykrycia rodzaju połączenia.</p>';
+    }    
 ?>
 
 	<input type="hidden" name="action" value="save"/>
