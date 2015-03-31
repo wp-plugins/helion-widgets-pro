@@ -95,39 +95,44 @@ function helion_get_botd($bookstore) {
 	$method = helion_detect_connection_method();
 		
 	switch($method) {
-		case 'curl':
-			$cu = curl_init();
-			$curl_url = "http://" . $bookstore . ".pl/plugins/xml/lista.cgi?pd=1";
-			curl_setopt($cu, CURLOPT_URL, $curl_url); 
-			curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1); 
-			$description = simplexml_load_string(curl_exec($cu));
-			curl_close($cu);
-			break;
-		default: 
-			$description = simplexml_load_file("http://" . $bookstore . 				
-				".pl/plugins/xml/lista.cgi?pd=1");
-			break;
+            case 'curl':
+                $cu = curl_init();
+		$curl_url = "http://" . $bookstore . ".pl/plugins/xml/lista.cgi?pd=1";
+                curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($cu, CURLOPT_HEADER, 0);
+		curl_setopt($cu, CURLOPT_URL, $curl_url); 
+		$out = curl_exec($cu);
+		curl_close($cu);
+		break;
+            default: 
+                $out = @simplexml_load_file("http://" . $bookstore . ".pl/plugins/xml/lista.cgi?pd=1");
+		break;
 	}
-	
-	if(is_object($description)) {
-	
-		$book['ident'] = strtolower($description->item->attributes()->ident);
-		$book['isbn'] = $description->item->attributes()->isbn;
-		$book['ean'] = $description->item->attributes()->ean;
-		$book['tytul'] = $description->item->attributes()->tytul;
-		$book['autor'] = $description->item->attributes()->autor;
-		$book['cenadetaliczna'] = $description->item->attributes()->cenadetaliczna;
-		$book['cena'] = $description->item->attributes()->cena;
-		$book['znizka'] = $description->item->attributes()->znizka;
-		$book['status'] = $description->item->attributes()->status;
-		$book['kat'] = $description->item->attributes()->kat;
-		$book['marka'] = $description->item->attributes()->marka;
-		$book['ts'] = $description->item->attributes()->ts;
 		
-		return $book;
+        if(($description = simplexml_load_string($out)) !== false){
+        }else{
+            $description = $out;
+        }
+        
+        if($description){
+            $book['ident'] = strtolower($description->item->attributes()->ident);
+            $book['isbn'] = $description->item->attributes()->isbn;
+            $book['ean'] = $description->item->attributes()->ean;
+            $book['tytul'] = $description->item->attributes()->tytul;
+            $book['autor'] = $description->item->attributes()->autor;
+            $book['cenadetaliczna'] = $description->item->attributes()->cenadetaliczna;
+            $book['cena'] = $description->item->attributes()->cena;
+            $book['znizka'] = $description->item->attributes()->znizka;
+            $book['status'] = $description->item->attributes()->status;
+            $book['kat'] = $description->item->attributes()->kat;
+            $book['marka'] = $description->item->attributes()->marka;
+            $book['ts'] = $description->item->attributes()->ts;
+		
+            return $book;
 	} else {
-		return false;
+            return false;
 	}
+		
 }
 
 /**

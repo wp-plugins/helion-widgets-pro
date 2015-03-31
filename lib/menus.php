@@ -110,6 +110,17 @@ naprawdę zamierzasz korzystać.</p>
             echo '<p class="error">Brak zainstalowanej funkcji cURL. Zgłoś prośbę do administratora o włączenie jej.</p>';
         }else if($conn == "curl"){
 
+            $cu = curl_init();
+            $curl_url = "http://helion.pl/plugins/xml/lista.cgi?pd=1";
+            curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($cu, CURLOPT_HEADER, 0);
+            curl_setopt($cu, CURLOPT_URL, $curl_url); 
+            $out = curl_exec($cu);
+            curl_close($cu);
+            if(($description = simplexml_load_string($out)) === false){
+                echo '<p class="error">Brak możliwości pobrania szczegółów pozycji (simplexml_load_string)</p>';
+            }
+            
         }else if($conn == "fopen"){
             
         }else{
