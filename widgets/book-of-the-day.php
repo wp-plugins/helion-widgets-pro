@@ -25,12 +25,13 @@ class Helion_Widget_BOTD extends WP_Widget {
 			echo $before_widget;
 			echo $before_title . $instance['title'] . $after_title;
 		?>
-			<p><strong>Wystąpił błąd.</strong> Nie wybrano żadnej książki w konfiguracji widgetu.</p>
+			<p><strong>Wystąpił błąd.</strong> Nie wybrano żadnej marki w konfiguracji widgetu.</p>
 		<?php
 			echo $after_widget;
 		} else {
 			
 			if($book = helion_get_botd($instance['bookstore'])) {
+                            
 				$dokoszyka = helion_get_link($instance['bookstore'], $book['ident'], $instance['cyfra'], true);
 				
 				if($instance['koszyk']) {
@@ -47,21 +48,40 @@ class Helion_Widget_BOTD extends WP_Widget {
 				echo $before_title . $instance['title'] . $after_title;
 				?>
 				<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
-					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>">
+					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>" rel="nofollow">
 						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
 					</a>
 				</div>
 				<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
 					<?php if($instance['tytul']) { ?>
-					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank"><?php echo $tytul; ?></a></p>
+					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank" rel="nofollow"><?php echo $tytul; ?></a></p>
 					<?php } ?>
 					<?php if($instance['autor']) { ?>
-						<p class="helion_autor">autor: <?php echo $autor; ?></p>
+						<p class="helion_autor">Autor: <?php echo $autor; ?></p>
 					<?php } ?>
 					<?php if($instance['cena']) { ?>
-					<p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł <del><?php echo $book['cenadetaliczna']; ?> zł</del></p>
+                                            <p class="helion_cena">Cena: <?php echo $book['cena']; ?> zł <del><?php echo $book['cenadetaliczna']; ?> zł</del>
+                                            <?php
+                                            $bookd = $druk = $ebook = false;
+                                            if(preg_match('/\_ebook$/', $book['ident'])){
+                                                $bookd = helion_get_book_info($instance['bookstore'], str_replace('_ebook', '', $book['ident']));
+                                                $druk = true;
+                                            }else{
+                                                $bookd = helion_get_book_info($instance['bookstore'], $book['ident'].'_ebook');
+                                                $ebook = true;
+                                            }
+                                                
+                                            if($bookd){
+                                                ?>
+                                                <br /><sup>(Cena <?php if($ebook):?>e-booka<?php else: ?>druku<?php endif;?>: <?php echo $bookd['cena']?> zł <del><?php echo $bookd['cenadetaliczna']; ?> zł</del>)</sup>
+                                                <?php
+                                            }
+                                            ?>
+                                            </p>
 					<?php } ?>
+                                        <?php if($instance['roznica']){?>
 					<p class="helion_znizka">O <?php echo $book['cenadetaliczna'] - $book['cena']; ?>zł taniej!</p>
+                                        <?php }?>
 					<?php if($instance['dodatkowe']) { ?>
 						<?php 
 							if($book['nowosc']) {
@@ -82,7 +102,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 						?>
 					<?php } ?>
 					<?php if($instance['przycisk']) { ?>
-						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>">kup teraz</a></div>
+						<div class="helion-box"><a href="<?php echo $dokoszyka; ?>" rel="nofollow">kup teraz</a></div>
 					<?php } ?>
 				</div>
 				<?php
@@ -91,7 +111,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 				echo $before_widget;
 				echo $before_title . $instance['title'] . $after_title;
 				?>
-				<p>Nie było możliwe pobranie danych na temat książki.</p>
+				<p>Nie było możliwe pobranie danych na temat książki dla marki <b><?php echo $instance['bookstore']?></b>.</p>
 				<?php
 			}
 		}
@@ -110,6 +130,7 @@ class Helion_Widget_BOTD extends WP_Widget {
 		$instance['bookstore'] = strip_tags( $new_instance['bookstore'] );
 		$instance['koszyk'] = strip_tags( $new_instance['koszyk'] );
 		$instance['przycisk'] = strip_tags( $new_instance['przycisk'] );
+                $instance['roznica'] = strip_tags( $new_instance['roznica'] );
 
 		return $instance;
 	}
@@ -166,8 +187,11 @@ class Helion_Widget_BOTD extends WP_Widget {
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'cena' ); ?>" name="<?php echo $this->get_field_name( 'cena' ); ?>" <?php if($instance['cena']) echo $checked; ?> />
 			<label for="<?php echo $this->get_field_id( 'cena' ); ?>">Wyświetlać cenę książki?</label>
 			<br/>
+                        <input type="checkbox" id="<?php echo $this->get_field_id( 'roznica' ); ?>" name="<?php echo $this->get_field_name( 'roznica' ); ?>" <?php if($instance['roznica']) echo $checked; ?> />
+			<label for="<?php echo $this->get_field_id( 'roznica' ); ?>">Wyświetlać różnicę cenową?</label>
+			<br/>
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'dodatkowe' ); ?>" name="<?php echo $this->get_field_name( 'dodatkowe' ); ?>" <?php if($instance['dodatkowe']) echo $checked; ?> />
-			<label for="<?php echo $this->get_field_id( 'dodatkowe' ); ?>">Wyświetlać dodatkowe informacje o książce (nowość, bestseller itp.)?</label>
+			<label for="<?php echo $this->get_field_id( 'dodatkowe' ); ?>">Wyświetlać dodatkowe informacje o książce (nowość, bestseller, cena druku/ebooka itp.)?</label>
 			<br/>
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'przycisk' ); ?>" name="<?php echo $this->get_field_name( 'przycisk' ); ?>" <?php if($instance['przycisk']) echo $checked; ?> />
 			<label for="<?php echo $this->get_field_id( 'przycisk' ); ?>">Wyświetlać przycisk "Kup Teraz"?</label>
