@@ -54,7 +54,7 @@ class Helion_Widget_Random_Book extends WP_Widget {
 				}
 				
 				$okladka = helion_get_cover($random_book['bookstore'], $random_book['ident'], $instance['cover']);
-				$tytul = $okladka['alt'];
+				$tytul = $book['tytul'];
 				$autor = $book['autor'];
 			
 				echo $before_widget;
@@ -62,12 +62,12 @@ class Helion_Widget_Random_Book extends WP_Widget {
 				?>
 				<div class="helion_okladka" style="width: <?php echo $okladka['width']; ?>px;">
 					<a href="<?php echo $link; ?>" target="_blank" title="<?php echo $tytul; ?>" rel="nofollow">
-						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $okladka['alt']; ?>" />
+						<img src="<?php echo $okladka['src']; ?>" alt="<?php echo $tytul; ?>" />
 					</a>
 				</div>
 				<div class="helion_meta" style="width: <?php echo $okladka['width'] + 70; ?>px;">
 					<?php if($instance['tytul']) { ?>
-					<p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank" rel="nofollow"><?php echo $tytul; ?></a></p>
+                                            <p class="helion_tytul"><a href="<?php echo $link; ?>" target="_blank" rel="nofollow" title="<?php echo $tytul; ?>"><?php echo $tytul; ?></a></p>
 					<?php } ?>
 					<?php if($instance['autor']) { ?>
 						<p class="helion_autor">autor: <?php echo $autor; ?></p>

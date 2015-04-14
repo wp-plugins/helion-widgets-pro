@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 4.1.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -249,6 +249,10 @@ Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP He
 = 1.4.2 =
 * Sprawdź, czy simplexml_load_string
 
+= 1.4.3 =
+* Poprawa zapytania sql
+* Brakujące atrybuty
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -399,3 +403,7 @@ Sprawdź, czy cURL włączony
 
 = 1.4.2 =
 Sprawdź, czy simplexml_load_string
+
+= 1.4.3 =
+Poprawa zapytania sql
+Brakujące atrybuty

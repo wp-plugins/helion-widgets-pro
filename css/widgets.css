@@ -25,16 +25,16 @@
     background-color: #f0f0f0;
     border: 1px solid #e1e1e1;
     display: block;
-    height: 21px;
+    height: 38px;
     margin: 12px 0px;
     overflow: hidden;
-    padding: 6px;
+    padding: 6px 6px 6px 20px;
     position: relative;
 }
 
 .widget .helion-box a {
-    display: block;
-    width: 100px;
+    display: inline;
+    width: 33%;
     font-size: 14px;
     text-transform: uppercase;
     padding: 2px 0px 0px 44px;
