@@ -39,9 +39,9 @@ class Helion_Widget_Serie extends WP_Widget {
 			$slug = get_option("helion_bookstore_slug");
 			
 			if($slug) {
-				$home = get_bloginfo("home") . "/" . $slug . "/?helion_bookstore=serie";
+				$home = get_bloginfo("url") . "/" . $slug . "/?helion_bookstore=serie";
 			} else {
-				$home = get_bloginfo("home") . "/?helion_bookstore=serie" ;
+				$home = get_bloginfo("url") . "/?helion_bookstore=serie" ;
 			}
 			
 			echo '<ul class="nad">';

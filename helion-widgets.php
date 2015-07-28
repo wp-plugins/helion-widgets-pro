@@ -3,7 +3,7 @@
 	Plugin Name: Helion Widgets Pro
 	Plugin URI: http://wordpress.org/extend/plugins/helion-widgets-pro/
 	Description: Widgety i Księgarnia dla uczestników Programu Partnerskiego GW Helion.
-	Version: 1.4.3  
+	Version: 1.4.4  
 	Author: Paweł Pela, Marek Dzimiera
 	License: GPL2
 */
@@ -19,7 +19,7 @@ add_action("update_plugin_complete_actions", "helion_install");
 function helion_install() {
 	global $wpdb;
 	
-	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint", "bezdroza");
+	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint", "bezdroza", "videopoint");
 	
 	foreach($bookstores as $bookstore) {
 		$table_name = $wpdb->prefix . "helion_books_" . $bookstore;
@@ -112,7 +112,7 @@ function helion_activation() {
 	
 	@helion_clear_bestsellers();
 	
-	$bs = array("helion","onepress", "sensus", "septem", "ebookpoint", "bezdroza");
+	$bs = array("helion","onepress", "sensus", "septem", "ebookpoint", "bezdroza", "videopoint");
 	foreach($bs as $b) {
 		@helion_clear_books_database($b);
 		@helion_xml_download($b, true);
@@ -137,7 +137,8 @@ function helion_activation() {
 	
 	if(!get_option("helion_bookstore_template_book")) {
 	
-		$template = '<div class="helion_ksiazka"><div style="float: left; width: 181px; margin-right: 20px;"><a href="%dokoszyka%" rel="nofollow">%okladka181x236%</a></div><div style="float: left; width: 350px;"><h2><a href="%dokoszyka%" rel="nofollow">%tytul%</a></h2><p>autor: %autor%</p><p>format: %format%</p><p>data wydania: %datawydania%</p><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%" rel="nofollow">kup teraz</a></div></div><div style="clear: both;"></div><hr/><div>%opis%</div><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%" rel="nofollow">kup teraz</a></div></div>';
+		$template = '<div class="helion_ksiazka"><div style="float: left; width: 181px; margin-right: 20px;"><a href="%dokoszyka%" rel="nofollow">%okladka181x236%</a></div><div style="float: left; width: 350px;"><h2><a href="%dokoszyka%" rel="nofollow">%tytul%</a></h2><p><b>Autor:</b> %autor%</p><p><b>Format:</b> %format%</p><p><b>Data wydania:</b> %datawydania%</p>'
+                        . '<div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%" rel="nofollow">kup teraz</a></div></div><div style="clear: both;"></div><hr/><div>%opis%</div><div class="helion-box"><div class="helion-cena">%cena% zł</div><a href="%dokoszyka%" rel="nofollow">kup teraz</a></div></div>';
 		
 		update_option("helion_bookstore_template_book", $template);
 	}
@@ -175,7 +176,7 @@ register_uninstall_hook(__FILE__, "helion_uninstall");
 function helion_uninstall() {
 	global $wpdb;
 	
-	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint", "bezdroza");
+	$bookstores = array("helion", "sensus", "onepress", "septem", "ebookpoint", "bezdroza", "videopoint");
 	
 	foreach($bookstores as $bookstore) {
 		$xml_table = $wpdb->prefix . "helion_books_" . $bookstore;

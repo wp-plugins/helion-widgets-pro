@@ -124,9 +124,10 @@ function helion_xml_import($bookstore, $bestseller = false) {
                                     $k['cena'] = $ksiazka->cena;
                                     $k['cenadetaliczna'] = $ksiazka->cenadetaliczna;
                                     $k['znizka'] = $ksiazka->znizka;
-                                    $k['marka'] = $ksiazka->marka;
+                                    // wlasna numeracja marek
+                                    $k['marka'] = helion_marka($bookstore); // $ksiazka->marka;
                                     $k['nazadanie'] = $ksiazka->nazadanie;
-                                    $k['format'] = $ksiazka->format;
+                                    $k['format'] = preg_match('/\_w$/i', $ksiazka->ident) ? 'Zip' : $ksiazka->format;
                                     $k['liczbastron'] = $ksiazka->liczbastron;
                                     $k['oprawa'] = $ksiazka->oprawa;
                                     $k['nosnik'] = $ksiazka->nosnik;

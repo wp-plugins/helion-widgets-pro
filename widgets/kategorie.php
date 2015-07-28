@@ -41,9 +41,9 @@ class Helion_Widget_Kategorie extends WP_Widget {
 			$slug = get_option("helion_bookstore_slug");
 			
 			if($slug) {
-				$home = get_bloginfo("home") . "/" . $slug . "/?helion_bookstore=category";
+				$home = get_bloginfo("url") . "/" . $slug . "/?helion_bookstore=category";
 			} else {
-				$home = get_bloginfo("home") . "/?helion_bookstore=category" ;
+				$home = get_bloginfo("url") . "/?helion_bookstore=category" ;
 			}
 			
 			echo '<ul class="nad">';

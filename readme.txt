@@ -1,10 +1,10 @@
 === Helion Widgets Pro ===
 Contributors: paulpela, mdzimiera, Grupa Wydawnicza Helion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=63SBY4W2R42NW
-Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, program partnerski, księgarnia
+Tags: helion, sensus, onepress, septem, ebookpoint, bezdroza, videopoint, program partnerski, księgarnia
 Requires at least: 3.1
 Tested up to: 4.1.1
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 
 Zainstaluj na swoim blogu widgety z książkami, umieszczaj informacje o książkach we wpisach, otwórz własną księgarnię i zarabiaj z GW Helion!
 
@@ -253,6 +253,12 @@ Napisz do autora wtyczki na mdzimiera@helion.pl lub zaloguj się na forum  PP He
 * Poprawa zapytania sql
 * Brakujące atrybuty
 
+= 1.4.4 =
+* Księgarnia Videopoint
+* Jeśli zniżka > 0, wyświetlaj rabat
+* Poprawki css przy kup teraz
+* Zmiana z 'siteurl' na 'url' (get_bloginfo) 
+
 == Upgrade Notice ==
 
 = 0.90 =
@@ -407,3 +413,9 @@ Sprawdź, czy simplexml_load_string
 = 1.4.3 =
 Poprawa zapytania sql
 Brakujące atrybuty
+
+= 1.4.4 =
+Księgarnia Videopoint
+Jeśli zniżka > 0, wyświetlaj rabat
+Poprawki css przy kup teraz
+Zmiana z 'siteurl' na 'url' (get_bloginfo)

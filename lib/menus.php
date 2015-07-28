@@ -18,14 +18,14 @@ function helion_main_options() {
         
         global $wpdb;
 	
-	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza");
+	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza", "videopoint");
 	$old_bookstores = get_option("helion_bookstores");
 	
 	if($_REQUEST['action'] == 'save') {
 		update_option("helion_partner_id", $_REQUEST['helion_partner_id']);
 		
 		foreach($bookstores as $bookstore) {
-			if($_REQUEST['ksiegarnia_' . $bookstore] == "on") {
+			if(isset($_REQUEST['ksiegarnia_' . $bookstore]) && $_REQUEST['ksiegarnia_' . $bookstore] == "on") {
                             // Pobierz bazę na nowo tylko jeśli księgarnia nie była wcześniej wybrana
                             $result = $wpdb->get_row("SELECT COUNT(id) as count FROM " . $wpdb->prefix . "helion_books_" . $bookstore);
                             if($old_bookstores[$bookstore] == 0 || $result->count == 0) {

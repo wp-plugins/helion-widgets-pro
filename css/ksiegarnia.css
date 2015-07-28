@@ -57,7 +57,7 @@
 	background-color: #f0f0f0;
 	border: 1px solid #e1e1e1;
 	display: block;
-	height: 21px;
+	height: auto;
 	margin: 12px 0px;
 	overflow: hidden;
 	padding: 6px;
@@ -68,14 +68,14 @@
 
 .helion-box .helion-cena {
 	float: left;
-	width: 50%;
+	width: 40%;
 	font-weight: bold;
 }
 
 .helion_ksiegarnia .helion-box a {
 	float: right;
 	display: block;
-	width: 33%;
+	width: 43%;
 	text-transform: uppercase;
 	padding: 2px 0px 0px 44px;
 	background: url("../images/koszyk.png") no-repeat;
