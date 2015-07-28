@@ -15,20 +15,23 @@ function helion_main_options() {
 	if (!current_user_can('manage_options'))  {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
+        
+        global $wpdb;
 	
-	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza");
+	$bookstores = array("helion", "onepress", "sensus", "septem", "ebookpoint", "bezdroza", "videopoint");
 	$old_bookstores = get_option("helion_bookstores");
 	
 	if($_REQUEST['action'] == 'save') {
 		update_option("helion_partner_id", $_REQUEST['helion_partner_id']);
 		
 		foreach($bookstores as $bookstore) {
-			if($_REQUEST['ksiegarnia_' . $bookstore] == "on") {
-				// Pobierz bazę na nowo tylko jeśli księgarnia nie była wcześniej wybrana
-				if($old_bookstores[$bookstore] == 0) {
-					helion_xml_download($bookstore);
-					helion_xml_import($bookstore);
-				}
+			if(isset($_REQUEST['ksiegarnia_' . $bookstore]) && $_REQUEST['ksiegarnia_' . $bookstore] == "on") {
+                            // Pobierz bazę na nowo tylko jeśli księgarnia nie była wcześniej wybrana
+                            $result = $wpdb->get_row("SELECT COUNT(id) as count FROM " . $wpdb->prefix . "helion_books_" . $bookstore);
+                            if($old_bookstores[$bookstore] == 0 || $result->count == 0) {
+                                helion_xml_download($bookstore);
+                                helion_xml_import($bookstore);
+                            }
 				
 				$new_bookstores[$bookstore] = 1;
 			} else {
@@ -44,7 +47,7 @@ function helion_main_options() {
 		
 		helion_download_bestsellers();
 		helion_import_bestsellers();
-					
+	
 		?>
 		<div id="message" class="updated">
 			<p><strong>Zmiany zostały zapisane.</strong></p>
@@ -63,7 +66,7 @@ oraz bestsellery literatury informatycznej, biznesowej, przewodniki turystyczne,
 beletrystykę oraz poradniki psychologiczne. Pamiętaj, książki informatyczne to
 najlepiej sprzedające się pozycje w sieci! <strong>Wystarczy, że przystąpisz do jednego
 z największych i najlepiej ocenianych programów partnerskich w Polsce. Więcej
-informacji znajdziesz na stronie <a href="http://program-partnerski.helion.pl" target="_blank">http://program-partnerski.helion.pl</a></strong>.</p>
+informacji znajdziesz na stronie <a href="http://program-partnerski.helion.pl" target="_blank" rel="nofollow">http://program-partnerski.helion.pl</a></strong>.</p>
 	
 	<table class="form-table">
 		<tr valign="top">
@@ -93,7 +96,44 @@ lokalnej bazy danych, warto ograniczyć wybór tylko do tych księgarń, z któr
 naprawdę zamierzasz korzystać.</p>
 
 <p>W razie problemów np. z brakiem danych na temat książek, możesz zresetować bazy odznaczając wybrane księgarnie, zapisując i ponownie je zaznaczając. Spowoduje to pobranie na nowo danych na temat książek.</p>
-	
+<?php 
+    if(!is_writable(ABSPATH . "/wp-content/helion-cache")) {
+        echo '<p class="error">Brak wystarczających uprawnień do utworzenia katalogu <b>"helion-cache"</b>. Nadaj odpowiednie uprawnienia dla katalogu <b>"wp-content"</b></p>';
+    }
+    if(!extension_loaded("simplexml")){
+        echo '<p class="error">Brak zainstalowanego rozszerzenia <b>"simplexml"</b>. Zgłoś prośbę do administratora o dodanie rozszerzenia.</p>';
+    }
+?>
+<?php 
+    if($conn = helion_detect_connection_method()){
+        if($conn == "none"){
+            echo '<p class="error">Brak zainstalowanej funkcji cURL. Zgłoś prośbę do administratora o włączenie jej.</p>';
+        }else if($conn == "curl"){
+
+            $cu = curl_init();
+            $curl_url = "http://helion.pl/plugins/xml/lista.cgi?pd=1";
+            curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($cu, CURLOPT_HEADER, 0);
+            curl_setopt($cu, CURLOPT_URL, $curl_url); 
+            $out = curl_exec($cu);
+            curl_close($cu);
+            if(($description = simplexml_load_string($out)) === false){
+                echo '<p class="error">Brak możliwości pobrania szczegółów pozycji (simplexml_load_string)</p>';
+            }
+            
+        }else if($conn == "fopen"){
+            
+        }else{
+            $xml = simplexml_load_file("http://helion.pl/plugins/xml/lista.cgi?pd=1");
+            if($xml === false){        
+               echo '<p class="error">Brak możliwości pobrania książki dnia dla marki helion (simplexml_load_file)</p>';
+            }
+        }
+    }else{
+        echo '<p class="error">Brak możliwości wykrycia rodzaju połączenia.</p>';
+    }    
+?>
+
 	<input type="hidden" name="action" value="save"/>
 	<p><input type="submit" class="button-primary" value="<?php _e("Save"); ?>"/></p>
 	</form>
@@ -274,7 +314,7 @@ function helion_submenu_losowa_ksiazka() {
 							if($selected) {
 						?>
 							<input type="button" class="cala_ksiegarnia" name="caly-<?php echo $ksiegarnia; ?>" value="+ <?php echo ucfirst($ksiegarnia); ?>" /><br/>
-						<?
+						<?php
 							}
 						}
 					?>
@@ -295,14 +335,14 @@ function helion_submenu_losowa_ksiazka() {
 			foreach($result as $r) {
 				if($r['typ'] == "ksiegarnia") {
 				?>
-					<span><a class="bookdelete" id="book-check-num-<?php echo $i; ?>">X</a>&nbsp; Cała księgarnia <?php echo ucfirst($r['obiekt']); ?><input type="hidden" name="ksiegarnie[]" value="<?php echo $r['obiekt']; ?>"/> </span> 
+					<span><a class="bookdelete" id="book-check-num-<?php echo $i; ?>" rel="nofollow">X</a>&nbsp; Cała księgarnia <?php echo ucfirst($r['obiekt']); ?><input type="hidden" name="ksiegarnie[]" value="<?php echo $r['obiekt']; ?>"/> </span> 
 				<?php
 					$i++;
 				}
 				
 				if($r['typ'] == "helion" || $r['typ'] == "sensus" || $r['typ'] == "onepress" || $r['typ'] == "septem" || $r['typ'] == "ebookpoint") {
 				?>
-					<span><a class="bookdelete" id="book-check-num-<?php echo $i; ?>">X</a>&nbsp;<code title="<?php echo helion_get_book_title($r['typ'], $r['obiekt']); ?>"><?php echo $r['obiekt']; ?></code><input type="hidden" name="books[]" value="<?php echo $r['typ'] . "-" . $r['obiekt']; ?>"/> </span> 
+					<span><a class="bookdelete" id="book-check-num-<?php echo $i; ?>" rel="nofollow">X</a>&nbsp;<code title="<?php echo helion_get_book_title($r['typ'], $r['obiekt']); ?>"><?php echo $r['obiekt']; ?></code><input type="hidden" name="books[]" value="<?php echo $r['typ'] . "-" . $r['obiekt']; ?>"/> </span> 
 				<?php
 					$i++;
 				}
@@ -347,7 +387,7 @@ function helion_submenu_ksiegarnia() {
 		<tr valign="top">
 			<th scope="row"><label for="helion_premalinks">Bezpośrednie odnośniki: </label></th>
 			<td><?php if(get_option('permalink_structure') == '') { ?>
-				<span style="color: red; font-weight: bold;">Wyłączone</span> (Aby ten moduł działał poprawnie, włącz bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>">Ustawienia->Bezpośrednie odnośniki</a>)
+				<span style="color: red; font-weight: bold;">Wyłączone</span> (Aby ten moduł działał poprawnie, włącz bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>" rel="nofollow">Ustawienia->Bezpośrednie odnośniki</a>)
 			<?php } else { ?>
 				<span style="color: green; font-weight: bold;">Włączone</span>
 			<?php } ?>
@@ -382,7 +422,7 @@ function helion_submenu_ksiegarnia() {
 			<th scope="row"><label for="helion_bookstore_template_main">Wygląd strony głównej: </label></th>
 			<td><textarea name="helion_bookstore_template_main" cols="68" rows="12"><?php echo stripslashes(get_option("helion_bookstore_template_main")); ?></textarea>
 			<br/>
-			<p>Dostępne znaczniki: <code>%nowosci%</code>, <code>%bestsellery%</code>. Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>">dziale pomocy</a>.</p>
+                        <p>Dostępne znaczniki: <code>%nowosci%</code>, <code>%bestsellery%</code>, <code>%polecane%</code>. Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>" rel="nofollow">dziale pomocy</a>.</p>
 			</td>
 		</tr>
 		<tr valign="top">
@@ -396,7 +436,7 @@ function helion_submenu_ksiegarnia() {
 				
 				<p>Znaczniki wstawiające linki: <code>%dokoszyka%</code>, <code>%link%</code>.</p>
 				
-				<p>Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>">dziale pomocy</a>.</p>
+				<p>Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>" rel="nofollow">dziale pomocy</a>.</p>
 			</td>
 		</tr>
 	</table>
@@ -439,7 +479,7 @@ function helion_submenu_wyszukiwarka() {
 			<tr valign="top">
 				<th scope="row"><label for="helion_premalinks">Bezpośrednie odnośniki: </label></th>
 				<td><?php if(get_option('permalink_structure') == '') { ?>
-					<span style="color: red; font-weight: bold;">Wyłączone</span> (Aby ten moduł działał poprawnie, włącz bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>">Ustawienia->Bezpośrednie odnośniki</a>)
+					<span style="color: red; font-weight: bold;">Wyłączone</span> (Aby ten moduł działał poprawnie, włącz bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>" rel="nofollow">Ustawienia->Bezpośrednie odnośniki</a>)
 				<?php } else { ?>
 					<span style="color: green; font-weight: bold;">Włączone</span>
 				<?php } ?>
@@ -472,7 +512,7 @@ function helion_submenu_wyszukiwarka() {
 					
 					<p>Znaczniki wstawiające linki: <code>%dokoszyka%</code>, <code>%link%</code>.</p>
 					
-					<p>Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>">dziale pomocy</a>. Znaczniki są te same co dla strony z opisem książki w księgarni.</p>
+					<p>Znaczniki są dokładnie opisane w <a href="<?php echo admin_url("admin.php?page=helion_pomoc#znaczniki_ksiegarnia"); ?>" rel="nofollow">dziale pomocy</a>. Znaczniki są te same co dla strony z opisem książki w księgarni.</p>
 				</td>
 			</tr>
 		</table>
@@ -504,7 +544,7 @@ najlepiej sprzedające się pozycje w sieci!</p>
 	
 	<p>Program partnerski działa praktycznie bezobsługowo, a jego zasady są proste i
 przejrzyste. Partner może publikować wszystkie informacje o książkach dostępnych
-w księgarniach Grupy Wydawniczej Helion, a mianowicie: <a href="http://www.onepress.pl" target="_blank">onepress.pl</a>, <a href="http://www.helion.pl" target="_blank">helion.pl</a>, <a href="http://www.sensus.pl" target="_blank">sensus.pl</a>, <a href="http://www.septem.pl" target="_blank">septem.pl</a>, <a href="http://www.bezdroza.pl" target="_blank">bezdroza.pl</a> i <a href="http://www.ebookpoint.pl" target="_blank">ebookpoint.pl</a>, w tym fragmenty książek, okładki, filmy wideo, szczegółowe
+w księgarniach Grupy Wydawniczej Helion, a mianowicie: <a href="http://www.onepress.pl" target="_blank" rel="nofollow">onepress.pl</a>, <a href="http://www.helion.pl" target="_blank" rel="nofollow">helion.pl</a>, <a href="http://www.sensus.pl" target="_blank" rel="nofollow">sensus.pl</a>, <a href="http://www.septem.pl" target="_blank" rel="nofollow">septem.pl</a>, <a href="http://www.bezdroza.pl" target="_blank" rel="nofollow">bezdroza.pl</a> i <a href="http://www.ebookpoint.pl" target="_blank" rel="nofollow">ebookpoint.pl</a>, w tym fragmenty książek, okładki, filmy wideo, szczegółowe
 opisy oraz spisy treści wraz z mechanizmem dodawania książek do koszyka.</p>
 	
 	<p>W zamian za prezentację naszych produktów otrzymasz wynagrodzenie w postaci
@@ -513,26 +553,26 @@ strony. Prowizja od każdego zrealizowanego zamówienia wynosi 5% dla książek
 drukowanych oraz 15% w przypadku publikacji elektronicznych.</p>
 	
 	<p><strong>Już teraz zapoznaj się z Programem Partnerskim na stronie <a href="http://program-
-	partnerski.helion.pl" target="_blank">http://program-partnerski.helion.pl</a> i dołącz do 4 tysięcy partnerów współpracujących z nami!</strong></p>
+	partnerski.helion.pl" target="_blank" rel="nofollow">http://program-partnerski.helion.pl</a> i dołącz do 4 tysięcy partnerów współpracujących z nami!</strong></p>
 
 	<p>Tutaj znajdziesz informacje na temat korzystania z wtyczki i dostępnych w niej opcji.</p>
 	
 	<h3 id="top">Spis treści</h3>
 	<ol>
-		<li><a href="#wymagania">Jakie są wymagania wtyczki?</a></li>
-		<li><a href="#jakzaczac">Jak zacząć korzystać z wtyczki?</a></li>
-		<li><a href="#jakwidgety">Jak używać widgetów?</a></li>
-		<li><a href="#rodzajewidgetow">Jakie rodzaje widgetów są dostępne i czym się charakteryzują?</a></li>
-		<li><a href="#losowaksiazka">Jak wybrać książki do wyświetlania w widgecie Losowa Książka?</a></li>
-		<li><a href="#wyszukiwarka">Jak działa widget Wyszukiwarka i jak go skonfigurować?</a></li>
-		<li><a href="#ksiegarnia">Jak ustawić i skonfigurować Księgarnię?</a></li>
-		<li><a href="#personalizacja">Jak spersonalizować wygląd Księgarni i Wyszukiwarki?</a></li>
-		<li><a href="#box">Jak wstawić Boks z opisem książki do wpisu?</a></li>
-		<li><a href="#link">Jak wstawić Link do książki do wpisu?</a></li>
-		<li><a href="#cache">Co to jest cache i jak go używać?</a></li>
-		<li><a href="#wyglad">Chcę zmienić sposób wyświetlania elementów - jak to zrobić?</a></li>
-		<li><a href="#bug">Znalazłem błąd - gdzie mogę go zgłosić?</a></li>
-		<li><a href="#forum">Gdzie znajdę pomoc dotyczącą Programu Partnerskiego i tej wtyczki?</a></li>
+		<li><a href="#wymagania" rel="nofollow">Jakie są wymagania wtyczki?</a></li>
+		<li><a href="#jakzaczac" rel="nofollow">Jak zacząć korzystać z wtyczki?</a></li>
+		<li><a href="#jakwidgety" rel="nofollow">Jak używać widgetów?</a></li>
+		<li><a href="#rodzajewidgetow" rel="nofollow">Jakie rodzaje widgetów są dostępne i czym się charakteryzują?</a></li>
+		<li><a href="#losowaksiazka" rel="nofollow">Jak wybrać książki do wyświetlania w widgecie Losowa Książka?</a></li>
+		<li><a href="#wyszukiwarka" rel="nofollow">Jak działa widget Wyszukiwarka i jak go skonfigurować?</a></li>
+		<li><a href="#ksiegarnia" rel="nofollow">Jak ustawić i skonfigurować Księgarnię?</a></li>
+		<li><a href="#personalizacja" rel="nofollow">Jak spersonalizować wygląd Księgarni i Wyszukiwarki?</a></li>
+		<li><a href="#box" rel="nofollow">Jak wstawić Boks z opisem książki do wpisu?</a></li>
+		<li><a href="#link" rel="nofollow">Jak wstawić Link do książki do wpisu?</a></li>
+		<li><a href="#cache" rel="nofollow">Co to jest cache i jak go używać?</a></li>
+		<li><a href="#wyglad" rel="nofollow">Chcę zmienić sposób wyświetlania elementów - jak to zrobić?</a></li>
+		<li><a href="#bug" rel="nofollow">Znalazłem błąd - gdzie mogę go zgłosić?</a></li>
+		<li><a href="#forum" rel="nofollow">Gdzie znajdę pomoc dotyczącą Programu Partnerskiego i tej wtyczki?</a></li>
 	</ol>
 	
 	<h3 id="wymagania">Jakie są wymagania wtyczki?</h3>
@@ -541,18 +581,18 @@ partnerskiego potrzebne jest także około 3 – 6 MB miejsca w bazie danych na
 każdą używaną księgarnię oraz łącznie około 100 – 500 MB miejsca na dysku serwera,
 przeznaczonego na przechowywanie okładek.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="jakzaczac">Jak zacząć korzystać z wtyczki?</h3>
-	<p>Aby zacząć korzystać z wtyczki, wystarczy przejść do menu <a href="<?php echo admin_url("admin.php?page=helion_options"); ?>">Helion</a>, podać tam swój numer partnera księgarni Helion (otrzymasz go po podpisaniu umowy partnerskiej na stronie <a href="http://program-
-	partnerski.helion.pl" target="_blank">http://program-partnerski.helion.pl</a>). Następnie należy wybrać księgarnie, z których chcesz korzystać. Gdy numer jest wpisany, a księgarnie wybrane, możesz zacząć korzystać z możliwości wtyczki: wstawiać widgety, korzystać z księgarni, wstawiać opisy książek do wpisów.</p>
+	<p>Aby zacząć korzystać z wtyczki, wystarczy przejść do menu <a href="<?php echo admin_url("admin.php?page=helion_options"); ?>" rel="nofollow">Helion</a>, podać tam swój numer partnera księgarni Helion (otrzymasz go po podpisaniu umowy partnerskiej na stronie <a href="http://program-
+	partnerski.helion.pl" target="_blank" rel="nofollow">http://program-partnerski.helion.pl</a>). Następnie należy wybrać księgarnie, z których chcesz korzystać. Gdy numer jest wpisany, a księgarnie wybrane, możesz zacząć korzystać z możliwości wtyczki: wstawiać widgety, korzystać z księgarni, wstawiać opisy książek do wpisów.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="jakwidgety">Jak używać widgetów?</h3>
-	<p>Aby wstawiać widgety wyświetlające książki, przejdź do menu <a href="<?php echo admin_url("widgets.php"); ?>">Wygląd->Widgety</a> i przeciągnij wybrany przez ciebie widget Helion na odpowiednią pozycję, w której ma się on pojawić. Następnie wybierz dodatkowe opcje i kliknij "Zapisz". Widget powinien pojawić się na twoim blogu.</p>
+	<p>Aby wstawiać widgety wyświetlające książki, przejdź do menu <a href="<?php echo admin_url("widgets.php"); ?>" rel="nofollow">Wygląd->Widgety</a> i przeciągnij wybrany przez ciebie widget Helion na odpowiednią pozycję, w której ma się on pojawić. Następnie wybierz dodatkowe opcje i kliknij "Zapisz". Widget powinien pojawić się na twoim blogu.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="rodzajewidgetow">Jakie rodzaje widgetów są dostępne i czym się charakteryzują?</h3>
 	<p>W chwili obecnej możesz używać następujących widgetów:</p>
@@ -587,7 +627,7 @@ koszyka i skieruje go do formularza z płatnością.</li>
 	<p>Nic nie stoi na przeszkodzie, aby na jednej stronie był wyświetlany więcej niż jeden
 widget, o ile pozwala na to moc Twojego serwera.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="losowaksiazka">Jak wybrać książki do wyświetlania w widgecie Losowa Książka?</h3>
 	<p>Przejdź do menu Helion->Losowa książka, a następnie wyszukaj za pomocą
@@ -598,7 +638,7 @@ powoduje dodanie wszystkich pozycji.</p>
 	<p>Gdy już wybierzesz książki, które chcesz wyświetlać, koniecznie zatwierdź swój
 wybór.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="wyszukiwarka">Jak działa widget wyszukiwarka i jak go skonfigurować?</h3>
 	<p>Widget Wyszukiwarka pozwala Twoim czytelnikom na wyszukiwanie książek, które
@@ -615,16 +655,16 @@ ich interesują.</p>
 		<li>Umieść widget Wyszukiwarka na swoim blogu.</li>
 	</ol>
 	
-	<p>Do poprawnego działania tego modułu twój blog musi mieć włączone bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>">Ustawienia->Bezpośrednie odnośniki</a>.</p>
+	<p>Do poprawnego działania tego modułu twój blog musi mieć włączone bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>" rel="nofollow">Ustawienia->Bezpośrednie odnośniki</a>.</p>
 	
-	<p>Możesz samodzielnie ustalić wygląd strony z opisem książki, używając do tego kodu HTML oraz znaczników, np. %tytul%. Znaczniki zostały <a href="#znaczniki_ksiegarnia">opisane w ramach modułu Księgarni</a>, ponieważ zarówno Wyszukiwarka, jak i Księgarnia korzystają z tego samego silnika wyświetlającego opisy i posiadają te same znaczniki.</p>
+	<p>Możesz samodzielnie ustalić wygląd strony z opisem książki, używając do tego kodu HTML oraz znaczników, np. %tytul%. Znaczniki zostały <a href="#znaczniki_ksiegarnia" rel="nofollow">opisane w ramach modułu Księgarni</a>, ponieważ zarówno Wyszukiwarka, jak i Księgarnia korzystają z tego samego silnika wyświetlającego opisy i posiadają te same znaczniki.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="ksiegarnia">Jak skonfigurować księgarnię</h3>
 	<p>Stwórz własną księgarnię, która będzie zawierała kopię całej oferty księgarni z Grupy Helion i sprzedawaj książki tematycznie powiązane z twoim blogiem.</p>
 	
-	<p>Do poprawnego działania tego modułu twój blog musi mieć włączone bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>">Ustawienia->Bezpośrednie odnośniki</a>.</p>
+	<p>Do poprawnego działania tego modułu twój blog musi mieć włączone bezpośrednie odnośniki w menu <a href="<?php admin_url("options-permalink.php"); ?>" rel="nofollow">Ustawienia->Bezpośrednie odnośniki</a>.</p>
 	
 	<h4>Księgarnia jako osobny blog</h4>
 	
@@ -679,34 +719,37 @@ ich interesują.</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
 		<li><code>%nowosci%</code> - wyświetla 4 boxy z losowo wybranymi nowymi książkami w ofercie, </li>
 		<li><code>%bestsellery%</code> - wyświetla listę 10 losowo wybranych bestsellerów</li>
+                <li><code>%polecane%</code> - wyświetla listę 10 wybranych pozycji ustalonych w widgecie "Losowa książka"</li>
 	</ul>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	
 	<h3 id="box">Jak wstawić Boks z opisem książki do wpisu?</h3>
-	<p>W każdym wpisie możesz łatwo wstawić Boks z okładką i danymi na temat dowolnej książki. Wystarczy w wybranym przez ciebie miejscu wstawić następujący kod: <code>[helion_ksiazka ksiegarnia="helion" ident="markwy" okladka="120x156" width="250" float="right"]</code>, gdzie dostępne są następujące parametry:</p>
+	<p>W każdym wpisie możesz łatwo wstawić Boks z okładką i danymi na temat dowolnej książki. Wystarczy w wybranym przez ciebie miejscu wstawić następujący kod: <code>[helion_ksiazka ksiegarnia="helion" ident="markwy" okladka="120x156" width="250" float="right" opis="1" substring="100"]</code>, gdzie dostępne są następujące parametry:</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
-		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint) nazwa księgarni, do której należy książka (obowiązkowy)</li>
+		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint|bezdroza) nazwa księgarni, do której należy książka (obowiązkowy)</li>
 		<li>ident: identyfikator książki (obowiązkowy)</li>
 		<li>okladka: rozmiar wyświetlonej w boxie okładki. Możesz wybierać spośród następujących rozmiarów: 326x466, 181x236, 125x163, 120x156, 90x119, 88x115, 72x95 i 65x85. Inne rozmiary nie są dostępne. (opcjonalny, domyślnie 120x156)</li>
 		<li>width: szerokość boxu w pikselach (opcjonalny, domyślnie taki sam jak szerokość okładki, minimum 200px)</li>
 		<li>float: określa, po której stronie ma się znaleźć box. Dostępne parametry: left, right (opcjonalny, domyślnie left)</li>
+                <li>opis: określa, czy wyświetlać opis (1 - tak, 0 - nie (opcjonalnie))</li>
+                <li>substring: określa, do ilu znaków ma zostać skrócony opis (opcjonalnie 100)</li>
 	</ul>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="link">Jak wstawić link do książki do wpisu?</h3>
 	<p>Jeżeli znasz parametr ident książki i wiesz, z jakiej księgarni ona pochodzi, możesz z łatwością wstawić do niej link za pomocą następującego kodu: <code>[helion_link ksiegarnia="helion" ident="markwy" cyfra="123"]</code>, gdzie parametry są następujące:</p>
 	<ul style="list-style-type: square; list-style-position: inside; padding-left: 40px;">
-		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint) nazwa księgarni (obowiązkowa)</li>
+		<li>ksiegarnia: (helion|onepress|sensus|septem|ebookpoint|bezdroza) nazwa księgarni (obowiązkowa)</li>
 		<li>ident: identyfikator książki (obowiązkowy)</li>
 		<li>cyfra: jest to dodatkowy parametr, dzięki którego możesz zbadać skuteczność kampanii. Jeśli prowadzisz dwie strony, na jednej możesz ustawić cyfrę 1 a na drugiej cyfrę 2 - gdy ktoś dokona zakupu, wówczas otrzymasz maila w którym oprócz informacji o zakupach zostanie przekazana ta cyfra i będziesz wiedział, z jakiej strony został dokonany zakup. (opcjonalna)</li>
 	</ul>
 	<p>Powyższy kod spowoduje wstawienie linku z twoim identyfikatorem klienta do treści wpisu. Wstawiony link będzie zawierał tytuł książki. Jeżeli chcesz nadać linkowi inną treść, wystarczy, że wstawisz kod w następującej formie: <code>[helion_link ksiegarnia="helion" ident="markwy" cyfra="123"]Treść linku[/helion_link]</code></p>
 	<p>Co ważne, nie będziesz musiał nic zmieniać, jeśli na przykład w przyszłości zmieni się format linków. Dzięki temu nie będzie konieczności przeszukiwania wszystkich wpisów i aktualizacji linków, ponieważ stanie się to automatycznie.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="cache">Co to jest cache i jak go używać?</h3>
 	<p>Cache to katalog, w którym przechowywane są okładki książek często używane na Twoim blogu. Raz pobrana okładka jest następnie serwowana z Twojego hostingu, a nie z głównego serwera księgarni. Pozwala to na odciążenie serwerów głównych Grupy Helion, co z kolei skutkuje ich szybszym działaniem i większą niezawodnością.</p>
@@ -714,22 +757,22 @@ ich interesują.</p>
 	<p>Podanie wartości 0 w ustawieniach rozmiaru cache jest równoznaczne z wyłączeniem tej funkcji.</p>
 	<p>Możesz zmienić rozmiar cache w menu Helion->Cache okładek.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="wyglad">Chcę zmienić sposób wyświetlania elementów - jak to zrobić?</h3>
 	<p>Wtyczka jest wyposażona w domyślny zestaw stylów CSS, dzięki czemu od samego początku wygląd elementów jest już w jakimś stopniu zdefinowany. Jeśli jednak chcesz wprowadzić zmiany, możesz dodać własne style w plikach twojego szablonu, np. za pomocą edytora w menu Wygląd->Edycja. Prawie każdy widget i element posiada własne klasy CSS, dzięki czemu możesz łatwo zapanować nad jego wyglądem. Przydatnym narzędziem w tym przypadku będzie wtyczka Firebug dla przeglądarki Firefox.</p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="bug">Znalazłem błąd. Gdzie mogę go zgłosić?</h3>
-	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:pawel@paulpela.com?subject=Helion+Widgets+Pro">pawel@paulpela.com</a></p>
+	<p>Zaloguj się na forum Programu Partnerskiego pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank" rel="nofollow">http://program-partnerski.helion.pl/forum/</a>, albo napisz maila do autora wtyczki: <a href="mailto:mdzimiera@helion.pl?subject=Helion+Widgets+Pro" rel="nofollow">mdzimiera@helion.pl</a></p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 	
 	<h3 id="forum">Gdzie znajdę pomoc dotyczącą Programu Partnerskiego i tej wtyczki?</h3>
-	<p>Wszelką pomoc dotyczącą PP Helion znajdziesz na specjalnie do tego celu stworzonym forum pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank">http://program-partnerski.helion.pl/forum/</a></p>
+	<p>Wszelką pomoc dotyczącą PP Helion znajdziesz na specjalnie do tego celu stworzonym forum pod adresem <a href="http://program-partnerski.helion.pl/forum/" target="_blank" rel="nofollow">http://program-partnerski.helion.pl/forum/</a></p>
 	
-	<p><small><a href="#top">&uarr; Powrót do spisu treści</a></small></p>
+	<p><small><a href="#top" rel="nofollow">&uarr; Powrót do spisu treści</a></small></p>
 </div>
 <?php
 }

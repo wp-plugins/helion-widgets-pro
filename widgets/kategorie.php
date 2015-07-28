@@ -41,9 +41,9 @@ class Helion_Widget_Kategorie extends WP_Widget {
 			$slug = get_option("helion_bookstore_slug");
 			
 			if($slug) {
-				$home = get_bloginfo("home") . "/" . $slug . "/?helion_bookstore=category";
+				$home = get_bloginfo("url") . "/" . $slug . "/?helion_bookstore=category";
 			} else {
-				$home = get_bloginfo("home") . "/?helion_bookstore=category" ;
+				$home = get_bloginfo("url") . "/?helion_bookstore=category" ;
 			}
 			
 			echo '<ul class="nad">';
@@ -68,7 +68,7 @@ class Helion_Widget_Kategorie extends WP_Widget {
 
                                             foreach($lista['pod'] as $id => $pod) {
                                                     if(key($pod) == $id_nad) {
-                                                            echo '<li><a href="' . $home . "&id=" . $id . '">' . $pod[key($pod)] .'</a></li>';
+                                                            echo '<li><a href="' . $home . "&id=" . $id . '" rel="nofollow">' . $pod[key($pod)] .'</a></li>';
                                                     }
                                             }
 
@@ -77,14 +77,14 @@ class Helion_Widget_Kategorie extends WP_Widget {
                                             
                                         }else{
                                             
-                                            echo '<li class="n"><a href="' . $home . "&id=" . $id_nad . '">' . $nad . '</a></li>';
+                                            echo '<li class="n"><a href="' . $home . "&id=" . $id_nad . '" rel="nofollow">' . $nad . '</a></li>';
                                             
                                         }
 					
 				}
 			} else {
 				foreach($lista['nad'] as $id_nad => $nad) {
-					echo '<li class="n"><a href="' . $home . "&id=" . $id_nad . '">' . $nad . '</a></li>';
+					echo '<li class="n"><a href="' . $home . "&id=" . $id_nad . '" rel="nofollow">' . $nad . '</a></li>';
 				}
 			}
 			
